@@ -1569,7 +1569,19 @@
     the-promise "^2.0.12"
     uuid "^8.3.2"
 
-"@kubevious/ui-components@^1.0.154":
+"@kubevious/ui-alerts@^1.0.27":
+  version "1.0.27"
+  resolved "https://registry.yarnpkg.com/@kubevious/ui-alerts/-/ui-alerts-1.0.27.tgz#c321098671cf87f9bee890c1f25c00e8642a3ef4"
+  integrity sha512-ZJfTRn7OmyMkCsiJ7mKvuRW7sCJC19QkFw0u5yHKEcaiOP68ITuL2u5UGBgdgu42DEZjv7GVmW/mQjeeyECDPg==
+  dependencies:
+    "@kubevious/ui-components" "^1.0.153"
+    "@kubevious/ui-framework" "^1.0.50"
+    classnames "^2.2.6"
+    popper.js "^1.16.1"
+    postcss "^8.2.10"
+    the-lodash "^2.0.9"
+
+"@kubevious/ui-components@^1.0.153", "@kubevious/ui-components@^1.0.154":
   version "1.0.154"
   resolved "https://registry.yarnpkg.com/@kubevious/ui-components/-/ui-components-1.0.154.tgz#2292694dfea2141bf4c77d840ce2890380a166dd"
   integrity sha512-n02WUC3N+UL4ShcrcePkqC3xdTQGfYtsrFgif31RfPS2Cu3PLpCVueF9IKuv7ajf7b46+LKKPRSywlNOphhUXg==

@@ -1,0 +1,88 @@
+.outside {
+    /* position: relative; */
+    display: flex;
+
+    background: rgb(53, 55, 62);
+    color: #FFFFFF;
+
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+}
+
+.iconContainer {
+    /* position: relative; */
+    width: 40px;
+    display: block;
+}
+
+.mainContainer {
+    /* position: relative; */
+    /* left: 40px; */
+    flex-grow: 1;
+
+    display: flex;
+
+
+    /* background: red; */
+}
+
+
+.iconBox {
+    /* position: relative; */
+    width: 40px;
+    height: 40px;
+    background: rgb(245, 141, 97);
+}
+
+.textContainer {
+    /* background: green; */
+    flex-grow: 1;
+
+    padding: 5px;
+
+}
+
+.detailsContainer {
+    /* background: blue; */
+    flex-grow: 1;
+
+    padding: 5px;
+
+    text-align: right;
+}
+
+.kindText {
+    font-size: 10px;
+}
+
+.nameText {
+    font-size: 14px;
+}
+
+.alertsContainer {
+    display: flex;
+    justify-content: flex-end;
+    /* background: orange; */
+
+}
+
+.flagsContainer {
+    
+}
+
+.alertsWrapper {
+    border-radius: 4px;
+    background: #292a2f;
+    height: 26px;
+    padding: 5px;
+    display: flex;
+}
+
+.severityWrapper {
+    margin-right: 10px;
+    display: flex;
+}
+
+.severity {
+    margin-right: 15px;
+}

@@ -23,6 +23,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@kubevious/helpers": "^1.0.62",
+    "@kubevious/ui-alerts": "^1.0.27",
     "@kubevious/ui-components": "^1.0.154",
     "@kubevious/ui-framework": "^1.0.50",
     "@kubevious/ui-middleware": "^1.0.38",
