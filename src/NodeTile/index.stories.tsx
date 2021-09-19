@@ -23,7 +23,7 @@ export const Default: Story = () => (
             </div>
 
             <div style={{ margin: '1rem' }}>
-                <NodeTile config={REPLICA_SET_CONFIG}>
+                <NodeTile config={REPLICA_SET_CONFIG} isSelected={true}>
                 </NodeTile>
             </div>
 

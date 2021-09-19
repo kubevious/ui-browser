@@ -6,20 +6,20 @@ import { DnIconComponent } from '@kubevious/ui-components';
 
 import { Label, FlagIcon, MarkerIcon } from '@kubevious/ui-components';
 import { SeverityIcon } from '@kubevious/ui-alerts';
+import cx from 'classnames';
 
-
-export const NodeTile: FC<NodeTileProps> = ({ config }) => {
+export const NodeTile: FC<NodeTileProps> = ({ config, isSelected }) => {
 
     const hasErrors = (config.alertCount?.error ?? 0) > 0;
     const hasWarnings = (config.alertCount?.warn ?? 0) > 0;
 
     return <>
-        <div className={styles.outside}>
+        <div className={cx(styles.outside, { [styles.outsideSelected] : isSelected })}>
 
             <div className={styles.iconContainer}>
 
                 <div className={styles.iconBox}>
-                    <DnIconComponent kind={config.kind} />
+                    <DnIconComponent kind={config.kind} size='lg'   />
                 </div>
 
             </div>

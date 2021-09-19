@@ -9,6 +9,10 @@
     font-weight: 500;
 }
 
+.outsideSelected {
+    background: rgb(252, 189, 63);
+}
+
 .iconContainer {
     /* position: relative; */
     width: 40px;
@@ -31,8 +35,14 @@
     /* position: relative; */
     width: 40px;
     height: 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
     background: rgb(245, 141, 97);
 }
+
 
 .textContainer {
     /* background: green; */
