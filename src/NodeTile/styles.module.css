@@ -11,6 +11,13 @@
 
 .outsideSelected {
     background: rgb(252, 189, 63);
+    color: #222222;
+}
+
+.outsideHighlighted {
+    border-color: rgb(252, 189, 63);
+    border-width: 1px;
+    border-style: solid;
 }
 
 .iconContainer {
@@ -67,6 +74,7 @@
 
 .nameText {
     font-size: 14px;
+    font-weight: 500;
 }
 
 .alertsContainer {
@@ -91,6 +99,7 @@
 .severityWrapper {
     margin-right: 10px;
     display: flex;
+    align-items: center;
 }
 
 .severity {

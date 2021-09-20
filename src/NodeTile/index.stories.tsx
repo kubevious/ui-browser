@@ -28,6 +28,11 @@ export const Default: Story = () => (
             </div>
 
             <div style={{ margin: '1rem' }}>
+                <NodeTile config={REPLICA_SET_CONFIG} isHighlighted={true}>
+                </NodeTile>
+            </div>
+
+            <div style={{ margin: '1rem' }}>
                 <NodeTile config={IMAGE_CONFIG}>
                 </NodeTile>
             </div>

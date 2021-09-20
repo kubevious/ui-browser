@@ -1,11 +1,21 @@
 .container {
 
     background: #1e1e1e;
+    
+    display: flex;
+}
 
+.listContainer {
+    flex-direction: column;
+}
+
+.gridContainer {
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .nodeContainer {
     
     margin: 15px;
-
+    flex-grow: 1;
 }

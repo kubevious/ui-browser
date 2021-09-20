@@ -8,13 +8,14 @@ import { Label, FlagIcon, MarkerIcon } from '@kubevious/ui-components';
 import { SeverityIcon } from '@kubevious/ui-alerts';
 import cx from 'classnames';
 
-export const NodeTile: FC<NodeTileProps> = ({ config, isSelected }) => {
+export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted }) => {
 
     const hasErrors = (config.alertCount?.error ?? 0) > 0;
     const hasWarnings = (config.alertCount?.warn ?? 0) > 0;
 
     return <>
-        <div className={cx(styles.outside, { [styles.outsideSelected] : isSelected })}>
+        <div data-dn={config.dn} data-rn={config.rn}
+            className={cx(styles.outside, { [styles.outsideSelected] : isSelected, [styles.outsideHighlighted] : isHighlighted })}>
 
             <div className={styles.iconContainer}>
 
@@ -31,7 +32,7 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected }) => {
                         {config.kind}
                     </div>
                     <div className={styles.nameText}>
-                        {config.rn}
+                        {config.name}
                     </div>
                 </div>
 
@@ -44,12 +45,12 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected }) => {
                                 {hasErrors && <span className={styles.severityWrapper}>
                                     <SeverityIcon severity="error"
                                         extraStyles={styles.severity} />
-                                    <Label text={`${config.alertCount.error}`}></Label>
+                                    <Label text={`${config.alertCount.error}`} ></Label>
                                 </span>}
                                 {hasWarnings && <span className={styles.severityWrapper}>
                                     <SeverityIcon severity="warn"
                                         extraStyles={styles.severity} />
-                                    <Label text={`${config.alertCount.warn}`}></Label>
+                                    <Label text={`${config.alertCount.warn}`} ></Label>
                                 </span>}
                             </span>
                         </>}

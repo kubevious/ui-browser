@@ -4,4 +4,5 @@ export interface NodeTileProps
 {
     config: NodeConfig;
     isSelected?: boolean;
+    isHighlighted?: boolean;
 }
