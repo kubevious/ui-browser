@@ -1,5 +1,9 @@
 
+
 .layer {
+    /* height: 100%; */
+    overflow-y: auto;
+
     margin: 15px;
     /* padding: 15px; */
 

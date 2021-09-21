@@ -8,6 +8,6 @@ export interface LayerInfo
 }
 
 export enum LayerInfoKind {
-    Children,
-    Node
+    Children = 'children',
+    Node = 'node'
 }

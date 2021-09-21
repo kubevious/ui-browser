@@ -1,20 +1,21 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import { DiagramBrowserProps } from './types';
 
 import styles from './styles.module.css';
-import cx from 'classnames';
+// import cx from 'classnames';
 
 import { extractDnLayers } from './utils';
 import { DiagramLayer } from '../DiagramLayer';
 
 export const DiagramBrowser: FC<DiagramBrowserProps> = ({ diagramSource, rootDn, expandedDn }) => {
 
-    let layers = extractDnLayers(rootDn, expandedDn);
-    if (diagramSource) {
-        diagramSource.applyLayers(layers);
-    }
+    const layers = extractDnLayers(rootDn, expandedDn);
+    // if (diagramSource) {
+    //     diagramSource.applyLayers(layers);
+    // }
 
     return <>
+
 
         <div className={styles.container}>
 

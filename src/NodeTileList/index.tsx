@@ -10,14 +10,14 @@ export const NodeTileList: FC<NodeTileListProps> = ({ isGrid, configs, selectedD
     return <>
         <div className={cx(styles.container, {[styles.listContainer]: !isGrid, [styles.gridContainer]: isGrid})}>
 
-            {configs.map((config) => <>
+            {configs.map((config) =>
                 <div key={config.rn}
                      className={styles.nodeContainer}>
                     <NodeTile config={config}
                               isSelected={selectedDn && config.dn == selectedDn}
                               isHighlighted={highlightedDn && config.dn == highlightedDn} />
                 </div>
-            </>)}
+            )}
             
         </div>
     </>

@@ -1,6 +1,6 @@
 import { Story } from '@storybook/react';
 import React from 'react';
-import { APP_CONFIG, IMAGE_CONFIG, LARGE_APP_NODE_LIST, makeAppConfigNode, REPLICA_SET_CONFIG } from '../mock/nodes';
+import { APP_CONFIG, IMAGE_CONFIG, LARGE_APP_NODE_LIST, REPLICA_SET_CONFIG } from '../mock/nodes';
 import { REPLICA_SET_CONFIG_DN } from '../mock/nodes';
 import { NodeTileList } from './';
 

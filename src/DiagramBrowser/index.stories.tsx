@@ -1,7 +1,7 @@
+import _ from 'the-lodash'
 import { Story } from '@storybook/react';
 import React, { useState } from 'react';
 import { DiagramBrowser } from './';
-import { CONT_CONFIG_DN } from '../mock/nodes';
 
 import { MyDiagramSource } from '../mock/diagram-source';
 
@@ -13,17 +13,15 @@ export default {
 export const Default: Story = () => (
 
     <div style={{ background: 'grey' }}>
-
         <div style={{ margin: '1rem' }}>
             <h2>Unrestricted Size</h2>
         </div>
 
         <div>
-
-            <div style={{ margin: '1rem', height: "500px" }}>
-                <DiagramBrowser diagramSource={MyDiagramSource} 
+            <div style={{ margin: '1rem', height: '700px' }}>
+                <DiagramBrowser diagramSource={MyDiagramSource}
                                 rootDn="root/logic"
-                                expandedDn="root/logic/ns-[kubevious]/app-[kubevious-mysql]/launcher-[StatefulSet]/pod-[0]/pvc-[data-kubevious-mysql-0]/pv-[pvc-8e3448af-a0f6-4f5c-ac55-ca92f18e4cc8]" >
+                                expandedDn="root/logic/ns-[sprt]/app-[gprod-sprt-main-grfna]/cont-[gprod-sprt-main-grfna]/port-[default (TCP-3000)]/service-[gprod-sprt-main-grfna-default]" >
                 </DiagramBrowser>
             </div>
 
@@ -44,7 +42,7 @@ export const Empty: Story = () => (
         <div>
 
             <div style={{ margin: '1rem', height: "500px" }}>
-                <DiagramBrowser diagramSource={MyDiagramSource} 
+                <DiagramBrowser diagramSource={MyDiagramSource}
                                 rootDn="root/logic"
                                 expandedDn="root/logic" >
                 </DiagramBrowser>
@@ -61,7 +59,7 @@ export const Interactive: Story = () => {
     const [expandedDn, setExpandedDn] = useState<string>('root/logic');
 
     function caseOne() {
-        setExpandedDn('root/logic/ns-[kubevious]/app-[kubevious-mysql]/launcher-[StatefulSet]/pod-[0]/pvc-[data-kubevious-mysql-0]/pv-[pvc-8e3448af-a0f6-4f5c-ac55-ca92f18e4cc8]')
+        setExpandedDn('root/logic/ns-[sprt]/app-[gprod-sprt-main-grfna]/cont-[gprod-sprt-main-grfna]/port-[default (TCP-3000)]/service-[gprod-sprt-main-grfna-default]')
     }
     function caseTwo() {
         setExpandedDn('root/logic')
@@ -81,7 +79,7 @@ export const Interactive: Story = () => {
                 </div>
 
                 <div style={{ margin: '1rem', height: "500px" }}>
-                    <DiagramBrowser diagramSource={MyDiagramSource} 
+                    <DiagramBrowser diagramSource={MyDiagramSource}
                                     rootDn="root/logic"
                                     expandedDn={expandedDn} >
                     </DiagramBrowser>

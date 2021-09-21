@@ -58,9 +58,9 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted 
                     </div>
 
                     <div className={styles.flagsContainer}>
-                        {config.markers && config.markers.map((marker) => <>
-                            <MarkerIcon marker={marker} />
-                        </>) }
+                        {config.markers && config.markers.map((marker) => 
+                            <MarkerIcon key={marker} marker={marker} />
+                        ) }
 
                         {/* <FlagIcon /> */}
                     </div>

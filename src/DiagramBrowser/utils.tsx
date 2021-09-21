@@ -23,7 +23,7 @@ export function extractDnLayers(rootDn: string, dn: string) : LayerInfo[]
         if (isMyHierarchy) {
             layers.push({
                 kind: LayerInfoKind.Children,
-                parent: parentDn,
+                parent: parentDn!,
                 selectedDn: (currentDn === dn) ? dn : undefined,
             });
         }
