@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { DiagramBrowserProps } from './types';
 
 import styles from './styles.module.css';
@@ -10,6 +10,8 @@ import { subscribeToSharedState } from '@kubevious/ui-framework/dist';
 import { LayerInfo } from '../service/types';
 
 export const DiagramBrowser: FC<DiagramBrowserProps> = ({ diagramSource, rootDn, initialExpandedDn }) => {
+
+    const contentRef = useRef<HTMLDivElement>(null);
 
     const [layers, setLayers] = useState<LayerInfo[]>([]);
     const [currentExpandedDn, setCurrentExpandedDn] = useState<string>(initialExpandedDn || rootDn);
@@ -44,11 +46,16 @@ export const DiagramBrowser: FC<DiagramBrowserProps> = ({ diagramSource, rootDn,
 
         <div className={styles.container}>
 
-            <div className={styles.content}>
+            <div className={styles.content}
+                 ref={contentRef}>
 
                 {layers.map((layer, index) => 
 
-                    <DiagramLayer key={index} diagramSource={diagramSource} layer={layer} />
+                    <DiagramLayer key={index}
+                                  diagramSource={diagramSource}
+                                  layer={layer}
+                                  scrollBoundaryRef={contentRef}
+                                  />
                     
                 )}
 

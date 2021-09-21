@@ -20,22 +20,22 @@ export const Default: Story = () => {
     return <>
         <div style={{ background: 'grey' }}>
 
-            <div style={{ padding: '1rem' }}>
+            <div style={{ margin: '1rem', background: 'darkblue' }}>
                 <NodeTileList configs={nodes} >
                 </NodeTileList>
             </div>
 
-            <div style={{ padding: '1rem' }}>
+            <div style={{ margin: '1rem', background: 'darkblue' }}>
                 <NodeTileList configs={nodes} selectedDn={REPLICA_SET_CONFIG_DN}>
                 </NodeTileList>
             </div>
 
-            <div style={{ padding: '1rem' }}>
+            <div style={{ margin: '1rem', background: 'darkblue' }}>
                 <NodeTileList configs={nodes} highlightedDn={REPLICA_SET_CONFIG_DN}>
                 </NodeTileList>
             </div>
 
-            <div style={{ padding: '1rem', width: '400px' }}>
+            <div style={{ margin: '1rem', background: 'darkblue', width: '400px' }}>
                 <NodeTileList configs={nodes} selectedDn={REPLICA_SET_CONFIG_DN}>
                 </NodeTileList>
             </div>
@@ -50,17 +50,17 @@ export const LargeList: Story = () => {
     return <>
         <div style={{ background: 'grey' }}>
 
-            <div style={{ padding: '1rem' }}>
+            <div style={{ margin: '1rem', background: 'darkblue' }}>
                 <NodeTileList configs={LARGE_APP_NODE_LIST} >
                 </NodeTileList>
             </div>
 
-            <div style={{ padding: '1rem' }}>
+            <div style={{ margin: '1rem', background: 'darkblue' }}>
                 <NodeTileList configs={LARGE_APP_NODE_LIST} selectedDn={LARGE_APP_NODE_LIST[1].dn}>
                 </NodeTileList>
             </div>
 
-            <div style={{ padding: '1rem' }}>
+            <div style={{ margin: '1rem', background: 'darkblue' }}>
                 <NodeTileList configs={LARGE_APP_NODE_LIST} highlightedDn={LARGE_APP_NODE_LIST[3].dn}>
                 </NodeTileList>
             </div>
@@ -76,18 +76,32 @@ export const LargeGrid: Story = () => {
     return <>
         <div style={{ background: 'grey' }}>
 
-            <div style={{ padding: '1rem' }}>
+            <div style={{ margin: '1rem', background: 'darkblue' }}>
                 <NodeTileList isGrid configs={LARGE_APP_NODE_LIST} >
                 </NodeTileList>
             </div>
 
-            <div style={{ padding: '1rem' }}>
+            <div style={{ margin: '1rem', background: 'darkblue' }}>
                 <NodeTileList isGrid configs={LARGE_APP_NODE_LIST} selectedDn={LARGE_APP_NODE_LIST[1].dn}>
                 </NodeTileList>
             </div>
 
-            <div style={{ padding: '1rem' }}>
+            <div style={{ margin: '1rem', background: 'darkblue' }}>
                 <NodeTileList isGrid configs={LARGE_APP_NODE_LIST} highlightedDn={LARGE_APP_NODE_LIST[3].dn}>
+                </NodeTileList>
+            </div>
+
+        </div>
+    </>
+}
+
+export const LargeListSelectedScroll: Story = () => {
+
+    return <>
+        <div style={{ background: 'grey' }}>
+
+            <div style={{ margin: '1rem', background: 'darkblue', height: '500px', overflowY: 'auto'  }}>
+                <NodeTileList configs={LARGE_APP_NODE_LIST} selectedDn={LARGE_APP_NODE_LIST[7].dn}>
                 </NodeTileList>
             </div>
 

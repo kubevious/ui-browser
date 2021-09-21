@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { NodeTileProps } from './types';
 
 import styles from './styles.module.css';
@@ -7,10 +7,30 @@ import { DnIconComponent } from '@kubevious/ui-components';
 import { Label, FlagIcon, MarkerIcon } from '@kubevious/ui-components';
 import { SeverityIcon } from '@kubevious/ui-alerts';
 import cx from 'classnames';
+import scrollIntoView from 'scroll-into-view-if-needed'
+
 
 import { app } from '@kubevious/ui-framework'
 
-export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted }) => {
+export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted, scrollBoundaryRef }) => {
+
+    const tileRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+
+        if (isSelected || isHighlighted ) {
+            const currentElem = tileRef.current;
+            if (currentElem) {
+                scrollIntoView(currentElem, {
+                    behavior: 'smooth',
+                    block: 'center',
+                    inline: 'center',
+                    boundary: scrollBoundaryRef?.current
+                });
+            }
+        }
+
+    }, [ isSelected, isHighlighted ]);
 
     const hasErrors = (config.alertCount?.error ?? 0) > 0;
     const hasWarnings = (config.alertCount?.warn ?? 0) > 0;
@@ -21,6 +41,7 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted 
 
     return <>
         <div data-dn={config.dn} data-rn={config.rn}
+             ref={tileRef}
              className={cx(styles.outside, { [styles.outsideSelected] : isSelected, [styles.outsideHighlighted] : isHighlighted })}
              onClick={onClick}
              >

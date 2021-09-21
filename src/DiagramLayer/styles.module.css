@@ -1,13 +1,16 @@
 
 
 .layer {
+    flex-grow: 0;
+    flex-shrink: 0;
+
     /* height: 100%; */
     overflow-y: auto;
 
     margin: 15px;
     /* padding: 15px; */
 
-    min-width: 350px;
+    width: 350px;
 
-    background-color: lightgray;
+    /* background-color: lightgray; */
 }

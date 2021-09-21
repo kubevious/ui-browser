@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { DiagramBrowser } from './';
 
 import { MyDiagramSource } from '../mock/diagram-source';
+import { app } from '@kubevious/ui-framework';
 
 export default {
     title: 'DiagramBrowser',
@@ -56,13 +57,11 @@ export const Empty: Story = () => (
 
 export const Interactive: Story = () => {
 
-    const [expandedDn, setExpandedDn] = useState<string>('root/logic');
-
     function caseOne() {
-        setExpandedDn('root/logic/ns-[sprt]/app-[gprod-sprt-main-grfna]/cont-[gprod-sprt-main-grfna]/port-[default (TCP-3000)]/service-[gprod-sprt-main-grfna-default]')
+        app.sharedState.set('selected_dn', 'root/logic/ns-[sprt]/app-[gprod-sprt-main-grfna]/cont-[gprod-sprt-main-grfna]/port-[default (TCP-3000)]/service-[gprod-sprt-main-grfna-default]');
     }
     function caseTwo() {
-        setExpandedDn('root/logic')
+        app.sharedState.set('selected_dn', null);
     }
 
     return <>
@@ -80,8 +79,7 @@ export const Interactive: Story = () => {
 
                 <div style={{ margin: '1rem', height: "500px" }}>
                     <DiagramBrowser diagramSource={MyDiagramSource}
-                                    rootDn="root/logic"
-                                    initialExpandedDn={expandedDn} >
+                                    rootDn="root/logic">
                     </DiagramBrowser>
                 </div>
 
@@ -98,30 +96,47 @@ export const MultiScreen: Story = () => (
         <div style={{ margin: '1rem' }}>
             <h2>Logic</h2>
         </div>
-
         <div>
             <div style={{ margin: '1rem', height: '400px' }}>
                 <DiagramBrowser diagramSource={MyDiagramSource}
                                 rootDn="root/logic"
-                                expandedDn="root/logic/ns-[sprt]/app-[gprod-sprt-main-grfna]/cont-[gprod-sprt-main-grfna]/port-[default (TCP-3000)]/service-[gprod-sprt-main-grfna-default]" >
+                                initialExpandedDn="root/logic/ns-[sprt]/app-[gprod-sprt-main-grfna]/cont-[gprod-sprt-main-grfna]/port-[default (TCP-3000)]/service-[gprod-sprt-main-grfna-default]" >
                 </DiagramBrowser>
             </div>
-
         </div>
 
         <div style={{ margin: '1rem' }}>
             <h2>Image</h2>
         </div>
-
         <div>
             <div style={{ margin: '1rem', height: '400px' }}>
                 <DiagramBrowser diagramSource={MyDiagramSource}
                                 rootDn="root/images"
-                                expandedDn="root/images/repo-[dockerhub]/image-[jaegertracing/all-in-one]/tag-[latest]/ns-[sprt]" >
+                                initialExpandedDn="root/images/repo-[dockerhub]/image-[jaegertracing/all-in-one]/tag-[latest]/ns-[sprt]" >
                 </DiagramBrowser>
             </div>
-
         </div>
 
+        <div style={{ margin: '1rem' }}>
+            <h2>K8s</h2>
+        </div>
+        <div>
+            <div style={{ margin: '1rem', height: '400px' }}>
+                <DiagramBrowser diagramSource={MyDiagramSource}
+                                rootDn="root/k8s">
+                </DiagramBrowser>
+            </div>
+        </div>
+
+        <div style={{ margin: '1rem' }}>
+            <h2>Infra</h2>
+        </div>
+        <div>
+            <div style={{ margin: '1rem', height: '400px' }}>
+                <DiagramBrowser diagramSource={MyDiagramSource}
+                                rootDn="root/infra">
+                </DiagramBrowser>
+            </div>
+        </div>
     </div>
 );
