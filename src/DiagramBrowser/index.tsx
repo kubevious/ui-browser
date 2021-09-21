@@ -6,22 +6,8 @@ import cx from 'classnames';
 
 import { extractDnLayers } from './utils';
 import { DiagramLayer } from '../DiagramLayer';
-import { DiagramSource } from '../service/diagram-source';
 
-export const DiagramBrowser: FC<DiagramBrowserProps> = ({ rootDn, expandedDn }) => {
-
-    const [diagramSource, setDiagramSource] = useState<DiagramSource | null>();
-
-    useEffect(() => {
-
-        const source = new DiagramSource();
-        setDiagramSource(source);
-
-        return () => {
-            source.close();
-            setDiagramSource(null);
-        }
-    }, [])
+export const DiagramBrowser: FC<DiagramBrowserProps> = ({ diagramSource, rootDn, expandedDn }) => {
 
     let layers = extractDnLayers(rootDn, expandedDn);
     if (diagramSource) {

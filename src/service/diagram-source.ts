@@ -2,38 +2,27 @@ import { IWebSocketService, WebSocketScope } from "@kubevious/ui-middleware"
 // import { WebSocketKind } from '@kubevious/saas-models'
 import { LayerInfo, LayerInfoKind } from "./types"
 
+import { IDiagramService, IDiagramServiceChildrenSubscriber } from "../interfaces/diagram-service";
+
 export class DiagramSource
 {
-    private _socket: IWebSocketService
-    private _childrenScope: WebSocketScope;
+    private _service : IDiagramService;
+    private _childrenSubscriber : IDiagramServiceChildrenSubscriber;
 
-    constructor()
+    private _childrenMap : Record<string, string[]> = {};
+
+    constructor(service : IDiagramService)
     {
         console.log('[DiagramSource] constructor')
+        this._service = service;
 
-        if (this._socket) {
-            this._childrenScope = this._socket.scope((value, target) => {
-                // const expandedObjects = this._sharedState.get(
-                //     "diagram_expanded_dns"
-                // )
-                // if (expandedObjects[target.dn]) {
-                //     if (value) {
-                //         const rnList = value as string[];
-                //         this._nodeChildren[target.dn] = rnList.map(x => target.dn + '/' + x);
-                //     } else {
-                //         delete this._nodeChildren[target.dn]
-                //     }
-                //     this._updateMonitoredObjects()
-                // }
-                // this._handleTreeChange()
-            })
-        }
-
+        this._childrenSubscriber = this._service.subscribeToChildren(this._onChildrenChange.bind(this));
     }
 
     close()
     {
         console.log('[DiagramSource] close')
+        this._childrenSubscriber.close();
     }
 
     applyLayers(layers: LayerInfo[])
@@ -43,13 +32,12 @@ export class DiagramSource
         const childrenDns = layers.filter(x => x.kind === LayerInfoKind.Children).map(x => x.parent);
         console.log('[DiagramSource] childrenDns :: ', childrenDns)
 
-        if (this._childrenScope) {
-            this._childrenScope.replace(childrenDns.map(x => ({
-                kind: 'children',
-                dn: x,
-            })));
-        }
+        this._childrenSubscriber.update(childrenDns);
+    }
 
+    private _onChildrenChange(parent: string, childrenDns: string[])
+    {
+        this._childrenMap[parent] = childrenDns;
     }
 
 }
