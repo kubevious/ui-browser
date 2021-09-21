@@ -25,7 +25,9 @@ export const REPLICA_SET_CONFIG : NodeConfig = {
 	}
 }
 
-export const IMAGE_CONFIG_DN = "root/ns-[hipster]/app-[productcatalogservice]/cont-[server]/image-[gcr.io/google-samples/microservices-demo/productcatalogservice]";
+export const CONT_CONFIG_DN = "root/ns-[hipster]/app-[productcatalogservice]/cont-[server]";
+
+export const IMAGE_CONFIG_DN = `${CONT_CONFIG_DN}/image-[gcr.io/google-samples/microservices-demo/productcatalogservice]`;
 export const IMAGE_CONFIG : NodeConfig = {
     "rn": "image-[gcr.io/google-samples/microservices-demo/productcatalogservice]",
 	"dn": IMAGE_CONFIG_DN,
