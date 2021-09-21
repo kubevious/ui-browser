@@ -51,6 +51,9 @@ export class DiagramSource
 
         const childrenSubscriber = this._service.subscribeToChildren((parentDn, childrenDns) => {
             nodesSubscriber.update(childrenDns);
+            if (childrenDns.length == 0) {
+                cb([]);
+            }
         })
         childrenSubscriber.update([dn]);
 

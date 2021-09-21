@@ -8,14 +8,22 @@ import { Label, FlagIcon, MarkerIcon } from '@kubevious/ui-components';
 import { SeverityIcon } from '@kubevious/ui-alerts';
 import cx from 'classnames';
 
+import { app } from '@kubevious/ui-framework'
+
 export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted }) => {
 
     const hasErrors = (config.alertCount?.error ?? 0) > 0;
     const hasWarnings = (config.alertCount?.warn ?? 0) > 0;
 
+    const onClick = () => {
+        app.sharedState.set('selected_dn', config.dn);
+    };
+
     return <>
         <div data-dn={config.dn} data-rn={config.rn}
-            className={cx(styles.outside, { [styles.outsideSelected] : isSelected, [styles.outsideHighlighted] : isHighlighted })}>
+             className={cx(styles.outside, { [styles.outsideSelected] : isSelected, [styles.outsideHighlighted] : isHighlighted })}
+             onClick={onClick}
+             >
 
             <div className={styles.iconContainer}>
 

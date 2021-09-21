@@ -1,7 +1,7 @@
 import * as DnUtils from '@kubevious/helpers/dist/dn-utils';
 import { LayerInfo, LayerInfoKind } from '../service/types';
 
-export function extractDnLayers(rootDn: string, dn: string) : LayerInfo[]
+export function extractDnLayers(rootDn: string, dn: string, selectedDn: string | null) : LayerInfo[]
 {
     const dnParts = DnUtils.parseDn(dn);
     let parentDn : string | null = null;
@@ -24,7 +24,7 @@ export function extractDnLayers(rootDn: string, dn: string) : LayerInfo[]
             layers.push({
                 kind: LayerInfoKind.Children,
                 parent: parentDn!,
-                selectedDn: (currentDn === dn) ? dn : undefined,
+                selectedDn: (selectedDn && (selectedDn === currentDn)) ? currentDn : undefined,
             });
         }
 

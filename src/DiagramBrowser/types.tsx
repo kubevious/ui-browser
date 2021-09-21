@@ -5,5 +5,5 @@ export interface DiagramBrowserProps
     diagramSource: DiagramSource;
     rootDn: string;
 
-    expandedDn: string;
+    initialExpandedDn?: string;
 }
