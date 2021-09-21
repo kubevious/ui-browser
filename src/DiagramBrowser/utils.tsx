@@ -1,5 +1,5 @@
 import * as DnUtils from '@kubevious/helpers/dist/dn-utils';
-import { LayerInfo } from '../DiagramLayer/types';
+import { LayerInfo, LayerInfoKind } from '../service/types';
 
 export function extractDnLayers(rootDn: string, dn: string) : LayerInfo[]
 {
@@ -22,7 +22,7 @@ export function extractDnLayers(rootDn: string, dn: string) : LayerInfo[]
 
         if (isMyHierarchy) {
             layers.push({
-                kind: 'children',
+                kind: LayerInfoKind.Children,
                 parent: parentDn,
                 selectedDn: (currentDn === dn) ? dn : undefined,
             });
@@ -35,7 +35,7 @@ export function extractDnLayers(rootDn: string, dn: string) : LayerInfo[]
 
     if (currentDn) {
         layers.push({
-            kind: 'children',
+            kind: LayerInfoKind.Children,
             parent: currentDn,
             // dn: currentDn
         });

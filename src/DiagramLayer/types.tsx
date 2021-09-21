@@ -1,14 +1,8 @@
-
-export interface LayerInfo
-{
-    kind?: string;
-    parent: string;
-    selectedDn?: string;
-    highlightedDn?: string;
-}
-
+import { DiagramSource } from "../service/diagram-source";
+import { LayerInfo } from "../service/types";
 
 export interface DiagramLayerProps
 {
+    diagramSource: DiagramSource;
     layer: LayerInfo;
 }
