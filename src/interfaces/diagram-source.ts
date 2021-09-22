@@ -1,8 +1,11 @@
-import { LayerInfo } from "../service/types"
+import { IService } from "@kubevious/ui-framework";
+import { NodeConfig } from "@kubevious/ui-middleware/dist/services/diagram-browser";
 
-export interface IDiagramSource
+export type DiagramSourceChildrenNodesChangeCallback = (nodes: NodeConfig[]) => void;
+export type DiagramSourceNodesChangeCallback = (nodes: NodeConfig | null) => void;
+
+export interface IDiagramSource extends IService
 {
-    close();
-
-    applyLayers(layers: LayerInfo[])
+    subscribeNode(dn: string, cb: DiagramSourceNodesChangeCallback) : IService;
+    subscribeChildrenNodes(dn: string, cb: DiagramSourceChildrenNodesChangeCallback) : IService;
 }

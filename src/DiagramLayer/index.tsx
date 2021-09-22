@@ -2,13 +2,13 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import { DiagramLayerProps } from './types';
 
 import styles from './styles.module.css';
-import { NodeConfig } from '../types';
 import { NodeTileList } from '../NodeTileList';
 import { NodeVerticalTile } from '../NodeVerticalTile'
 import cx from 'classnames';
 import scrollIntoView from 'scroll-into-view-if-needed'
 import { IService } from '@kubevious/ui-framework';
 import { LayerInfoKind } from '../service/types';
+import { NodeConfig } from '@kubevious/ui-middleware/dist/services/diagram-browser';
 
 export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, diagramSource, scrollBoundaryRef }) => {
 

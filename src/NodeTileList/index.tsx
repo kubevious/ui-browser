@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { NodeTile } from '../NodeTile';
 import { NodeTileListProps } from './types';
 

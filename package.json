@@ -30,7 +30,7 @@
     "@kubevious/ui-alerts": "^1.0.28",
     "@kubevious/ui-components": "^1.0.159",
     "@kubevious/ui-framework": "^1.0.50",
-    "@kubevious/ui-middleware": "^1.0.38",
+    "@kubevious/ui-middleware": "^1.0.39",
     "bootstrap": "^5.0.0-beta3",
     "classnames": "^2.2.6",
     "scroll-into-view-if-needed": "^2.2.28",

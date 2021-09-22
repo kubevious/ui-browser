@@ -87,7 +87,11 @@
 }
 
 .flagsContainer {
-    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0px;
 }
 
 .alertsWrapper {
@@ -96,14 +100,14 @@
     height: 26px;
     padding: 5px;
     display: flex;
+    gap: 10px;
 }
 
 .severityWrapper {
-    margin-right: 10px;
     display: flex;
     align-items: center;
 }
 
 .severity {
-    margin-right: 15px;
+    margin-right: 5px;
 }

@@ -1,4 +1,4 @@
-import { NodeConfig } from '../types';
+import { NodeConfig } from "@kubevious/ui-middleware/dist/services/diagram-browser";
 
 export interface NodeVerticalTileProps
 {

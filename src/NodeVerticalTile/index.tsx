@@ -4,7 +4,7 @@ import { NodeVerticalTileProps } from './types';
 import styles from './styles.module.css';
 import { DnIconComponent } from '@kubevious/ui-components';
 
-import { Label, FlagIcon, MarkerIcon } from '@kubevious/ui-components';
+import { Label, MarkerIcon } from '@kubevious/ui-components';
 import { SeverityIcon } from '@kubevious/ui-alerts';
 import cx from 'classnames';
 

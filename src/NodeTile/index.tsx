@@ -1,10 +1,10 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import { NodeTileProps } from './types';
 
 import styles from './styles.module.css';
-import { DnIconComponent } from '@kubevious/ui-components';
+import { DnIconComponent, FlagIcon } from '@kubevious/ui-components';
 
-import { Label, FlagIcon, MarkerIcon } from '@kubevious/ui-components';
+import { Label, MarkerIcon } from '@kubevious/ui-components';
 import { SeverityIcon } from '@kubevious/ui-alerts';
 import cx from 'classnames';
 import scrollIntoView from 'scroll-into-view-if-needed'
@@ -75,13 +75,15 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
                         {(hasErrors || hasWarnings) && <>
                             <span className={styles.alertsWrapper}>
                                 {hasErrors && <span className={styles.severityWrapper}>
-                                    <SeverityIcon severity="error"
-                                        extraStyles={styles.severity} />
+                                    <span className={styles.severity}>
+                                        <SeverityIcon severity="error"/>
+                                    </span>
                                     <Label text={`${config.alertCount.error}`} ></Label>
                                 </span>}
                                 {hasWarnings && <span className={styles.severityWrapper}>
-                                    <SeverityIcon severity="warn"
-                                        extraStyles={styles.severity} />
+                                    <span className={styles.severity}>
+                                        <SeverityIcon severity="warn" />
+                                    </span>
                                     <Label text={`${config.alertCount.warn}`} ></Label>
                                 </span>}
                             </span>
@@ -92,9 +94,11 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
                     <div className={styles.flagsContainer}>
                         {config.markers && config.markers.map((marker) => 
                             <MarkerIcon key={marker} marker={marker} />
-                        ) }
+                        )}
 
-                        {/* <FlagIcon /> */}
+                        {config.flags && config.flags.map((flag) => 
+                            <FlagIcon key={flag} flag={flag} />
+                        )}
                     </div>
 
                 </div>

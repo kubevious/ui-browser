@@ -1,10 +1,10 @@
 import { RefObject } from "react";
-import { DiagramSource } from "../service/diagram-source";
 import { LayerInfo } from "../service/types";
+import { IDiagramSource } from "../interfaces/diagram-source";
 
 export interface DiagramLayerProps
 {
-    diagramSource: DiagramSource;
+    diagramSource: IDiagramSource;
     layer: LayerInfo;
 
     scrollBoundaryRef? : RefObject<any>

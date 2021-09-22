@@ -1,13 +1,13 @@
 import _ from 'the-lodash';
-import { DiagramChildrenChangeCallback, DiagramNodeChangeCallback, IDiagramService, IDiagramServiceSubscriber } from "../../interfaces/diagram-service";
 
 import { DN_LIST } from './mock-data';
 import * as DnUtils from '@kubevious/helpers/dist/dn-utils';
-import { BundledNodeConfig } from "@kubevious/helpers/dist/registry-bundle-state";
+import { IDiagramBrowserService } from '@kubevious/ui-middleware/dist';
+import { DiagramChildrenChangeCallback, DiagramNodeChangeCallback, IDiagramBrowserServiceSubscriber, NodeConfig } from '@kubevious/ui-middleware/dist/services/diagram-browser';
 
-export class MockDiagramService implements IDiagramService
+export class MockDiagramService implements IDiagramBrowserService
 {
-    private _nodes : { [dn : string] : BundledNodeConfig }  = {};
+    private _nodes : { [dn : string] : NodeConfig }  = {};
     private _children : { [dn : string] : { [childDn: string] : boolean } }  = {};
 
     constructor()
@@ -20,7 +20,7 @@ export class MockDiagramService implements IDiagramService
         console.log("[MockDiagramService], children:", this._children);
     }
 
-    subscribeToChildren(cb: DiagramChildrenChangeCallback) : IDiagramServiceSubscriber
+    subscribeToChildren(cb: DiagramChildrenChangeCallback) : IDiagramBrowserServiceSubscriber
     {
         const subscriptions : Record<string, boolean> = {};
 
@@ -44,7 +44,7 @@ export class MockDiagramService implements IDiagramService
 
     }
 
-    subscribeToNodes(cb: DiagramNodeChangeCallback) : IDiagramServiceSubscriber
+    subscribeToNodes(cb: DiagramNodeChangeCallback) : IDiagramBrowserServiceSubscriber
     {
         const subscriptions : Record<string, boolean> = {};
 
@@ -62,10 +62,15 @@ export class MockDiagramService implements IDiagramService
 
             },
             close: () => {
-                return
+                return;
             }   
         }
 
+    }
+
+    close()
+    {
+        return;
     }
 
     private _addDn(dn: string)
@@ -88,6 +93,7 @@ export class MockDiagramService implements IDiagramService
         const lastPart = _.last(parts)!;
 
         this._nodes[dn] = {
+            dn: dn,
             kind: lastPart.kind,
             rn: lastPart.rn,
             name: lastPart.name!,

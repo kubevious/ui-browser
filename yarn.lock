@@ -1629,6 +1629,13 @@
   dependencies:
     the-promise "^2.0.13"
 
+"@kubevious/ui-middleware@^1.0.39":
+  version "1.0.39"
+  resolved "https://registry.yarnpkg.com/@kubevious/ui-middleware/-/ui-middleware-1.0.39.tgz#8a90bb3ce0dce5d61409eed79321ec92b3aa3d62"
+  integrity sha512-zkmY/KDD+tHCYTJ+3GZ24MA91puwLjkoFMvT35RqmrBB/4xBOprNTsYF431mcyo0bh4J5MxxqC2SwGqXoJQicw==
+  dependencies:
+    the-promise "^2.0.13"
+
 "@mdx-js/loader@^1.6.22":
   version "1.6.22"
   resolved "https://registry.yarnpkg.com/@mdx-js/loader/-/loader-1.6.22.tgz#d9e8fe7f8185ff13c9c8639c048b123e30d322c4"

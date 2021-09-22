@@ -1,8 +1,8 @@
-import { DiagramSource } from "../service/diagram-source";
+import { IDiagramSource } from "../interfaces/diagram-source";
 
 export interface DiagramBrowserProps
 {
-    diagramSource: DiagramSource;
+    diagramSource: IDiagramSource;
     rootDn: string;
 
     initialExpandedDn?: string;
