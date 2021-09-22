@@ -1,3 +1,4 @@
+import _ from 'the-lodash';
 import * as DnUtils from '@kubevious/helpers/dist/dn-utils';
 import { LayerInfo, LayerInfoKind } from '../service/types';
 
@@ -33,11 +34,17 @@ export function extractDnLayers(rootDn: string, dn: string, selectedDn: string |
         }
     }
 
+    for(const layer of _.dropRight(layers, 2))
+    {
+        layer.kind = LayerInfoKind.Node;
+    }
+
     if (currentDn) {
         layers.push({
             kind: LayerInfoKind.Children,
             parent: currentDn,
             // dn: currentDn
+            isGridView: true
         });
     }
 

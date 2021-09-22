@@ -5,8 +5,11 @@ import { LayerInfo, LayerInfoKind } from "./types"
 
 import { IDiagramService, IDiagramServiceSubscriber } from "../interfaces/diagram-service";
 import { NodeConfig } from '../types';
+import { IService } from '@kubevious/ui-framework';
+import { BundledNodeConfig } from '@kubevious/helpers/dist/registry-bundle-state';
 
 export type DiagramSourceChildrenNodesChangeCallback = (nodes: NodeConfig[]) => void;
+export type DiagramSourceNodesChangeCallback = (nodes: NodeConfig | null) => void;
 
 export class DiagramSource
 {
@@ -31,17 +34,32 @@ export class DiagramSource
         // this._childrenSubscriber.close();
     }
 
-    subscribeChildrenNodes(dn: string, cb: DiagramSourceChildrenNodesChangeCallback)
+    subscribeNode(dn: string, cb: DiagramSourceNodesChangeCallback) : IService
+    {
+        const nodesSubscriber = this._service.subscribeToNodes((nodeDn, config) => {
+            if (config) {
+                cb(this._makeNodeConfig(config, dn));
+            } else {
+                cb(null);
+            }
+        })
+        nodesSubscriber.update([dn]);
+
+        return {
+            close: () => {
+                nodesSubscriber.close();
+            }   
+        }
+    }
+
+    subscribeChildrenNodes(dn: string, cb: DiagramSourceChildrenNodesChangeCallback) : IService
     {
         // console.log('[DiagramSource] subscribeChildrenNodes. dn: ', dn);
         const nodeMap : Record<string, NodeConfig> = {};
 
         const nodesSubscriber = this._service.subscribeToNodes((childDn, config) => {
             if (config) {
-                nodeMap[childDn] = {
-                    ...config,
-                    dn: childDn
-                }
+                nodeMap[childDn] = this._makeNodeConfig(config, childDn);
             } else {
                 delete nodeMap[childDn];
             }
@@ -60,7 +78,16 @@ export class DiagramSource
         return {
             close: () => {
                 childrenSubscriber.close();
+                nodesSubscriber.close();
             }   
+        }
+    }
+
+    private _makeNodeConfig(config: BundledNodeConfig, dn: string) : NodeConfig
+    {
+        return {
+            ...config,
+            dn: dn
         }
     }
 

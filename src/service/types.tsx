@@ -5,6 +5,8 @@ export interface LayerInfo
     parent: string;
     selectedDn?: string;
     highlightedDn?: string;
+
+    isGridView?: boolean;
 }
 
 export enum LayerInfoKind {

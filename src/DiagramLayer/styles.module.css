@@ -14,3 +14,16 @@
 
     /* background-color: lightgray; */
 }
+
+.singleNodeLayer {
+    width: 40px;
+    overflow: hidden;
+}
+
+.columnLayer {
+    width: 350px;
+}
+
+.gridLayer {
+    width: 700px;
+}

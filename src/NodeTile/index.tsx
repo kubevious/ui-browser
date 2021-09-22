@@ -17,6 +17,9 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
     const tileRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        if (!scrollBoundaryRef) {
+            return;
+        }
 
         if (isSelected || isHighlighted ) {
             const currentElem = tileRef.current;

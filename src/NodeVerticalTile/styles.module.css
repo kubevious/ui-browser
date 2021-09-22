@@ -1,0 +1,129 @@
+.outside {
+    /* position: relative; */
+    display: flex;
+    flex-direction: column;
+
+    background: rgb(53, 55, 62);
+    color: #FFFFFF;
+
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    width: 40px;
+    height: 100%;
+}
+
+.outsideSelected {
+    background: rgb(252, 189, 63);
+    color: #222222;
+}
+
+.outsideHighlighted {
+    border-color: rgb(252, 189, 63);
+    border-width: 1px;
+    border-style: solid;
+}
+
+.iconContainer {
+    /* position: relative; */
+    width: 40px;
+    display: block;
+}
+
+.mainContainer {
+    /* position: relative; */
+    /* left: 40px; */
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: column;
+
+
+    /* background: red; */
+}
+
+
+.iconBox {
+    /* position: relative; */
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    background: rgb(245, 141, 97);
+}
+
+
+.textContainer {
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+    padding: 5px;
+
+}
+
+.detailsContainer {
+    /* background: blue; */
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    /* padding: 5px; */
+
+    /* text-align: right; */
+}
+
+.kindText {
+    font-size: 10px;
+}
+
+.nameText {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.rotateText {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+}
+
+
+.alertsContainer {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: flex-end; */
+    /* background: orange; */
+
+}
+
+.flagsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.alertsWrapper {
+    border-radius: 4px;
+    background: #292a2f;
+    height: 26px;
+    padding: 5px;
+    display: flex;
+}
+
+.severityWrapper {
+    display: flex;
+    /* align-items: center; */
+}
+
+.severity {
+    margin-right: 5px;
+}
