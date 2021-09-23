@@ -25,7 +25,7 @@ export class DiagramSource implements IDiagramSource
 
     subscribeNode(dn: string, cb: DiagramSourceNodesChangeCallback) : IService
     {
-        const nodesSubscriber = this._service.subscribeToNodes((nodeDn, config) => {
+        const nodesSubscriber = this._service.subscribeToNodes((_, config) => {
             if (config) {
                 cb(config);
             } else {
@@ -55,7 +55,7 @@ export class DiagramSource implements IDiagramSource
             cb(_.values(nodeMap));
         })
 
-        const childrenSubscriber = this._service.subscribeToChildren((parentDn, childrenDns) => {
+        const childrenSubscriber = this._service.subscribeToChildren((_, childrenDns) => {
             nodesSubscriber.update(childrenDns);
             if (childrenDns.length == 0) {
                 cb([]);
