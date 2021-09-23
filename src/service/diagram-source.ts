@@ -80,7 +80,10 @@ export class DiagramSource implements IDiagramSource
 
             notifyNodes();
         })
+        
         childrenSubscriber.update([dn]);
+        
+        notifyNodes();
 
         return {
             close: () => {
