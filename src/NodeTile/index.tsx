@@ -9,6 +9,7 @@ import { SeverityIcon } from '@kubevious/ui-alerts';
 import cx from 'classnames';
 import scrollIntoView from 'scroll-into-view-if-needed'
 
+import { getNodeConfigFlags, getNodeConfigMarkers } from '../utils/node-utils';
 
 import { app } from '@kubevious/ui-framework'
 
@@ -92,11 +93,11 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
                     </div>
 
                     <div className={styles.flagsContainer}>
-                        {config.markers && config.markers.map((marker) => 
+                        {getNodeConfigMarkers(config).map((marker) => 
                             <MarkerIcon key={marker} marker={marker} />
                         )}
 
-                        {config.flags && config.flags.map((flag) => 
+                        {getNodeConfigFlags(config).map((flag) => 
                             <FlagIcon key={flag} flag={flag} />
                         )}
                     </div>

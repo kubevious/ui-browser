@@ -2,11 +2,13 @@ import React, { FC } from 'react';
 import { NodeVerticalTileProps } from './types';
 
 import styles from './styles.module.css';
-import { DnIconComponent } from '@kubevious/ui-components';
+import { DnIconComponent, FlagIcon } from '@kubevious/ui-components';
 
 import { Label, MarkerIcon } from '@kubevious/ui-components';
 import { SeverityIcon } from '@kubevious/ui-alerts';
 import cx from 'classnames';
+
+import { getNodeConfigFlags, getNodeConfigMarkers } from '../utils/node-utils';
 
 
 import { app } from '@kubevious/ui-framework'
@@ -64,11 +66,13 @@ export const NodeVerticalTile: FC<NodeVerticalTileProps> = ({ config, isSelected
                     </div>
 
                     <div className={styles.flagsContainer}>
-                        {config.markers && config.markers.map((marker) => 
+                        {getNodeConfigMarkers(config).map((marker) => 
                             <MarkerIcon key={marker} marker={marker} />
                         ) }
 
-                        {/* <FlagIcon /> */}
+                        {getNodeConfigFlags(config).map((flag) => 
+                            <FlagIcon key={flag} flag={flag} />
+                        )}
                     </div>
 
                 </div>
