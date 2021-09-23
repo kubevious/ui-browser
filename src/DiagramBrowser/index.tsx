@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { DiagramBrowserProps } from './types';
+import { DiagramBrowserProps, DiagramBrowserViewOptions } from './types';
 
 import styles from './styles.module.css';
 // import cx from 'classnames';
@@ -9,7 +9,7 @@ import { DiagramLayer } from '../DiagramLayer';
 import { subscribeToSharedState } from '@kubevious/ui-framework/dist';
 import { LayerInfo } from '../service/types';
 
-export const DiagramBrowser: FC<DiagramBrowserProps> = ({ diagramSource, rootDn, initialExpandedDn }) => {
+export const DiagramBrowser: FC<DiagramBrowserProps> = ({ diagramSource, rootDn, initialExpandedDn, viewOptions }) => {
 
     const contentRef = useRef<HTMLDivElement>(null);
 
@@ -37,7 +37,13 @@ export const DiagramBrowser: FC<DiagramBrowserProps> = ({ diagramSource, rootDn,
 
     useEffect(() => {
 
-        setLayers(extractDnLayers(rootDn, currentExpandedDn, currentSelectedDn))
+        const myViewOptions: DiagramBrowserViewOptions = {
+            useVerticalNodeView: viewOptions?.useVerticalNodeView ?? true,
+            useVerticalNodeCount: viewOptions?.useVerticalNodeCount ?? 2,
+            useGridView: viewOptions?.useGridView ?? true,
+        }
+
+        setLayers(extractDnLayers(rootDn, currentExpandedDn, currentSelectedDn, myViewOptions))
 
     }, [currentExpandedDn, currentSelectedDn]);
 

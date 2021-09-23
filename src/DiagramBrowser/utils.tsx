@@ -1,8 +1,9 @@
 import _ from 'the-lodash';
 import * as DnUtils from '@kubevious/helpers/dist/dn-utils';
 import { LayerInfo, LayerInfoKind } from '../service/types';
+import { DiagramBrowserViewOptions } from './types';
 
-export function extractDnLayers(rootDn: string, dn: string, selectedDn: string | null) : LayerInfo[]
+export function extractDnLayers(rootDn: string, dn: string, selectedDn: string | null, viewOptions: DiagramBrowserViewOptions) : LayerInfo[]
 {
     const dnParts = DnUtils.parseDn(dn);
     let parentDn : string | null = null;
@@ -34,9 +35,11 @@ export function extractDnLayers(rootDn: string, dn: string, selectedDn: string |
         }
     }
 
-    for(const layer of _.dropRight(layers, 2))
-    {
-        layer.kind = LayerInfoKind.Node;
+    if (viewOptions.useVerticalNodeView) {
+        for(const layer of _.dropRight(layers, viewOptions.useVerticalNodeCount))
+        {
+            layer.kind = LayerInfoKind.Node;
+        }
     }
 
     if (currentDn) {
@@ -44,7 +47,7 @@ export function extractDnLayers(rootDn: string, dn: string, selectedDn: string |
             kind: LayerInfoKind.Children,
             parent: currentDn,
             // dn: currentDn
-            isGridView: true
+            isGridView: viewOptions.useGridView
         });
     }
 
