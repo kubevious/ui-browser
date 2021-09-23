@@ -3,10 +3,10 @@ import _ from 'the-lodash';
 // import { WebSocketKind } from '@kubevious/saas-models'
 
 import { IService } from '@kubevious/ui-framework';
-import { IDiagramBrowserService } from '@kubevious/ui-middleware/dist/services/diagram-browser';
-import { NodeConfig } from '@kubevious/ui-middleware/dist/services/diagram-browser';
+import { NodeConfig, IDiagramBrowserService } from '@kubevious/ui-middleware/dist/services/diagram-browser';
 
 import { DiagramSourceChildrenNodesChangeCallback, DiagramSourceNodesChangeCallback, IDiagramSource } from '../interfaces/diagram-source';
+
 
 export class DiagramSource implements IDiagramSource
 {
@@ -43,23 +43,42 @@ export class DiagramSource implements IDiagramSource
 
     subscribeChildrenNodes(dn: string, cb: DiagramSourceChildrenNodesChangeCallback) : IService
     {
-        const nodeMap : Record<string, NodeConfig> = {};
+        const nodeMap : Record<string, NodeConfig | null> = {};
+
+        const notifyNodes = () => {
+            const nodeList = _.values(nodeMap).filter(x => x);
+            cb(<NodeConfig[]>nodeList);
+        }
 
         const nodesSubscriber = this._service.subscribeToNodes((childDn, config) => {
-            if (config) {
-                nodeMap[childDn] = config;
-            } else {
-                delete nodeMap[childDn];
+            if (childDn in nodeMap)
+            {
+                if (config) {
+                    nodeMap[childDn] = config;
+                } else {
+                    delete nodeMap[childDn];
+                }
+                notifyNodes();
             }
-
-            cb(_.values(nodeMap));
         })
 
-        const childrenSubscriber = this._service.subscribeToChildren((_, childrenDns) => {
-            nodesSubscriber.update(childrenDns);
-            if (childrenDns.length == 0) {
-                cb([]);
+        const childrenSubscriber = this._service.subscribeToChildren((__, childrenDns) => {
+            for(const childDn of childrenDns) {
+                if (!nodeMap[childDn]) {
+                    nodeMap[childDn] = null;
+                }
             }
+            
+            const targetChildrenMap = _.makeBoolDict(childrenDns);
+            for(const childDn of _.keys(nodeMap)) {
+                if (!targetChildrenMap[childDn]) {
+                    delete nodeMap[childDn];
+                }
+            }
+
+            nodesSubscriber.update(childrenDns);
+
+            notifyNodes();
         })
         childrenSubscriber.update([dn]);
 
