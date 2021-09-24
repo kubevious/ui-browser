@@ -60,6 +60,10 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
 
     }, [ layer.dataKey, nodes ]);
 
+    if (nodes.length == 0) {
+        return <>
+        </>;
+    }
     
     return <>
         {isChildrenView && 
@@ -102,6 +106,5 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
 
             </div>
         }
-
     </>
 }
