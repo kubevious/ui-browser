@@ -24,6 +24,8 @@
     /* margin: 15px; */
     padding: 15px;
     flex-grow: 1;
+
+    z-index: 1000;
 }
 
 .nodeContainerHighlighted {

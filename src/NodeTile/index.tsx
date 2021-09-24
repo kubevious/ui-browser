@@ -49,7 +49,12 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
     const hasWarnings = (config.alertCount?.warn ?? 0) > 0;
 
     const onClick = () => {
-        app.sharedState.set('selected_dn', config.dn);
+        const currentSelection = app.sharedState.get('selected_dn');
+        if (currentSelection && currentSelection === config.dn) {
+            app.sharedState.set('selected_dn', null);
+        } else {
+            app.sharedState.set('selected_dn', config.dn);
+        }
     };
 
     const returnAlertTooltipContent = () => {

@@ -15,9 +15,9 @@ const LAYER_COLOR_TABLE_01 = [
 
 const LAYER_COLOR_TABLE_GRAYSCALE = [
     // '#1E1E1E',
-    '#1F1F1F',
     '#292929',
-    '#333333'
+    '#1F1F1F',
+    '#333333',
 ];
 
 // const LAYER_COLOR_TABLE = LAYER_COLOR_TABLE_01;

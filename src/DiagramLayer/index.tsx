@@ -11,6 +11,8 @@ import { LayerInfoKind } from '../service/types';
 import { NodeConfig } from '@kubevious/ui-middleware/dist/services/diagram-browser';
 
 import { getLayerColor } from '../utils/diagram-utils';
+import { ScrollbarComponent } from '../ScrollbarComponent';
+
 
 export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBoundaryRef, viewOptions }) => {
 
@@ -61,22 +63,29 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
     
     return <>
         {isChildrenView && 
-            <div data-dn={layer.parent}
-                className={cx(styles.layer, {[styles.columnLayer]: !layer.isGridView, [styles.gridLayer]: layer.isGridView })}
-                style={{ backgroundColor: getLayerColor(layer.depth) }}
-                ref={layerRef}
+            <ScrollbarComponent style={{ maxWidth: '450px'  }} 
                 >
-
-                <NodeTileList configs={nodes}   
-                    highlightedDn={layer.highlightedDn}
-                    selectedDn={layer.selectedDn}
-                    scrollBoundaryRef={layerRef}
-                    isGrid={layer.isGridView}
-                    viewOptions={viewOptions}
-                    depth={layer.depth}
+                <div data-dn={layer.parent}
+                    className={cx(styles.layer, {[styles.columnLayer]: !layer.isGridView, [styles.gridLayer]: layer.isGridView })}
+                    style={{ backgroundColor: getLayerColor(layer.depth) }}
+                    ref={layerRef}
                     >
-                </NodeTileList>
-            </div>
+
+                    <div className={styles.layerBorder}>
+                        
+                    </div>
+
+                    <NodeTileList configs={nodes}   
+                        highlightedDn={layer.highlightedDn}
+                        selectedDn={layer.selectedDn}
+                        scrollBoundaryRef={layerRef}
+                        isGrid={layer.isGridView}
+                        viewOptions={viewOptions}
+                        depth={layer.depth}
+                        >
+                    </NodeTileList>
+                </div>
+            </ScrollbarComponent>
         }
 
         {isSingleNodeView && 
