@@ -205,6 +205,7 @@ export class DiagramBrowserLoader
 
             if (isMyHierarchy) {
                 layers.push({
+                    depth: 0,
                     dataKey: null,
                     kind: LayerInfoKind.Children,
                     parent: parentDn!,
@@ -226,12 +227,19 @@ export class DiagramBrowserLoader
 
         if (currentDn) {
             layers.push({
+                depth: 0,
                 dataKey: null,
                 kind: LayerInfoKind.Children,
                 parent: currentDn,
                 // dn: currentDn
                 isGridView: this._viewOptions.useGridView
             });
+        }
+
+        for(let i = 0; i < layers.length; i++)
+        {
+            const item = layers[i];
+            item.depth = i;
         }
 
         for(let i = 0; i < layers.length - 1; i++)

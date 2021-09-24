@@ -14,4 +14,6 @@ export interface NodeTileListProps
     scrollBoundaryRef? : RefObject<any>;
 
     viewOptions?: Partial<DiagramBrowserViewOptions>;
+
+    depth?: number;
 }

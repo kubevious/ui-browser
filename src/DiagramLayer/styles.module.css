@@ -5,14 +5,18 @@
     flex-shrink: 0;
 
     /* height: 100%; */
-    overflow-y: auto;
+    overflow-y: hidden;
 
-    margin: 15px;
+    /* margin: 15px; */
     /* padding: 15px; */
 
     width: 350px;
 
     /* background-color: lightgray; */
+}
+
+.layer:hover {
+    overflow-y: auto;
 }
 
 .singleNodeLayer {

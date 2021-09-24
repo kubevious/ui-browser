@@ -10,6 +10,8 @@ import scrollIntoView from 'scroll-into-view-if-needed'
 import { LayerInfoKind } from '../service/types';
 import { NodeConfig } from '@kubevious/ui-middleware/dist/services/diagram-browser';
 
+import { getLayerColor } from '../utils/diagram-utils';
+
 export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBoundaryRef, viewOptions }) => {
 
     const layerRef = useRef<HTMLDivElement>(null);
@@ -61,6 +63,7 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
         {isChildrenView && 
             <div data-dn={layer.parent}
                 className={cx(styles.layer, {[styles.columnLayer]: !layer.isGridView, [styles.gridLayer]: layer.isGridView })}
+                style={{ backgroundColor: getLayerColor(layer.depth) }}
                 ref={layerRef}
                 >
 
@@ -70,6 +73,7 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
                     scrollBoundaryRef={layerRef}
                     isGrid={layer.isGridView}
                     viewOptions={viewOptions}
+                    depth={layer.depth}
                     >
                 </NodeTileList>
             </div>

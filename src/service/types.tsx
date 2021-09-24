@@ -8,6 +8,8 @@ export interface LayerInfo
     highlightedDn?: string;
 
     isGridView?: boolean;
+
+    depth: number;
 }
 
 export enum LayerInfoKind {

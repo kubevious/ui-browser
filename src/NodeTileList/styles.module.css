@@ -21,6 +21,13 @@
 
 .nodeContainer {
     
-    margin: 15px;
+    /* margin: 15px; */
+    padding: 15px;
     flex-grow: 1;
+}
+
+.nodeContainerHighlighted {
+    border-left: rgb(252, 189, 63) solid 1px;
+    border-top: rgb(252, 189, 63) solid 1px;
+    border-bottom: rgb(252, 189, 63) solid 1px;
 }
