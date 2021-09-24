@@ -1,3 +1,4 @@
+import _ from 'the-lodash';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { DiagramLayerProps } from './types';
 
@@ -6,15 +7,13 @@ import { NodeTileList } from '../NodeTileList';
 import { NodeVerticalTile } from '../NodeVerticalTile'
 import cx from 'classnames';
 import scrollIntoView from 'scroll-into-view-if-needed'
-import { IService } from '@kubevious/ui-framework';
 import { LayerInfoKind } from '../service/types';
 import { NodeConfig } from '@kubevious/ui-middleware/dist/services/diagram-browser';
 
-export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, diagramSource, scrollBoundaryRef }) => {
+export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBoundaryRef, viewOptions }) => {
 
     const layerRef = useRef<HTMLDivElement>(null);
 
-    const [ selfNode, setSelfNode ] = useState<NodeConfig | null>(null);
     const [ nodes, setNodes ] = useState<NodeConfig[]>([]);
 
     const isChildrenView = (layer.kind == LayerInfoKind.Children);
@@ -22,7 +21,24 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, diagramSource, scro
 
     useEffect(() => {
 
-        const subscribers : IService[] = [];
+        const subscription = loader.onLayerNodesChange(layer, (newNodes) => {
+            setNodes(newNodes ?? []);
+        })
+
+        return () => {
+            subscription.close();
+        }
+
+    }, [layer.dataKey]);
+
+
+    useEffect(() => {
+
+        if (!_.isUndefined(viewOptions?.autoScrollHorizontally)) {
+            if (!viewOptions?.autoScrollHorizontally) {
+                return;
+            }
+        }
 
         if (isChildrenView)
         {
@@ -36,34 +52,10 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, diagramSource, scro
                     });
                 }
             }
-    
-            const subscriber = diagramSource.subscribeChildrenNodes(layer.parent, (nodes) => {
-                setNodes(nodes);
-            });
-            subscribers.push(subscriber);
         }
 
-        if (isSingleNodeView)
-        {
-            const subscriber = diagramSource.subscribeNode(layer.highlightedDn!, (config) => {
-                setSelfNode(config);
-                if (config) {
-                    setNodes([config]);
-                } else {
-                    setNodes([]);
-                }
-            });
-            subscribers.push(subscriber);
-        }
+    }, [ layer.dataKey, nodes ]);
 
-
-        return () => {
-            for(const subscriber of subscribers) {
-                subscriber.close();
-            }
-        };
-
-    }, [layer]);
     
     return <>
         {isChildrenView && 
@@ -72,18 +64,12 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, diagramSource, scro
                 ref={layerRef}
                 >
 
-                {/* <div>
-                    <pre style={{background: 'white'}}>
-                        {JSON.stringify(layer, null, 4)}
-                    </pre>
-                </div>
-                 */}
-
                 <NodeTileList configs={nodes}   
                     highlightedDn={layer.highlightedDn}
                     selectedDn={layer.selectedDn}
                     scrollBoundaryRef={layerRef}
                     isGrid={layer.isGridView}
+                    viewOptions={viewOptions}
                     >
                 </NodeTileList>
             </div>
@@ -93,18 +79,14 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, diagramSource, scro
             <div data-dn={layer.parent}
                  className={cx(styles.layer, styles.singleNodeLayer)}
                  ref={layerRef}>
-
-                {/* <div>
-                    <pre style={{background: 'white'}}>
-                        {JSON.stringify(layer, null, 4)}
-                    </pre>
-                </div> */}
-
-                {selfNode && 
-                    <NodeVerticalTile config={selfNode}   
+                
+                {nodes.map((node, index) => 
+                    <NodeVerticalTile key={index} 
+                                      config={node}   
                                       isHighlighted >
                     </NodeVerticalTile>
-                }
+                )}
+
             </div>
         }
 

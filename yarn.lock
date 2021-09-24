@@ -1569,22 +1569,22 @@
     the-promise "^2.0.12"
     uuid "^8.3.2"
 
-"@kubevious/ui-alerts@^1.0.28":
-  version "1.0.28"
-  resolved "https://registry.yarnpkg.com/@kubevious/ui-alerts/-/ui-alerts-1.0.28.tgz#39e0d227c35c78ed1b790a3c44307b53cabced23"
-  integrity sha512-J/vJv5cGSwwsF7JcvD8kJ21BEEphMXfkE79/ZGUYMo5K6Cr8rNiet3qKtPqT5j1OtVJJQkm3QvXk/X+YjJ1v1A==
+"@kubevious/ui-alerts@^1.0.29":
+  version "1.0.29"
+  resolved "https://registry.yarnpkg.com/@kubevious/ui-alerts/-/ui-alerts-1.0.29.tgz#75a9c4af55d3c410f338d708b1766991e019b499"
+  integrity sha512-appAL+B/uNX3LVuq239xHv19jSUTiIfYBwp5RWoEupQDlLNEOHN2UQTPxmUzIKy8fBUHg9iQif8lkR9w9kGR0Q==
   dependencies:
-    "@kubevious/ui-components" "^1.0.159"
+    "@kubevious/ui-components" "^1.0.160"
     "@kubevious/ui-framework" "^1.0.50"
     classnames "^2.2.6"
     popper.js "^1.16.1"
     postcss "^8.2.10"
     the-lodash "^2.0.9"
 
-"@kubevious/ui-components@^1.0.159":
-  version "1.0.159"
-  resolved "https://registry.yarnpkg.com/@kubevious/ui-components/-/ui-components-1.0.159.tgz#3934905a8ca9d1458b092932d73ff2c1b69cd86d"
-  integrity sha512-Dlo8SM+IfxOFs6efIcg0XMmU+mcAvasv7taQZ2Yf910HZSrNAPg+1GW9ZL7xbGONVeSgMnccy73MVc3fyYfinA==
+"@kubevious/ui-components@^1.0.160":
+  version "1.0.160"
+  resolved "https://registry.yarnpkg.com/@kubevious/ui-components/-/ui-components-1.0.160.tgz#fde32765a86f24ef8ebae93f945e370d5d083e0b"
+  integrity sha512-Z4U4U6HNuW8NQ8V9iZNNHRTCXi+i7av6+g7+TVHI4D4dpKxsPRYjgHX1rmH5oc7jwDoKXzEe5+0MZAVcFn0fwg==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-regular-svg-icons" "^5.15.1"
@@ -1592,7 +1592,7 @@
     "@fortawesome/react-fontawesome" "^0.1.14"
     "@kubevious/helpers" "^1.0.62"
     "@kubevious/ui-framework" "^1.0.50"
-    "@kubevious/ui-middleware" "^1.0.38"
+    "@kubevious/ui-middleware" "^1.0.39"
     bootstrap "^5.0.0"
     classnames "^2.2.6"
     codemirror "^5.60.0"
@@ -1621,13 +1621,6 @@
     the-lodash "^2.0.9"
     the-promise "^2.0.13"
     uuid "^8.3.2"
-
-"@kubevious/ui-middleware@^1.0.38":
-  version "1.0.38"
-  resolved "https://registry.yarnpkg.com/@kubevious/ui-middleware/-/ui-middleware-1.0.38.tgz#a366f2a5fab77855d9dae2adf82db559a92f0ed3"
-  integrity sha512-IYZt1p8slQYyofOyLrBkKN/7CxCUwZul71QfRFcZo3Y/9sETItfRr9oPStpy5sXizRDuXr22kFlnXFWc7pf9WQ==
-  dependencies:
-    the-promise "^2.0.13"
 
 "@kubevious/ui-middleware@^1.0.39":
   version "1.0.39"

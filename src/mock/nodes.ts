@@ -18,7 +18,7 @@ export const REPLICA_SET_CONFIG : NodeConfig = {
 		warn: 55,
 		error: 0
 	},
-	childrenCount: 0,
+	childrenCount: 2,
 	selfAlertCount: {
 		warn: 0,
 		error: 0
@@ -64,7 +64,7 @@ export function makeAppConfigNode(name: string) : NodeConfig {
 			warn: 10,
 			error: 3
 		},
-		childrenCount: 2,
+		childrenCount: 10,
 		selfAlertCount: {
 			warn: 0,
 			error: 0

@@ -82,6 +82,7 @@
 .alertsContainer {
     display: flex;
     justify-content: flex-end;
+    gap: 5px;
     /* background: orange; */
 
 }
@@ -91,7 +92,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
-    gap: 0px;
+    gap: 5px;
+    margin-top: 5px;
 }
 
 .alertsWrapper {
@@ -110,4 +112,16 @@
 
 .severity {
     margin-right: 5px;
+}
+
+.tooltipAlertContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tooltipAlertSeverity {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
 }

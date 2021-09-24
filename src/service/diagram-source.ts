@@ -43,11 +43,27 @@ export class DiagramSource implements IDiagramSource
 
     subscribeChildrenNodes(dn: string, cb: DiagramSourceChildrenNodesChangeCallback) : IService
     {
+        console.log("[DiagramSource] subscribeChildrenNodes :: ", dn);
+
         const nodeMap : Record<string, NodeConfig | null> = {};
 
         const notifyNodes = () => {
             const nodeList = _.values(nodeMap).filter(x => x);
             cb(<NodeConfig[]>nodeList);
+        }
+
+        let isTriggered = false;
+        const triggerResultUpdated = () => {
+            // notifyNodes();
+            // return;
+            if (isTriggered) {
+                return;
+            }
+            isTriggered = true;
+            setTimeout(() => {
+                isTriggered = false;
+                notifyNodes();
+            }, 200);
         }
 
         const nodesSubscriber = this._service.subscribeToNodes((childDn, config) => {
@@ -58,11 +74,13 @@ export class DiagramSource implements IDiagramSource
                 } else {
                     delete nodeMap[childDn];
                 }
-                notifyNodes();
+                triggerResultUpdated();
             }
         })
 
         const childrenSubscriber = this._service.subscribeToChildren((__, childrenDns) => {
+            console.log("[DiagramSource] subscribeChildrenNodes :: ", dn, " :: ChildrenDNs: ", childrenDns);
+
             for(const childDn of childrenDns) {
                 if (!nodeMap[childDn]) {
                     nodeMap[childDn] = null;
@@ -77,13 +95,10 @@ export class DiagramSource implements IDiagramSource
             }
 
             nodesSubscriber.update(childrenDns);
-
             notifyNodes();
         })
         
         childrenSubscriber.update([dn]);
-        
-        notifyNodes();
 
         return {
             close: () => {

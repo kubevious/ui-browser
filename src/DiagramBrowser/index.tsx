@@ -1,51 +1,36 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { DiagramBrowserProps, DiagramBrowserViewOptions } from './types';
+import { DiagramBrowserProps } from './types';
 
 import styles from './styles.module.css';
 // import cx from 'classnames';
 
-import { extractDnLayers } from './utils';
 import { DiagramLayer } from '../DiagramLayer';
-import { subscribeToSharedState } from '@kubevious/ui-framework/dist';
 import { LayerInfo } from '../service/types';
+
+import { DiagramBrowserLoader } from './diagram-browser-loader';
 
 export const DiagramBrowser: FC<DiagramBrowserProps> = ({ diagramSource, rootDn, initialExpandedDn, viewOptions }) => {
 
     const contentRef = useRef<HTMLDivElement>(null);
 
+    const [loader, setLoader] = useState<DiagramBrowserLoader | null>(null);
     const [layers, setLayers] = useState<LayerInfo[]>([]);
-    const [currentExpandedDn, setCurrentExpandedDn] = useState<string>(initialExpandedDn || rootDn);
-    const [currentSelectedDn, setCurrentSelectedDn] = useState<string | null>(null);
-
-    // const layers = extractDnLayers(rootDn, expandedDn);
-    // if (diagramSource) {
-    //     diagramSource.applyLayers(layers);
-    // }
-
-    subscribeToSharedState('selected_dn', (selected_dn: string) => {
-        if (selected_dn) {
-            if (selected_dn.startsWith(rootDn)) {
-                setCurrentSelectedDn(selected_dn);
-                setCurrentExpandedDn(selected_dn);
-            } else {
-                setCurrentSelectedDn(null);
-            }
-        } else {
-            setCurrentSelectedDn(null);
-        }
-    });
 
     useEffect(() => {
+        const l = new DiagramBrowserLoader(rootDn, diagramSource, viewOptions, initialExpandedDn);
 
-        const myViewOptions: DiagramBrowserViewOptions = {
-            useVerticalNodeView: viewOptions?.useVerticalNodeView ?? true,
-            useVerticalNodeCount: viewOptions?.useVerticalNodeCount ?? 2,
-            useGridView: viewOptions?.useGridView ?? true,
-        }
+        const subscriber = l.onLayersChange((layers) => {
+            setLayers(layers);
+        })
 
-        setLayers(extractDnLayers(rootDn, currentExpandedDn, currentSelectedDn, myViewOptions))
+        setLoader(l);
 
-    }, [currentExpandedDn, currentSelectedDn]);
+        return () => {
+            setLoader(null);
+            l.close();
+            subscriber.close();
+        };
+    }, []);
 
     return <>
 
@@ -55,12 +40,19 @@ export const DiagramBrowser: FC<DiagramBrowserProps> = ({ diagramSource, rootDn,
             <div className={styles.content}
                  ref={contentRef}>
 
-                {layers.map((layer, index) => 
+                {loader && layers.map((layer, index) => 
+
+                    // <div key={index}>
+                    //     <pre>
+                    //         {JSON.stringify(layer, null, 4)}
+                    //     </pre>
+                    // </div>
 
                     <DiagramLayer key={index}
-                                  diagramSource={diagramSource}
+                                  loader={loader}
                                   layer={layer}
                                   scrollBoundaryRef={contentRef}
+                                  viewOptions={viewOptions}
                                   />
                     
                 )}

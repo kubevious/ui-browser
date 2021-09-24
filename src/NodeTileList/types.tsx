@@ -1,4 +1,5 @@
 import { RefObject } from 'react';
+import { DiagramBrowserViewOptions } from '../DiagramBrowser/types';
 import { NodeConfig } from '../types';
 
 export interface NodeTileListProps
@@ -10,5 +11,7 @@ export interface NodeTileListProps
     selectedDn?: string;
     highlightedDn?: string;
 
-    scrollBoundaryRef? : RefObject<any>
+    scrollBoundaryRef? : RefObject<any>;
+
+    viewOptions?: Partial<DiagramBrowserViewOptions>;
 }

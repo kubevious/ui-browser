@@ -31,6 +31,30 @@ export const Default: Story = () => (
     </div>
 );
 
+export const BasicView: Story = () => (
+
+    <div style={{ background: 'grey' }}>
+        <div style={{ margin: '1rem' }}>
+            <h2>Unrestricted Size</h2>
+        </div>
+
+        <div>
+            <div style={{ margin: '1rem', height: '600px' }}>
+                <DiagramBrowser diagramSource={MyDiagramSource}
+                                rootDn="root/logic"
+                                initialExpandedDn="root/logic/ns-[sprt]/app-[gprod-sprt-main-grfna]/cont-[gprod-sprt-main-grfna]/port-[default (TCP-3000)]/service-[gprod-sprt-main-grfna-default]" 
+                                viewOptions={{ useVerticalNodeView: false, useGridView: false, autoScrollHorizontally: false, autoScrollVertically: false }}
+                                >
+
+                </DiagramBrowser>
+            </div>
+
+        </div>
+
+    </div>
+);
+
+
 
 export const Empty: Story = () => (
 

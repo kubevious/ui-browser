@@ -1,5 +1,6 @@
 import { RefObject } from 'react';
 import { NodeConfig } from "@kubevious/ui-middleware/dist/services/diagram-browser";
+import { DiagramBrowserViewOptions } from '../DiagramBrowser/types';
 
 export interface NodeTileProps
 {
@@ -7,5 +8,7 @@ export interface NodeTileProps
     isSelected?: boolean;
     isHighlighted?: boolean;
 
-    scrollBoundaryRef? : RefObject<any>
+    scrollBoundaryRef? : RefObject<any>;
+
+    viewOptions?: Partial<DiagramBrowserViewOptions>;
 }

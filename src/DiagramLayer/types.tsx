@@ -1,11 +1,14 @@
 import { RefObject } from "react";
 import { LayerInfo } from "../service/types";
-import { IDiagramSource } from "../interfaces/diagram-source";
+import { DiagramBrowserLoader } from "../DiagramBrowser/diagram-browser-loader";
+import { DiagramBrowserViewOptions } from "../DiagramBrowser/types";
 
 export interface DiagramLayerProps
 {
-    diagramSource: IDiagramSource;
+    loader: DiagramBrowserLoader;
     layer: LayerInfo;
 
-    scrollBoundaryRef? : RefObject<any>
+    scrollBoundaryRef? : RefObject<any>;
+
+    viewOptions?: Partial<DiagramBrowserViewOptions>;
 }

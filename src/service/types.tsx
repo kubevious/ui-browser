@@ -2,6 +2,7 @@
 export interface LayerInfo
 {
     kind?: LayerInfoKind;
+    dataKey: string | null;
     parent: string;
     selectedDn?: string;
     highlightedDn?: string;

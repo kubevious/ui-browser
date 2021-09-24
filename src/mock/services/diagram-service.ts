@@ -32,7 +32,10 @@ export class MockDiagramService implements IDiagramBrowserService
                     if (!subscriptions[dn]) {
                         subscriptions[dn] = true;
                         const childrenMap = this._children[dn];
-                        cb(dn, _.keys(childrenMap ?? {}));
+
+                        setTimeout(() => {
+                            cb(dn, _.keys(childrenMap ?? {}));
+                        }, 100);
                     }
                 }
 
@@ -56,7 +59,10 @@ export class MockDiagramService implements IDiagramBrowserService
                     if (!subscriptions[dn]) {
                         subscriptions[dn] = true;
                         const config = this._nodes[dn];
-                        cb(dn, config ?? null);
+
+                        setTimeout(() => {
+                            cb(dn, config ?? null);
+                        }, 100);
                     }
                 }
 
@@ -85,6 +91,15 @@ export class MockDiagramService implements IDiagramBrowserService
             current = DnUtils.makeDn(current, parts[i].rn);
             this._registerDn(current);
         }
+
+        for(const dn of _.keys(this._children))
+        {
+            const parent = this._nodes[dn];
+            if (parent) {
+                parent.childrenCount = _.keys(this._children[dn]).length;
+            }
+        }
+
     }
 
     private _registerDn(dn: string)
@@ -97,7 +112,7 @@ export class MockDiagramService implements IDiagramBrowserService
             kind: lastPart.kind,
             rn: lastPart.rn,
             name: lastPart.name!,
-            childrenCount: 10,
+            childrenCount: 0,
             markers: [],
             selfAlertCount: {
                 error: 4,

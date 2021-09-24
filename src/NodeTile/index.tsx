@@ -1,8 +1,9 @@
+import _ from 'the-lodash';
 import React, { FC, useEffect, useRef } from 'react';
 import { NodeTileProps } from './types';
 
 import styles from './styles.module.css';
-import { DnIconComponent, FlagIcon } from '@kubevious/ui-components';
+import { DnIconComponent, FlagIcon, IconBox } from '@kubevious/ui-components';
 
 import { Label, MarkerIcon } from '@kubevious/ui-components';
 import { SeverityIcon } from '@kubevious/ui-alerts';
@@ -13,13 +14,19 @@ import { getNodeConfigFlags, getNodeConfigMarkers } from '../utils/node-utils';
 
 import { app } from '@kubevious/ui-framework'
 
-export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted, scrollBoundaryRef }) => {
+export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted, scrollBoundaryRef, viewOptions }) => {
 
     const tileRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (!scrollBoundaryRef) {
             return;
+        }
+
+        if (!_.isUndefined(viewOptions?.autoScrollVertically)) {
+            if (!(viewOptions?.autoScrollVertically)) {
+                return;
+            }
         }
 
         if (isSelected || isHighlighted ) {
@@ -36,12 +43,41 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
 
     }, [ isSelected, isHighlighted ]);
 
+    const childrenCount = config.childrenCount ?? 0;
+    const hasChildren = childrenCount > 0;
     const hasErrors = (config.alertCount?.error ?? 0) > 0;
     const hasWarnings = (config.alertCount?.warn ?? 0) > 0;
 
     const onClick = () => {
         app.sharedState.set('selected_dn', config.dn);
     };
+
+    const returnAlertTooltipContent = () => {
+        return <div className={styles.tooltipAlertContainer}>
+            <div className={styles.tooltipAlertSeverity}>
+                Total number of alerts<br/>within the hierarchy.
+            </div>
+
+            {hasErrors && <div className={styles.tooltipAlertSeverity}>
+                <SeverityIcon severity="error"/>
+                Errors:
+                <Label text={`${config.alertCount.error}`} ></Label>
+            </div>}
+
+            {hasWarnings && <div className={styles.tooltipAlertSeverity}>
+                <SeverityIcon severity="warn" />
+                Warnings:
+                <Label text={`${config.alertCount.warn}`} ></Label>
+            </div>}
+        </div>
+    };
+
+    const returnChildrenTooltipContent = () => {
+        return <>
+            Children: {childrenCount}
+        </>
+    };
+
 
     return <>
         <div data-dn={config.dn} data-rn={config.rn}
@@ -74,7 +110,10 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
                     <div className={styles.alertsContainer}>
 
                         {(hasErrors || hasWarnings) && <>
-                            <span className={styles.alertsWrapper}>
+                            <IconBox height={16}
+                                     tooltipContentsFetcher={returnAlertTooltipContent}
+                                     innerExtraStyle={{ gap: '10px' }}
+                                     >
                                 {hasErrors && <span className={styles.severityWrapper}>
                                     <span className={styles.severity}>
                                         <SeverityIcon severity="error"/>
@@ -87,10 +126,37 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
                                     </span>
                                     <Label text={`${config.alertCount.warn}`} ></Label>
                                 </span>}
-                            </span>
+                            </IconBox>
+
+
+
+                            {/* <span className={styles.alertsWrapper}>
+                                {hasErrors && <span className={styles.severityWrapper}>
+                                    <span className={styles.severity}>
+                                        <SeverityIcon severity="error"/>
+                                    </span>
+                                    <Label text={`${config.alertCount.error}`} ></Label>
+                                </span>}
+                                {hasWarnings && <span className={styles.severityWrapper}>
+                                    <span className={styles.severity}>
+                                        <SeverityIcon severity="warn" />
+                                    </span>
+                                    <Label text={`${config.alertCount.warn}`} ></Label>
+                                </span>}
+                            </span> */}
                         </>}
 
+
+                        {hasChildren && <>
+                            <IconBox width={16} height={16}
+                                     tooltipContentsFetcher={returnChildrenTooltipContent}
+                                     innerExtraStyle={{ color: 'white' }}
+                                      >
+                                <i className="fas fa-sign-in-alt"></i>
+                            </IconBox>
+                        </>}
                     </div>
+
 
                     <div className={styles.flagsContainer}>
                         {getNodeConfigMarkers(config).map((marker) => 

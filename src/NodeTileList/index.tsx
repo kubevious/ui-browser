@@ -5,7 +5,7 @@ import { NodeTileListProps } from './types';
 import styles from './styles.module.css';
 import cx from 'classnames';
 
-export const NodeTileList: FC<NodeTileListProps> = ({ isGrid, configs, selectedDn, highlightedDn, scrollBoundaryRef }) => {
+export const NodeTileList: FC<NodeTileListProps> = ({ isGrid, configs, selectedDn, highlightedDn, scrollBoundaryRef, viewOptions }) => {
 
     return <>
         <div className={cx(styles.container, {[styles.listContainer]: !isGrid, [styles.gridContainer]: isGrid})}>
@@ -17,6 +17,7 @@ export const NodeTileList: FC<NodeTileListProps> = ({ isGrid, configs, selectedD
                               isSelected={(selectedDn && config.dn == selectedDn) || false}
                               isHighlighted={(highlightedDn && config.dn == highlightedDn) || false}
                               scrollBoundaryRef={scrollBoundaryRef}
+                              viewOptions={viewOptions}
                               />
                 </div>
             )}

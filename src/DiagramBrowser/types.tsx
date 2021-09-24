@@ -6,6 +6,9 @@ export interface DiagramBrowserViewOptions
     useVerticalNodeView: boolean;
     useVerticalNodeCount: number;
     useGridView: boolean;
+
+    autoScrollHorizontally: boolean;
+    autoScrollVertically: boolean;
 }
 
 export interface DiagramBrowserProps
