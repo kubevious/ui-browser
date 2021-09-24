@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
-import { Scrollbars } from 'react-custom-scrollbars';
+import { Scrollbars } from 'react-custom-scrollbars-2';
 
-export class ScrollbarComponent extends Component {
+export interface ScrollbarComponentProps
+{
+    style?: React.CSSProperties;
+}
 
-    constructor(props, ...rest) {
-        super(props, ...rest);
-        this.state = { top: 0 };
-        this.handleUpdate = this.handleUpdate.bind(this);
+export class ScrollbarComponent extends Component<ScrollbarComponentProps> {
+
+    constructor(props : ScrollbarComponentProps | Readonly<ScrollbarComponentProps>) {
+        super(props);
+        this.state = { };
+        this.renderThumb = this.renderThumb.bind(this);
     }
 
-    handleUpdate(values) {
-        const { top } = values;
-        this.setState({ top });
-    }
-
-    renderThumb({ style, ...props }) {
+    renderThumb({ style, ...props } : { style: any, [key: string] : any}) {
         const thumbStyle = {
             width: '2px',
             backgroundColor: 'rgb(252, 189, 63)'
@@ -28,7 +28,7 @@ export class ScrollbarComponent extends Component {
 
     render() {
         return (
-            <Scrollbars
+            <Scrollbars style={this.props.style}
                 renderThumbHorizontal={this.renderThumb}
                 renderThumbVertical={this.renderThumb}
                 autoHide

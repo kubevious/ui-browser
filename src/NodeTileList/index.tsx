@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { NodeTile } from '../NodeTile';
 import { NodeTileListProps } from './types';
-import { NodeConfig } from '../types';
+import { NodeConfig } from "@kubevious/ui-middleware/dist/services/diagram-browser";
 
 import styles from './styles.module.css';
 import cx from 'classnames';
