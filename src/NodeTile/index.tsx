@@ -49,7 +49,10 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
     const hasWarnings = (config.alertCount?.warn ?? 0) > 0;
 
     const onClick = () => {
+        console.error("[NodeTile] OnClick", )
+        console.error("[NodeTile] OnClick. config:", config)
         const currentSelection = app.sharedState.get('selected_dn');
+        console.error("[NodeTile] currentSelection:", currentSelection)
         if (currentSelection && currentSelection === config.dn) {
             app.sharedState.set('selected_dn', null);
         } else {
