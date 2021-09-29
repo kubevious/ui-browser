@@ -10,8 +10,8 @@ import cx from 'classnames';
 
 import { getNodeConfigFlags, getNodeConfigMarkers } from '../utils/node-utils';
 
-
 import { app } from '@kubevious/ui-framework'
+import { DIAGRAM_LABELS, parseDn } from '@kubevious/entity-meta';
 
 export const NodeVerticalTile: FC<NodeVerticalTileProps> = ({ config, isSelected, isHighlighted }) => {
 
@@ -22,6 +22,8 @@ export const NodeVerticalTile: FC<NodeVerticalTileProps> = ({ config, isSelected
         app.sharedState.set('selected_dn', config.dn);
     };
 
+    const dnParts = parseDn(config.dn);
+
     return <>
         <div data-dn={config.dn} data-rn={config.rn}
              className={cx(styles.outside, { [styles.outsideSelected] : isSelected, [styles.outsideHighlighted] : isHighlighted })}
@@ -31,7 +33,7 @@ export const NodeVerticalTile: FC<NodeVerticalTileProps> = ({ config, isSelected
             <div className={styles.iconContainer}>
 
                 <div className={styles.iconBox}>
-                    <DnIconComponent kind={config.kind} size='lg'   />
+                    <DnIconComponent dnParts={dnParts} size='lg'   />
                 </div>
 
             </div>
@@ -40,7 +42,7 @@ export const NodeVerticalTile: FC<NodeVerticalTileProps> = ({ config, isSelected
 
                 <div className={styles.textContainer}>
                     <div className={cx(styles.kindText, styles.rotateText)}>
-                        {config.kind}
+                        {DIAGRAM_LABELS.get((config.kind as any))}
                     </div>
                     <div className={cx(styles.nameText, styles.rotateText)}>
                         {config.name}

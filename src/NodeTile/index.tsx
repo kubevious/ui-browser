@@ -13,6 +13,7 @@ import scrollIntoView from 'scroll-into-view-if-needed'
 import { getNodeConfigFlags, getNodeConfigMarkers } from '../utils/node-utils';
 
 import { app } from '@kubevious/ui-framework'
+import { parseDn, DIAGRAM_LABELS } from '@kubevious/entity-meta';
 
 export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted, scrollBoundaryRef, viewOptions }) => {
 
@@ -47,6 +48,8 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
     const hasChildren = childrenCount > 0;
     const hasErrors = (config.alertCount?.error ?? 0) > 0;
     const hasWarnings = (config.alertCount?.warn ?? 0) > 0;
+
+    const dnParts = parseDn(config.dn);
 
     const onClick = () => {
         console.error("[NodeTile] OnClick", )
@@ -97,7 +100,7 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
             <div className={styles.iconContainer}>
 
                 <div className={styles.iconBox}>
-                    <DnIconComponent kind={config.kind} size='lg'   />
+                    <DnIconComponent dnParts={dnParts} size='lg'   />
                 </div>
 
             </div>
@@ -106,7 +109,7 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
 
                 <div className={styles.textContainer}>
                     <div className={styles.kindText}>
-                        {config.kind}
+                        {DIAGRAM_LABELS.get((config.kind as any))}
                     </div>
                     <div className={styles.nameText}>
                         {config.name}

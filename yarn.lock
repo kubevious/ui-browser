@@ -1549,6 +1549,13 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
+"@kubevious/entity-meta@^1.0.14":
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/@kubevious/entity-meta/-/entity-meta-1.0.14.tgz#4c4511b72d6030f19dbe559d253996315b5a92ac"
+  integrity sha512-tQoUtwYSoZaSGl4vxjmrcLGDwMiyX030WX1o52iH8G/DmCKZstaeoMMyKwwyc3QnMYdnBQBvA0Fu0MBCMTm9Yg==
+  dependencies:
+    the-lodash "^2.0.9"
+
 "@kubevious/helpers@^1.0.62":
   version "1.0.62"
   resolved "https://registry.yarnpkg.com/@kubevious/helpers/-/helpers-1.0.62.tgz#68a9079411b7ec8a1cb6a15d6d3c458f54b51ff9"
@@ -1591,6 +1598,34 @@
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
     "@fortawesome/react-fontawesome" "^0.1.14"
     "@kubevious/helpers" "^1.0.62"
+    "@kubevious/ui-framework" "^1.0.50"
+    "@kubevious/ui-middleware" "^1.0.39"
+    bootstrap "^5.0.0"
+    classnames "^2.2.6"
+    codemirror "^5.60.0"
+    golden-layout "^1.5.9"
+    jquery "^3.5.1"
+    popper.js "^1.16.1"
+    react "^17.0.2"
+    react-bootstrap "^2.0.0-beta.4"
+    react-codemirror2 "^7.2.1"
+    react-dom "^17.0.2"
+    react-router-dom "^5.2.0"
+    react-select "^4.3.1"
+    the-lodash "^2.0.9"
+    the-promise "^2.0.13"
+    uuid "^8.3.2"
+
+"@kubevious/ui-components@^1.0.161":
+  version "1.0.161"
+  resolved "https://registry.yarnpkg.com/@kubevious/ui-components/-/ui-components-1.0.161.tgz#c72ad360b504bf473a3ed8a4093ada3c4443f468"
+  integrity sha512-13bz7UZ/tiMIZ4UhFqJTnM6h4fgmF1leH4ByVadrUs+IJTL/BLVoAsxUOsFPwB16yAppnhhtBNaKZ/5CF1We5Q==
+  dependencies:
+    "@fortawesome/fontawesome-svg-core" "^1.2.35"
+    "@fortawesome/free-regular-svg-icons" "^5.15.1"
+    "@fortawesome/free-solid-svg-icons" "^5.15.3"
+    "@fortawesome/react-fontawesome" "^0.1.14"
+    "@kubevious/entity-meta" "^1.0.14"
     "@kubevious/ui-framework" "^1.0.50"
     "@kubevious/ui-middleware" "^1.0.39"
     bootstrap "^5.0.0"

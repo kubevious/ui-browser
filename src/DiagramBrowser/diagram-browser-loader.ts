@@ -6,7 +6,7 @@ import { LayerInfo, LayerInfoKind } from "../service/types";
 import { NodeConfig } from "@kubevious/ui-middleware/dist/services/diagram-browser";
 import { CallbackHandler } from './callback-handler';
 import { IClosable } from '@kubevious/ui-middleware/dist/common-types';
-import * as DnUtils from '@kubevious/helpers/dist/dn-utils';
+import { parseDn, makeDn }from '@kubevious/entity-meta';
 
 export type LayersChangeHandlerCallback = ((layers: LayerInfo[]) => any);
 export type LayerNodesChangeHandlerCallback = ((nodes: NodeConfig[]) => any);
@@ -186,7 +186,7 @@ export class DiagramBrowserLoader
 
     private _calculateNewLayers() : LayerInfo[]
     {
-        const dnParts = DnUtils.parseDn(this._currentExpandedDn);
+        const dnParts = parseDn(this._currentExpandedDn);
         let parentDn : string | null = null;
         let currentDn : string | null = null;
 
@@ -200,7 +200,7 @@ export class DiagramBrowserLoader
             if (!currentDn) {
                 currentDn = part.rn;
             } else {
-                currentDn = DnUtils.makeDn(currentDn, part.rn);
+                currentDn = makeDn(currentDn, part.rn);
             }
 
             if (isMyHierarchy) {

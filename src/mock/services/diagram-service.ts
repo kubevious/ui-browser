@@ -1,9 +1,10 @@
 import _ from 'the-lodash';
 
 import { DN_LIST } from './mock-data';
-import * as DnUtils from '@kubevious/helpers/dist/dn-utils';
+import { parseDn, makeDn }from '@kubevious/entity-meta';
 import { IDiagramBrowserService } from '@kubevious/ui-middleware/dist';
 import { DiagramChildrenChangeCallback, DiagramNodeChangeCallback, IDiagramBrowserServiceSubscriber, NodeConfig } from '@kubevious/ui-middleware/dist/services/diagram-browser';
+import { parentDn } from '@kubevious/entity-meta/dist/dn-utils';
 
 export class MockDiagramService implements IDiagramBrowserService
 {
@@ -81,14 +82,14 @@ export class MockDiagramService implements IDiagramBrowserService
 
     private _addDn(dn: string)
     {
-        const parts = DnUtils.parseDn(dn);
+        const parts = parseDn(dn);
 
         let current = parts[0].rn;
         this._registerDn(current);
 
         for(let i = 1; i < parts.length; i++)
         {
-            current = DnUtils.makeDn(current, parts[i].rn);
+            current = makeDn(current, parts[i].rn);
             this._registerDn(current);
         }
 
@@ -104,7 +105,7 @@ export class MockDiagramService implements IDiagramBrowserService
 
     private _registerDn(dn: string)
     {
-        const parts = DnUtils.parseDn(dn);
+        const parts = parseDn(dn);
         const lastPart = _.last(parts)!;
 
         this._nodes[dn] = {
@@ -124,7 +125,7 @@ export class MockDiagramService implements IDiagramBrowserService
             }
         };
 
-        const parent = DnUtils.parentDn(dn);
+        const parent = parentDn(dn);
 
         if (!this._children[parent]) {
             this._children[parent] = {};
