@@ -3,9 +3,11 @@ export interface LayerInfo
 {
     kind?: LayerInfoKind;
     dataKey: string | null;
-    parent: string;
+    parent?: string;
     selectedDn?: string;
     highlightedDn?: string;
+
+    dnList?: string[];
 
     isGridView?: boolean;
 
@@ -14,5 +16,6 @@ export interface LayerInfo
 
 export enum LayerInfoKind {
     Children = 'children',
-    Node = 'node'
+    NodeList = 'node-list',
+    Node = 'node',
 }

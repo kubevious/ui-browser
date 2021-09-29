@@ -4,6 +4,7 @@ import { Scrollbars } from 'react-custom-scrollbars-2';
 export interface ScrollbarComponentProps
 {
     style?: React.CSSProperties;
+    className?: string;
 }
 
 export class ScrollbarComponent extends Component<ScrollbarComponentProps> {
@@ -31,6 +32,7 @@ export class ScrollbarComponent extends Component<ScrollbarComponentProps> {
             <Scrollbars style={this.props.style}
                 renderThumbHorizontal={this.renderThumb}
                 renderThumbVertical={this.renderThumb}
+                className={this.props.className}
                 autoHide
                 {...this.props}/>
         );

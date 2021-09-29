@@ -20,7 +20,7 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
 
     const [ nodes, setNodes ] = useState<NodeConfig[]>([]);
 
-    const isChildrenView = (layer.kind == LayerInfoKind.Children);
+    const isMultiNodeView = (layer.kind == LayerInfoKind.Children) || (layer.kind == LayerInfoKind.NodeList);
     const isSingleNodeView = (layer.kind == LayerInfoKind.Node);
 
     useEffect(() => {
@@ -44,7 +44,7 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
             }
         }
 
-        if (isChildrenView)
+        if (isMultiNodeView)
         {
             if (layer.selectedDn) {
                 const currentElem = layerRef.current;
@@ -60,24 +60,21 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
 
     }, [ layer.dataKey, nodes ]);
 
-    if (nodes.length == 0) {
-        return <>
-        </>;
-    }
+    // if (nodes.length == 0) {
+    //     return <>
+    //     </>;
+    // }
     
     return <>
-        {isChildrenView && 
-            <ScrollbarComponent style={{ maxWidth: '450px'  }} 
+        {isMultiNodeView && 
+            <ScrollbarComponent
+                className={cx(styles.outerLayer, {[styles.outerLayerColumn]: !layer.isGridView, [styles.outerLayerGrid]: layer.isGridView })} 
                 >
                 <div data-dn={layer.parent}
-                    className={cx(styles.layer, {[styles.columnLayer]: !layer.isGridView, [styles.gridLayer]: layer.isGridView })}
+                    className={styles.layer}
                     style={{ backgroundColor: getLayerColor(layer.depth) }}
                     ref={layerRef}
                     >
-
-                    <div className={styles.layerBorder}>
-                        
-                    </div>
 
                     <NodeTileList configs={nodes}   
                         highlightedDn={layer.highlightedDn}

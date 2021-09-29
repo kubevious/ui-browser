@@ -101,8 +101,9 @@ export class DiagramBrowserLoader
 
     private _applyLayers()
     {
-        const layers = this._calculateNewLayers();
-        console.info("[DiagramBrowserLoader] _applyLayers :: Desired Layers; ", layers);
+        // const layers = this._calculateNewLayersDeep();
+        const layers = this._calculateNewLayersFlat();
+        console.info("[DiagramBrowserLoader] _applyLayers :: Desired Layers: ", layers);
 
         const usedDataSourceKeys : Record<string, boolean> = {};
         for(const layer of layers)
@@ -114,11 +115,11 @@ export class DiagramBrowserLoader
         {
             if (!usedDataSourceKeys[internalLayer.key])
             {
-                if (internalLayer.subscription) {
-                    internalLayer.subscription.close();
-                    delete internalLayer.subscription;
-                    delete this._layerData[internalLayer.key];
+                for(const subscription of _.values(internalLayer.subscriptions)) {
+                    subscription.close();
                 }
+                internalLayer.subscriptions = {};
+                delete this._layerData[internalLayer.key];
             }
         }
 
@@ -138,13 +139,17 @@ export class DiagramBrowserLoader
 
         let layerInternalData = this._layerData[layer.dataKey];
         if (layerInternalData) {
+            layerInternalData.layer = layer;
+            this._updateLayerSubscription(layerInternalData);
             return;
         }
 
         layerInternalData = {
             key: layer.dataKey,
             layer: layer,
+            nodeDict: {},
             nodes: [],
+            subscriptions: {},
             handler: new CallbackHandler<LayerNodesChangeHandlerCallback>()
         }
         this._layerData[layer.dataKey] = layerInternalData;
@@ -157,80 +162,123 @@ export class DiagramBrowserLoader
         const layer = layerInternalData.layer;
         if (layer.kind == LayerInfoKind.Children)
         {
-            const myDn = layer.parent;
-            layerInternalData.subscription = this._diagramSource.subscribeChildrenNodes(myDn, (nodes) => {
-                this._updateLayerNodes(layerInternalData, nodes);
+            const myDn = layer.parent!;
+            layerInternalData.subscriptions[myDn] = this._diagramSource.subscribeChildrenNodes(myDn, (nodes) => {
+                layerInternalData.nodeDict = _.makeDict(nodes, x => x.dn, x => x);
+                this._updateLayerNodes(layerInternalData);
             });
+            return;
+        }
+
+        if (layer.kind == LayerInfoKind.NodeList)
+        {
+            this._updateLayerSubscription(layerInternalData);
             return;
         }
 
         if (layer.kind == LayerInfoKind.Node)
         {
             const myDn = layer.highlightedDn!;
-            layerInternalData.subscription = this._diagramSource.subscribeNode(myDn, (config) => {
+            layerInternalData.subscriptions[myDn] = this._diagramSource.subscribeNode(myDn, (config) => {
                 if (config) {
-                    this._updateLayerNodes(layerInternalData, [config]);
+                    layerInternalData.nodeDict[myDn] = config;
                 } else {
-                    this._updateLayerNodes(layerInternalData, []);
+                    layerInternalData.nodeDict[myDn] = null;
                 }
+                this._updateLayerNodes(layerInternalData);
             });
             return;
         }
     }
 
-    private _updateLayerNodes(layerInternalData : LayerInternalData, nodes: NodeConfig[])
+    private _updateLayerSubscription(layerInternalData : LayerInternalData)
     {
-        layerInternalData.nodes = nodes;
+        const layer = layerInternalData.layer;
+        if (layer.kind === LayerInfoKind.NodeList)
+        {
+            for(const dn of layer.dnList!)
+            {
+                if (!layerInternalData.subscriptions[dn])
+                {
+                    layerInternalData.subscriptions[dn] = this._diagramSource.subscribeNode(dn, (config) => {
+                        if (config) {
+                            layerInternalData.nodeDict[dn] = config;
+                        } else {
+                            layerInternalData.nodeDict[dn] = null;
+                        }
+                        this._updateLayerNodes(layerInternalData);
+                    });
+                }
+            }
+
+            for(const dn of _.keys(layerInternalData.subscriptions))
+            {
+                if (!layer.dnList!.includes(dn))
+                {
+                    delete layerInternalData.nodeDict[dn];
+                    layerInternalData.subscriptions[dn].close()
+                    delete layerInternalData.subscriptions[dn];
+                    this._updateLayerNodes(layerInternalData);
+                }
+            }
+            
+        }
+    }
+
+    private _updateLayerNodes(layerInternalData : LayerInternalData)
+    {
+        layerInternalData.nodes = _.values(layerInternalData.nodeDict).filter(x => x).map(x => x!);
+
         layerInternalData.handler.execute(x => x(layerInternalData.nodes));
     }
 
-    private _calculateNewLayers() : LayerInfo[]
+    private _calculateNewLayersFlat() : LayerInfo[]
     {
+        const layers : LayerInfo[] = [ ];
+
         const dnParts = parseDn(this._currentExpandedDn);
-        let parentDn : string | null = null;
+
         let currentDn : string | null = null;
 
-        const layers : LayerInfo[] = [ ];
+        const parentDns : string[] = [];
 
         let isMyHierarchy = false;
         for(const part of dnParts)
         {
-            parentDn = currentDn;
-
             if (!currentDn) {
                 currentDn = part.rn;
             } else {
                 currentDn = makeDn(currentDn, part.rn);
             }
 
-            if (isMyHierarchy) {
-                layers.push({
-                    depth: 0,
-                    dataKey: null,
-                    kind: LayerInfoKind.Children,
-                    parent: parentDn!,
-                    selectedDn: (this._currentSelectedDn && (this._currentSelectedDn === currentDn)) ? currentDn : undefined,
-                });
-            }
-
             if (currentDn == this._rootDn) {
                 isMyHierarchy = true;
             }
-        }
 
-        if (this._viewOptions.useVerticalNodeView) {
-            for(const layer of _.dropRight(layers, this._viewOptions.useVerticalNodeCount))
-            {
-                layer.kind = LayerInfoKind.Node;
+            if (isMyHierarchy) {
+                if (currentDn) {
+                    parentDns.push(currentDn);
+                }
             }
         }
 
-        if (currentDn) {
+
+        if (parentDns.length > 0) {
+            layers.push({
+                depth: 0,
+                dataKey: null,
+                kind: LayerInfoKind.NodeList,
+                dnList: parentDns,
+                selectedDn: (this._currentSelectedDn && parentDns.includes(this._currentSelectedDn)) ? this._currentSelectedDn : undefined,
+            });
+        }
+
+        if (this._currentExpandedDn) {
             layers.push({
                 depth: 0,
                 dataKey: null,
                 kind: LayerInfoKind.Children,
-                parent: currentDn,
+                parent: this._currentExpandedDn,
                 // dn: currentDn
                 isGridView: this._viewOptions.useGridView
             });
@@ -242,15 +290,6 @@ export class DiagramBrowserLoader
             item.depth = i;
         }
 
-        for(let i = 0; i < layers.length - 1; i++)
-        {
-            const item = layers[i];
-            const next = layers[i+1];
-            if (!item.selectedDn) {
-                item.highlightedDn = next.parent;
-            }
-        }
-
         for(const layer of layers)
         {
             layer.dataKey = this._getLayerDataKey(layer);
@@ -259,6 +298,81 @@ export class DiagramBrowserLoader
         return layers;
     }
 
+    // private _calculateNewLayersDeep() : LayerInfo[]
+    // {
+    //     const dnParts = parseDn(this._currentExpandedDn);
+    //     let parentDn : string | null = null;
+    //     let currentDn : string | null = null;
+
+    //     const layers : LayerInfo[] = [ ];
+
+    //     let isMyHierarchy = false;
+    //     for(const part of dnParts)
+    //     {
+    //         parentDn = currentDn;
+
+    //         if (!currentDn) {
+    //             currentDn = part.rn;
+    //         } else {
+    //             currentDn = makeDn(currentDn, part.rn);
+    //         }
+
+    //         if (isMyHierarchy) {
+    //             layers.push({
+    //                 depth: 0,
+    //                 dataKey: null,
+    //                 kind: LayerInfoKind.Children,
+    //                 parent: parentDn!,
+    //                 selectedDn: (this._currentSelectedDn && (this._currentSelectedDn === currentDn)) ? currentDn : undefined,
+    //             });
+    //         }
+
+    //         if (currentDn == this._rootDn) {
+    //             isMyHierarchy = true;
+    //         }
+    //     }
+
+    //     if (this._viewOptions.useVerticalNodeView) {
+    //         for(const layer of _.dropRight(layers, this._viewOptions.useVerticalNodeCount))
+    //         {
+    //             layer.kind = LayerInfoKind.Node;
+    //         }
+    //     }
+
+    //     if (currentDn) {
+    //         layers.push({
+    //             depth: 0,
+    //             dataKey: null,
+    //             kind: LayerInfoKind.Children,
+    //             parent: currentDn,
+    //             // dn: currentDn
+    //             isGridView: this._viewOptions.useGridView
+    //         });
+    //     }
+
+    //     for(let i = 0; i < layers.length; i++)
+    //     {
+    //         const item = layers[i];
+    //         item.depth = i;
+    //     }
+
+    //     for(let i = 0; i < layers.length - 1; i++)
+    //     {
+    //         const item = layers[i];
+    //         const next = layers[i+1];
+    //         if (!item.selectedDn) {
+    //             item.highlightedDn = next.parent;
+    //         }
+    //     }
+
+    //     for(const layer of layers)
+    //     {
+    //         layer.dataKey = this._getLayerDataKey(layer);
+    //     }
+
+    //     return layers;
+    // }
+
     private _getLayerDataKey(layer: LayerInfo) : string | null
     {
         if (layer.kind == LayerInfoKind.Children) {
@@ -266,6 +380,9 @@ export class DiagramBrowserLoader
         }
         if (layer.kind == LayerInfoKind.Node) {
             return `${layer.kind}-${layer.highlightedDn!}`;
+        }
+        if (layer.kind == LayerInfoKind.NodeList) {
+            return `${layer.kind}-${layer.depth}`;
         }
         return null;
     }
@@ -283,7 +400,8 @@ export class LayerInternalData
     key: string;
     layer: LayerInfo;
     nodes: NodeConfig[];
-    subscription?: IService;
+    nodeDict: Record<string, NodeConfig | null>;
+    subscriptions: Record<string, IService>;
 
     handler: CallbackHandler<LayerNodesChangeHandlerCallback>;
 }

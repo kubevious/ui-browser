@@ -6,23 +6,18 @@ import { NodeConfig } from "@kubevious/ui-middleware/dist/services/diagram-brows
 import styles from './styles.module.css';
 import cx from 'classnames';
 
-import { getLayerColor } from '../utils/diagram-utils';
-
-export const NodeTileList: FC<NodeTileListProps> = ({ isGrid, depth, configs, selectedDn, highlightedDn, scrollBoundaryRef, viewOptions }) => {
+export const NodeTileList: FC<NodeTileListProps> = ({ isGrid, configs, selectedDn, highlightedDn, scrollBoundaryRef, viewOptions }) => {
 
     const renderNodeTile = (config: NodeConfig) => {
         const isSelected = (selectedDn && config.dn == selectedDn) || false;
         const isHighlighted = (highlightedDn && config.dn == highlightedDn) || false;
 
-        const tileBackground = (isSelected || isHighlighted) ? getLayerColor((depth ?? 0) + 1) : undefined;
-
         return <div key={config.rn}
-            className={cx(styles.nodeContainer, {[styles.nodeContainerHighlighted] : (isSelected || isHighlighted)})}
-            style={{ backgroundColor: tileBackground }}
+            className={cx(styles.nodeContainer)}
             >
             <NodeTile config={config}
                     isSelected={isSelected}
-                    isHighlighted={isHighlighted && false}
+                    isHighlighted={isHighlighted}
                     scrollBoundaryRef={scrollBoundaryRef}
                     viewOptions={viewOptions}
                     />

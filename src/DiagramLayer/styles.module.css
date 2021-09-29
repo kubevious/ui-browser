@@ -1,3 +1,12 @@
+.outerLayer {
+}
+
+.outerLayerColumn {
+    max-width: 450px;
+}
+
+.outerLayerGrid {
+}
 
 
 .layer {
@@ -5,30 +14,12 @@
     flex-grow: 0;
     flex-shrink: 0;
 
-    padding-left: 10px;
+    padding: 20px;
 
     min-height: 100%;
-}
-
-.layerBorder {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    border-right: 1px solid rgb(252, 189, 63);
-    /* z-index: 100; */
 }
 
 .singleNodeLayer {
     width: 60px;
     overflow: hidden;
-}
-
-.columnLayer {
-    /* width: 350px; */
-}
-
-.gridLayer {
-    /* width: 700px; */
 }

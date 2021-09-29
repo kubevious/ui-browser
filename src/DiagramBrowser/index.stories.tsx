@@ -68,8 +68,7 @@ export const Empty: Story = () => (
 
             <div style={{ margin: '1rem', height: "500px" }}>
                 <DiagramBrowser diagramSource={MyDiagramSource}
-                                rootDn="root/logic"
-                                initialExpandedDn="root/logic" >
+                                rootDn="root/logic" >
                 </DiagramBrowser>
             </div>
 
