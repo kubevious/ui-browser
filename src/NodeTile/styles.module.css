@@ -2,7 +2,8 @@
     /* position: relative; */
     display: flex;
 
-    background: rgb(53, 55, 62);
+    background: #35373D;
+    border-radius: 8px;
     color: #FFFFFF;
 
     font-family: "Montserrat", sans-serif;
@@ -26,7 +27,7 @@
 
 .iconContainer {
     /* position: relative; */
-    width: 40px;
+    margin: 12px;
     display: block;
 }
 
@@ -36,7 +37,11 @@
     flex-grow: 1;
 
     display: flex;
+    flex-direction: column;
 
+    gap: 5px;
+
+    justify-content: center;
 
     /* background: red; */
 }
@@ -44,32 +49,40 @@
 
 .iconBox {
     /* position: relative; */
-    width: 40px;
-    height: 40px;
+    width: 95px;
+    height: 95px;
 
     display: flex;
     justify-content: center;
     align-items: center;
     
-    background: rgb(245, 141, 97);
+    background: #292B31;
+
+    border-radius: 4px;
 }
 
+.icon {
+    width: 65px;
+    height: 65px;
+}
+
+.outside:hover .icon {
+    width: 68px;
+    height: 68px;
+}
 
 .textContainer {
     /* background: green; */
     flex-grow: 1;
-
-    padding: 5px;
-
 }
 
 .detailsContainer {
     /* background: blue; */
-    flex-grow: 1;
+    /* flex-grow: 1; */
 
-    padding: 5px;
+    /* padding: 5px; */
 
-    text-align: right;
+    /* text-align: right; */
 }
 
 .kindText {
@@ -83,7 +96,7 @@
 
 .alertsContainer {
     display: flex;
-    justify-content: flex-end;
+    /* justify-content: flex-end; */
     gap: 5px;
     /* background: orange; */
 
@@ -93,9 +106,9 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-end;
+    /* justify-content: flex-end; */
     gap: 5px;
-    margin-top: 5px;
+    /* margin-top: 5px; */
 }
 
 .alertsWrapper {

@@ -1608,10 +1608,10 @@
     the-promise "^2.0.13"
     uuid "^8.3.2"
 
-"@kubevious/ui-components@^1.0.162":
-  version "1.0.162"
-  resolved "https://registry.yarnpkg.com/@kubevious/ui-components/-/ui-components-1.0.162.tgz#5ec7dc118a3909ebf6270f0c623cdf3e7c6b3f05"
-  integrity sha512-svMvJzgoORxqi+ECZvi9cHniiU61WpgZ8QfyDiB7GdcCXfjC/SIxvU8H+tWUUU5emXgMHspjIhynKZ7H5HWvfQ==
+"@kubevious/ui-components@^1.0.163":
+  version "1.0.163"
+  resolved "https://registry.yarnpkg.com/@kubevious/ui-components/-/ui-components-1.0.163.tgz#ea093193374ac1d81fa6a412504baa11dd38eb68"
+  integrity sha512-a/c+PyQPa3CUPE4kQWk5/8eKhWeuHjOA5upsf75BtQxr8ZYryXO83QZKkRy+JXudESAX7tYsXg+0+DbNctGcAA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-regular-svg-icons" "^5.15.1"

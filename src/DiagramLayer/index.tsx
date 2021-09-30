@@ -20,7 +20,10 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
 
     const [ nodes, setNodes ] = useState<NodeConfig[]>([]);
 
-    const isMultiNodeView = (layer.kind == LayerInfoKind.Children) || (layer.kind == LayerInfoKind.NodeList);
+    const isChildrenView = (layer.kind == LayerInfoKind.Children);
+    const isNodeListView = (layer.kind == LayerInfoKind.NodeList);
+
+    const isMultiNodeView = isChildrenView || isNodeListView;
     const isSingleNodeView = (layer.kind == LayerInfoKind.Node);
 
     useEffect(() => {
@@ -59,11 +62,6 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
         }
 
     }, [ layer.dataKey, nodes ]);
-
-    // if (nodes.length == 0) {
-    //     return <>
-    //     </>;
-    // }
     
     return <>
         {isMultiNodeView && 
@@ -83,6 +81,7 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
                         isGrid={layer.isGridView}
                         viewOptions={viewOptions}
                         depth={layer.depth}
+                        separator={isNodeListView}
                         >
                     </NodeTileList>
                 </div>

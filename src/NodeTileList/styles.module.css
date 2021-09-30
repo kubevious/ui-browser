@@ -21,3 +21,14 @@
 .nodeContainer {
     flex-grow: 1;
 }
+
+.separator {
+    flex-grow: 0;
+    width: 20px;
+    height: 20px;
+    background-image: url('/img/browser/vertical-flow.svg');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin: auto;
+}

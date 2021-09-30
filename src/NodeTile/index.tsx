@@ -100,85 +100,81 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
             <div className={styles.iconContainer}>
 
                 <div className={styles.iconBox}>
-                    <DnIconComponent dnParts={dnParts} size='lg'   />
+                    <DnIconComponent dnParts={dnParts} size='custom' extraClassNames={styles.icon}   />
                 </div>
 
             </div>
 
             <div className={styles.mainContainer}>
 
-                <div className={styles.textContainer}>
+                {/* <div className={styles.textContainer}> */}
                     <div className={styles.kindText}>
                         {DIAGRAM_LABELS.get((config.kind as any))}
                     </div>
                     <div className={styles.nameText}>
                         {config.name}
                     </div>
+                {/* </div> */}
+
+                <div className={styles.alertsContainer}>
+
+                    {(hasErrors || hasWarnings) && <>
+                        <IconBox height={16}
+                                    tooltipContentsFetcher={returnAlertTooltipContent}
+                                    innerExtraStyle={{ gap: '10px' }}
+                                    >
+                            {hasErrors && <span className={styles.severityWrapper}>
+                                <span className={styles.severity}>
+                                    <SeverityIcon severity="error"/>
+                                </span>
+                                <Label text={`${config.alertCount.error}`} ></Label>
+                            </span>}
+                            {hasWarnings && <span className={styles.severityWrapper}>
+                                <span className={styles.severity}>
+                                    <SeverityIcon severity="warn" />
+                                </span>
+                                <Label text={`${config.alertCount.warn}`} ></Label>
+                            </span>}
+                        </IconBox>
+
+
+
+                        {/* <span className={styles.alertsWrapper}>
+                            {hasErrors && <span className={styles.severityWrapper}>
+                                <span className={styles.severity}>
+                                    <SeverityIcon severity="error"/>
+                                </span>
+                                <Label text={`${config.alertCount.error}`} ></Label>
+                            </span>}
+                            {hasWarnings && <span className={styles.severityWrapper}>
+                                <span className={styles.severity}>
+                                    <SeverityIcon severity="warn" />
+                                </span>
+                                <Label text={`${config.alertCount.warn}`} ></Label>
+                            </span>}
+                        </span> */}
+                    </>}
+
+
+                    {hasChildren && <>
+                        <IconBox width={16} height={16}
+                                    tooltipContentsFetcher={returnChildrenTooltipContent}
+                                    innerExtraStyle={{ color: 'white' }}
+                                    >
+                            <i className="fas fa-sign-in-alt"></i>
+                        </IconBox>
+                    </>}
                 </div>
 
-                <div className={styles.detailsContainer}>
 
-                    <div className={styles.alertsContainer}>
+                <div className={styles.flagsContainer}>
+                    {getNodeConfigMarkers(config).map((marker) => 
+                        <MarkerIcon key={marker} marker={marker} />
+                    )}
 
-                        {(hasErrors || hasWarnings) && <>
-                            <IconBox height={16}
-                                     tooltipContentsFetcher={returnAlertTooltipContent}
-                                     innerExtraStyle={{ gap: '10px' }}
-                                     >
-                                {hasErrors && <span className={styles.severityWrapper}>
-                                    <span className={styles.severity}>
-                                        <SeverityIcon severity="error"/>
-                                    </span>
-                                    <Label text={`${config.alertCount.error}`} ></Label>
-                                </span>}
-                                {hasWarnings && <span className={styles.severityWrapper}>
-                                    <span className={styles.severity}>
-                                        <SeverityIcon severity="warn" />
-                                    </span>
-                                    <Label text={`${config.alertCount.warn}`} ></Label>
-                                </span>}
-                            </IconBox>
-
-
-
-                            {/* <span className={styles.alertsWrapper}>
-                                {hasErrors && <span className={styles.severityWrapper}>
-                                    <span className={styles.severity}>
-                                        <SeverityIcon severity="error"/>
-                                    </span>
-                                    <Label text={`${config.alertCount.error}`} ></Label>
-                                </span>}
-                                {hasWarnings && <span className={styles.severityWrapper}>
-                                    <span className={styles.severity}>
-                                        <SeverityIcon severity="warn" />
-                                    </span>
-                                    <Label text={`${config.alertCount.warn}`} ></Label>
-                                </span>}
-                            </span> */}
-                        </>}
-
-
-                        {hasChildren && <>
-                            <IconBox width={16} height={16}
-                                     tooltipContentsFetcher={returnChildrenTooltipContent}
-                                     innerExtraStyle={{ color: 'white' }}
-                                      >
-                                <i className="fas fa-sign-in-alt"></i>
-                            </IconBox>
-                        </>}
-                    </div>
-
-
-                    <div className={styles.flagsContainer}>
-                        {getNodeConfigMarkers(config).map((marker) => 
-                            <MarkerIcon key={marker} marker={marker} />
-                        )}
-
-                        {getNodeConfigFlags(config).map((flag) => 
-                            <FlagIcon key={flag} flag={flag} />
-                        )}
-                    </div>
-
+                    {getNodeConfigFlags(config).map((flag) => 
+                        <FlagIcon key={flag} flag={flag} />
+                    )}
                 </div>
 
             </div>

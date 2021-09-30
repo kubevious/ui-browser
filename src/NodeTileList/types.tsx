@@ -16,4 +16,6 @@ export interface NodeTileListProps
     viewOptions?: Partial<DiagramBrowserViewOptions>;
 
     depth?: number;
+
+    separator?: boolean;
 }

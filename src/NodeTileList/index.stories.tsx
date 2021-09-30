@@ -20,22 +20,27 @@ export const Default: Story = () => {
     return <>
         <div style={{ background: 'grey' }}>
 
-            <div style={{ margin: '1rem', background: 'darkblue' }}>
+            <div style={{ margin: '3rem', background: 'darkblue' }}>
                 <NodeTileList configs={nodes} >
                 </NodeTileList>
             </div>
 
-            <div style={{ margin: '1rem', background: 'darkblue' }}>
+            <div style={{ margin: '3rem', background: 'darkblue' }}>
+                <NodeTileList configs={nodes} separator >
+                </NodeTileList>
+            </div>
+
+            <div style={{ margin: '3rem', background: 'darkblue' }}>
                 <NodeTileList configs={nodes} selectedDn={REPLICA_SET_CONFIG_DN}>
                 </NodeTileList>
             </div>
 
-            <div style={{ margin: '1rem', background: 'darkblue' }}>
+            <div style={{ margin: '3rem', background: 'darkblue' }}>
                 <NodeTileList configs={nodes} highlightedDn={REPLICA_SET_CONFIG_DN}>
                 </NodeTileList>
             </div>
 
-            <div style={{ margin: '1rem', background: 'darkblue', width: '400px' }}>
+            <div style={{ margin: '3rem', background: 'darkblue', width: '400px' }}>
                 <NodeTileList configs={nodes} selectedDn={REPLICA_SET_CONFIG_DN}>
                 </NodeTileList>
             </div>
