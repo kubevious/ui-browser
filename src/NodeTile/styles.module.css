@@ -1,5 +1,4 @@
 .outside {
-    /* position: relative; */
     display: flex;
 
     background: #35373D;
@@ -32,8 +31,6 @@
 }
 
 .mainContainer {
-    /* position: relative; */
-    /* left: 40px; */
     flex-grow: 1;
 
     display: flex;
@@ -42,13 +39,10 @@
     gap: 5px;
 
     justify-content: center;
-
-    /* background: red; */
 }
 
 
 .iconBox {
-    /* position: relative; */
     width: 95px;
     height: 95px;
 
@@ -72,17 +66,7 @@
 }
 
 .textContainer {
-    /* background: green; */
     flex-grow: 1;
-}
-
-.detailsContainer {
-    /* background: blue; */
-    /* flex-grow: 1; */
-
-    /* padding: 5px; */
-
-    /* text-align: right; */
 }
 
 .kindText {
@@ -96,19 +80,14 @@
 
 .alertsContainer {
     display: flex;
-    /* justify-content: flex-end; */
     gap: 5px;
-    /* background: orange; */
-
 }
 
 .flagsContainer {
     display: flex;
     flex-direction: row;
     align-items: center;
-    /* justify-content: flex-end; */
     gap: 5px;
-    /* margin-top: 5px; */
 }
 
 .alertsWrapper {

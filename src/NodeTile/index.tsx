@@ -89,6 +89,9 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
         </>
     };
 
+    const nodeConfigMarkers = getNodeConfigMarkers(config);
+    const nodeConfigFlags = getNodeConfigFlags(config);
+
 
     return <>
         <div data-dn={config.dn} data-rn={config.rn}
@@ -107,14 +110,14 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
 
             <div className={styles.mainContainer}>
 
-                {/* <div className={styles.textContainer}> */}
-                    <div className={styles.kindText}>
-                        {DIAGRAM_LABELS.get((config.kind as any))}
-                    </div>
+                <div className={styles.kindText}>
+                    {DIAGRAM_LABELS.get((config.kind as any))}
+                </div>
+                {config.name && 
                     <div className={styles.nameText}>
                         {config.name}
                     </div>
-                {/* </div> */}
+                }
 
                 <div className={styles.alertsContainer}>
 
@@ -137,22 +140,6 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
                             </span>}
                         </IconBox>
 
-
-
-                        {/* <span className={styles.alertsWrapper}>
-                            {hasErrors && <span className={styles.severityWrapper}>
-                                <span className={styles.severity}>
-                                    <SeverityIcon severity="error"/>
-                                </span>
-                                <Label text={`${config.alertCount.error}`} ></Label>
-                            </span>}
-                            {hasWarnings && <span className={styles.severityWrapper}>
-                                <span className={styles.severity}>
-                                    <SeverityIcon severity="warn" />
-                                </span>
-                                <Label text={`${config.alertCount.warn}`} ></Label>
-                            </span>}
-                        </span> */}
                     </>}
 
 
@@ -167,15 +154,17 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
                 </div>
 
 
-                <div className={styles.flagsContainer}>
-                    {getNodeConfigMarkers(config).map((marker) => 
-                        <MarkerIcon key={marker} marker={marker} />
-                    )}
+                {(nodeConfigMarkers.length + nodeConfigFlags.length > 0) &&
+                    <div className={styles.flagsContainer}>
+                        {nodeConfigMarkers.map((marker) => 
+                            <MarkerIcon key={marker} marker={marker} />
+                        )}
 
-                    {getNodeConfigFlags(config).map((flag) => 
-                        <FlagIcon key={flag} flag={flag} />
-                    )}
-                </div>
+                        {nodeConfigFlags.map((flag) => 
+                            <FlagIcon key={flag} flag={flag} />
+                        )}
+                    </div>
+                }
 
             </div>
 
