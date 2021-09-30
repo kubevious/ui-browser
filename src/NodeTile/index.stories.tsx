@@ -13,7 +13,7 @@ export const Default: Story = () => (
     <div style={{ background: 'grey' }}>
 
         <div style={{ margin: '1rem' }}>
-            <h1>Unrestricted Size</h1>
+            <h1>Normal</h1>
         </div>
 
         <div>
@@ -38,6 +38,32 @@ export const Default: Story = () => (
             </div>
         </div>
 
+        <div style={{ margin: '1rem' }}>
+            <h1>Compact</h1>
+        </div>
+
+        <div>
+            <div style={{ margin: '1rem' }}>
+                <NodeTile config={APP_CONFIG} compact>
+                </NodeTile>
+            </div>
+
+            <div style={{ margin: '1rem' }}>
+                <NodeTile config={REPLICA_SET_CONFIG} isSelected={true} compact>
+                </NodeTile>
+            </div>
+
+            <div style={{ margin: '1rem' }}>
+                <NodeTile config={REPLICA_SET_CONFIG} isHighlighted={true} compact>
+                </NodeTile>
+            </div>
+
+            <div style={{ margin: '1rem' }}>
+                <NodeTile config={IMAGE_CONFIG} compact>
+                </NodeTile>
+            </div>
+        </div>
+
 
         <div style={{ margin: '1rem' }}>
             <h1>Width 350px</h1>
@@ -56,6 +82,27 @@ export const Default: Story = () => (
 
             <div style={{ margin: '1rem' }}>
                 <NodeTile config={IMAGE_CONFIG}>
+                </NodeTile>
+            </div>
+        </div>
+
+        <div style={{ margin: '1rem' }}>
+            <h1>Compact Width 350px</h1>
+        </div>
+
+        <div style={{ width: "350px" }}>
+            <div style={{ margin: '1rem' }}>
+                <NodeTile config={APP_CONFIG} compact>
+                </NodeTile>
+            </div>
+
+            <div style={{ margin: '1rem' }}>
+                <NodeTile config={REPLICA_SET_CONFIG} compact>
+                </NodeTile>
+            </div>
+
+            <div style={{ margin: '1rem' }}>
+                <NodeTile config={IMAGE_CONFIG} compact>
                 </NodeTile>
             </div>
         </div>

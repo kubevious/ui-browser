@@ -18,4 +18,6 @@ export interface NodeTileListProps
     depth?: number;
 
     separator?: boolean;
+
+    compact?: boolean;
 }

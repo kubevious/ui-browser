@@ -15,7 +15,7 @@ import { getNodeConfigFlags, getNodeConfigMarkers } from '../utils/node-utils';
 import { app } from '@kubevious/ui-framework'
 import { parseDn, DIAGRAM_LABELS } from '@kubevious/entity-meta';
 
-export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted, scrollBoundaryRef, viewOptions }) => {
+export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted, scrollBoundaryRef, compact, viewOptions }) => {
 
     const tileRef = useRef<HTMLDivElement>(null);
 
@@ -102,22 +102,33 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
 
             <div className={styles.iconContainer}>
 
-                <div className={styles.iconBox}>
+                <div className={cx(styles.iconBox, {[styles.iconBoxCompact] : compact})}>
                     <DnIconComponent dnParts={dnParts} size='custom' extraClassNames={styles.icon}   />
                 </div>
 
             </div>
 
+
+            {hasChildren && <>
+                <IconBox tooltipContentsFetcher={returnChildrenTooltipContent}
+                         extraClassNames={styles.childrenCountBox}
+                        >
+                    {childrenCount}
+                </IconBox>
+            </>}
+
             <div className={styles.mainContainer}>
 
-                <div className={styles.kindText}>
-                    {DIAGRAM_LABELS.get((config.kind as any))}
-                </div>
-                {config.name && 
-                    <div className={styles.nameText}>
-                        {config.name}
+                <div className={cx(styles.nameContainer, { [styles.nameContainerCompact] : compact })}>
+                    <div className={styles.kindText}>
+                        {DIAGRAM_LABELS.get((config.kind as any))}
                     </div>
-                }
+                    {config.name && 
+                        <div className={styles.nameText}>
+                            {config.name}
+                        </div>
+                    }
+                </div>
 
                 <div className={styles.alertsContainer}>
 
@@ -142,15 +153,6 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
 
                     </>}
 
-
-                    {hasChildren && <>
-                        <IconBox width={16} height={16}
-                                    tooltipContentsFetcher={returnChildrenTooltipContent}
-                                    innerExtraStyle={{ color: 'white' }}
-                                    >
-                            <i className="fas fa-sign-in-alt"></i>
-                        </IconBox>
-                    </>}
                 </div>
 
 

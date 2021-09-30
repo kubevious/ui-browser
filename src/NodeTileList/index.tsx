@@ -6,7 +6,7 @@ import { NodeConfig } from "@kubevious/ui-middleware/dist/services/diagram-brows
 import styles from './styles.module.css';
 import cx from 'classnames';
 
-export const NodeTileList: FC<NodeTileListProps> = ({ isGrid, configs, selectedDn, highlightedDn, scrollBoundaryRef, viewOptions, separator }) => {
+export const NodeTileList: FC<NodeTileListProps> = ({ isGrid, configs, selectedDn, highlightedDn, scrollBoundaryRef, viewOptions, separator, compact }) => {
 
     const renderNodeTile = (config: NodeConfig, index: number, isNotLast: boolean) => {
         const isSelected = (selectedDn && config.dn == selectedDn) || false;
@@ -21,6 +21,7 @@ export const NodeTileList: FC<NodeTileListProps> = ({ isGrid, configs, selectedD
                         isHighlighted={isHighlighted}
                         scrollBoundaryRef={scrollBoundaryRef}
                         viewOptions={viewOptions}
+                        compact={compact}
                         />
 
             </div>  

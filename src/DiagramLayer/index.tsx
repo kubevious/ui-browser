@@ -82,6 +82,7 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
                         viewOptions={viewOptions}
                         depth={layer.depth}
                         separator={isNodeListView}
+                        compact={isNodeListView}
                         >
                     </NodeTileList>
                 </div>

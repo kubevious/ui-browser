@@ -11,4 +11,6 @@ export interface NodeTileProps
     scrollBoundaryRef? : RefObject<any>;
 
     viewOptions?: Partial<DiagramBrowserViewOptions>;
+
+    compact? : boolean;
 }

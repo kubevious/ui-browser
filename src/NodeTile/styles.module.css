@@ -1,5 +1,6 @@
 .outside {
     display: flex;
+    position: relative;
 
     background: #35373D;
     border-radius: 8px;
@@ -25,7 +26,6 @@
 }
 
 .iconContainer {
-    /* position: relative; */
     margin: 12px;
     display: block;
 }
@@ -39,6 +39,9 @@
     gap: 5px;
 
     justify-content: center;
+
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 
@@ -55,14 +58,32 @@
     border-radius: 4px;
 }
 
+.iconBoxCompact {
+    width: 60px;
+    height: 60px;
+}
+
 .icon {
-    width: 65px;
-    height: 65px;
+    width: 65%;
+    /* width: 65px;
+    height: 65px; */
 }
 
 .outside:hover .icon {
-    width: 68px;
-    height: 68px;
+    width: 68%;
+    /* width: 68px;
+    height: 68px; */
+}
+
+.nameContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.nameContainerCompact {
+    flex-direction: row;
+    align-items: center;
+    column-gap: 5px;
 }
 
 .textContainer {
@@ -70,10 +91,12 @@
 }
 
 .kindText {
+    display: inline-block;
     font-size: 10px;
 }
 
 .nameText {
+    display: inline-block;
     font-size: 14px;
     font-weight: 500;
 }
@@ -118,4 +141,16 @@
     display: flex;
     flex-direction: row;
     gap: 5px;
+}
+
+.childrenCountBox {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+
+    height: 20px;
+    min-width: 20px;
+
+    color: #ffffff;
+    font-size: 12px;
 }
