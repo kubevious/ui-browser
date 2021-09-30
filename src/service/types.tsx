@@ -9,7 +9,7 @@ export interface LayerInfo
 
     dnList?: string[];
 
-    isGridView?: boolean;
+    // isGridView?: boolean;
 
     depth: number;
 }

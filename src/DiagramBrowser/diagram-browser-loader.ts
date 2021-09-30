@@ -34,10 +34,6 @@ export class DiagramBrowserLoader
         this._currentExpandedDn = initialExpandedDn || rootDn;
 
         this._viewOptions = {
-            useVerticalNodeView: viewOptions?.useVerticalNodeView ?? true,
-            useVerticalNodeCount: viewOptions?.useVerticalNodeCount ?? 2,
-            useGridView: viewOptions?.useGridView ?? true,
-
             autoScrollHorizontally: viewOptions?.autoScrollHorizontally ?? true,
             autoScrollVertically: viewOptions?.autoScrollVertically ?? true,
         }
@@ -45,6 +41,10 @@ export class DiagramBrowserLoader
         console.log("[DiagramBrowserLoader] constructor: ", rootDn);
 
         this._selectedDnSubscriber = app.sharedState.subscribe('selected_dn', this._handleSelectedDnChange.bind(this))
+    }
+
+    get viewOptions() {
+        return this._viewOptions;
     }
 
     close()
@@ -101,7 +101,6 @@ export class DiagramBrowserLoader
 
     private _applyLayers()
     {
-        // const layers = this._calculateNewLayersDeep();
         const layers = this._calculateNewLayersFlat();
         console.info("[DiagramBrowserLoader] _applyLayers :: Desired Layers: ", layers);
 
@@ -262,7 +261,6 @@ export class DiagramBrowserLoader
             }
         }
 
-
         if (parentDns.length > 0) {
             layers.push({
                 depth: 0,
@@ -280,7 +278,7 @@ export class DiagramBrowserLoader
                 kind: LayerInfoKind.Children,
                 parent: this._currentExpandedDn,
                 // dn: currentDn
-                isGridView: this._viewOptions.useGridView
+                // isGridView: this._viewOptions.useGridView
             });
         }
 
@@ -297,81 +295,6 @@ export class DiagramBrowserLoader
 
         return layers;
     }
-
-    // private _calculateNewLayersDeep() : LayerInfo[]
-    // {
-    //     const dnParts = parseDn(this._currentExpandedDn);
-    //     let parentDn : string | null = null;
-    //     let currentDn : string | null = null;
-
-    //     const layers : LayerInfo[] = [ ];
-
-    //     let isMyHierarchy = false;
-    //     for(const part of dnParts)
-    //     {
-    //         parentDn = currentDn;
-
-    //         if (!currentDn) {
-    //             currentDn = part.rn;
-    //         } else {
-    //             currentDn = makeDn(currentDn, part.rn);
-    //         }
-
-    //         if (isMyHierarchy) {
-    //             layers.push({
-    //                 depth: 0,
-    //                 dataKey: null,
-    //                 kind: LayerInfoKind.Children,
-    //                 parent: parentDn!,
-    //                 selectedDn: (this._currentSelectedDn && (this._currentSelectedDn === currentDn)) ? currentDn : undefined,
-    //             });
-    //         }
-
-    //         if (currentDn == this._rootDn) {
-    //             isMyHierarchy = true;
-    //         }
-    //     }
-
-    //     if (this._viewOptions.useVerticalNodeView) {
-    //         for(const layer of _.dropRight(layers, this._viewOptions.useVerticalNodeCount))
-    //         {
-    //             layer.kind = LayerInfoKind.Node;
-    //         }
-    //     }
-
-    //     if (currentDn) {
-    //         layers.push({
-    //             depth: 0,
-    //             dataKey: null,
-    //             kind: LayerInfoKind.Children,
-    //             parent: currentDn,
-    //             // dn: currentDn
-    //             isGridView: this._viewOptions.useGridView
-    //         });
-    //     }
-
-    //     for(let i = 0; i < layers.length; i++)
-    //     {
-    //         const item = layers[i];
-    //         item.depth = i;
-    //     }
-
-    //     for(let i = 0; i < layers.length - 1; i++)
-    //     {
-    //         const item = layers[i];
-    //         const next = layers[i+1];
-    //         if (!item.selectedDn) {
-    //             item.highlightedDn = next.parent;
-    //         }
-    //     }
-
-    //     for(const layer of layers)
-    //     {
-    //         layer.dataKey = this._getLayerDataKey(layer);
-    //     }
-
-    //     return layers;
-    // }
 
     private _getLayerDataKey(layer: LayerInfo) : string | null
     {

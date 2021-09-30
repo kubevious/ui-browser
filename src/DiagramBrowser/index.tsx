@@ -52,7 +52,7 @@ export const DiagramBrowser: FC<DiagramBrowserProps> = ({ diagramSource, rootDn,
                                   loader={loader}
                                   layer={layer}
                                   scrollBoundaryRef={contentRef}
-                                  viewOptions={viewOptions}
+                                  viewOptions={loader.viewOptions}
                                   />
                     
                 )}

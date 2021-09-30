@@ -153,9 +153,18 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
 
                     </>}
 
+                    {nodeConfigFlags.map((flag) => 
+                        <FlagIcon key={flag} flag={flag} />
+                    )}
+
+                    {nodeConfigMarkers.map((marker) => 
+                        <MarkerIcon key={marker} marker={marker} />
+                    )}
+
+
                 </div>
 
-
+{/* 
                 {(nodeConfigMarkers.length + nodeConfigFlags.length > 0) &&
                     <div className={styles.flagsContainer}>
                         {nodeConfigMarkers.map((marker) => 
@@ -166,7 +175,7 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
                             <FlagIcon key={flag} flag={flag} />
                         )}
                     </div>
-                }
+                } */}
 
             </div>
 
