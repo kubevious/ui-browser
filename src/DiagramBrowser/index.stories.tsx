@@ -43,7 +43,7 @@ export const BasicView: Story = () => (
                 <DiagramBrowser diagramSource={MyDiagramSource}
                                 rootDn="root/logic"
                                 initialExpandedDn="root/logic/ns-[sprt]/app-[gprod-sprt-main-grfna]/cont-[gprod-sprt-main-grfna]/port-[default (TCP-3000)]/service-[gprod-sprt-main-grfna-default]" 
-                                viewOptions={{ useVerticalNodeView: false, useGridView: false, autoScrollHorizontally: false, autoScrollVertically: false }}
+                                viewOptions={{ autoScrollHorizontally: false, autoScrollVertically: false }}
                                 >
 
                 </DiagramBrowser>

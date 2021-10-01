@@ -11,6 +11,7 @@ import { NodeConfig } from '@kubevious/ui-middleware/dist/services/diagram-brows
 
 import { getLayerColor } from '../utils/diagram-utils';
 import { ScrollbarComponent } from '../ScrollbarComponent';
+import { LayerFilters } from '../LayerFilters';
 
 
 export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBoundaryRef, viewOptions }) => {
@@ -56,10 +57,9 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
         }
 
     }, [ layer.dataKey, nodes ]);
-    
-    return <>
-        <ScrollbarComponent
-            className={cx(styles.outerLayer, {[styles.outerLayerColumn]: isNodeListView, [styles.outerLayerGrid]: isChildrenView })} 
+
+    const renderItems = () => {
+        return <ScrollbarComponent
             >
             <div data-dn={layer.parent}
                 className={styles.layer}
@@ -80,5 +80,24 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
                 </NodeTileList>
             </div>
         </ScrollbarComponent>
-    </>
+    }
+    
+    return <div 
+        className={cx(styles.outerLayer, {[styles.outerLayerColumn]: isNodeListView })} 
+        >
+
+        {isChildrenView &&
+            <div className={styles.layerFilterWrapper}>
+                <LayerFilters>
+                </LayerFilters>
+            </div>}
+
+        
+
+        <div style={{ backgroundColor: 'red', height: '100%'}}
+             className={styles.itemsContent}   >
+            {renderItems()}
+        </div>
+
+    </div>
 }

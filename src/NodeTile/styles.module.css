@@ -122,27 +122,6 @@
     gap: 10px;
 }
 
-.severityWrapper {
-    display: flex;
-    align-items: center;
-}
-
-.severity {
-    margin-right: 5px;
-}
-
-.tooltipAlertContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.tooltipAlertSeverity {
-    display: flex;
-    flex-direction: row;
-    gap: 5px;
-}
-
 .childrenCountBox {
     position: absolute;
     right: 10px;

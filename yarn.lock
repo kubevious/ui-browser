@@ -1558,6 +1558,13 @@
   dependencies:
     the-lodash "^2.0.9"
 
+"@kubevious/entity-meta@^1.0.18":
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/@kubevious/entity-meta/-/entity-meta-1.0.18.tgz#d9b07ec2d05d17659bb2735dda1067e185912018"
+  integrity sha512-LuCwWeJmhGPfP1lNDmkSZtdBN3XYXSX6McL3x+Pgmxx0+viPdAHk16s2UKzSN/3UXztXQ0VOvfnhxxDmFLxeUQ==
+  dependencies:
+    the-lodash "^2.0.9"
+
 "@kubevious/http-client@^1.0.15":
   version "1.0.15"
   resolved "https://registry.yarnpkg.com/@kubevious/http-client/-/http-client-1.0.15.tgz#7b7b79545826b866c2061b2f418f4986ddce985d"
@@ -1608,10 +1615,10 @@
     the-promise "^2.0.13"
     uuid "^8.3.2"
 
-"@kubevious/ui-components@^1.0.163":
-  version "1.0.163"
-  resolved "https://registry.yarnpkg.com/@kubevious/ui-components/-/ui-components-1.0.163.tgz#ea093193374ac1d81fa6a412504baa11dd38eb68"
-  integrity sha512-a/c+PyQPa3CUPE4kQWk5/8eKhWeuHjOA5upsf75BtQxr8ZYryXO83QZKkRy+JXudESAX7tYsXg+0+DbNctGcAA==
+"@kubevious/ui-components@^1.0.168":
+  version "1.0.168"
+  resolved "https://registry.yarnpkg.com/@kubevious/ui-components/-/ui-components-1.0.168.tgz#29f02ee12067c36d575f23b21d144616f66301cf"
+  integrity sha512-lHyvOkZDmldXjiqku0l5oy2IZvq7gXelANX7crtz76lcYPqffeciH4/rb/VQJo5wrGKs0fl8cg1JjAhtyyKj7g==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-regular-svg-icons" "^5.15.1"

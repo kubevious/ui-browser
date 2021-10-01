@@ -5,8 +5,7 @@ import { NodeTileProps } from './types';
 import styles from './styles.module.css';
 import { DnIconComponent, FlagIcon, IconBox } from '@kubevious/ui-components';
 
-import { Label, MarkerIcon } from '@kubevious/ui-components';
-import { SeverityIcon } from '@kubevious/ui-alerts';
+import { SeverityBlock, MarkerIcon } from '@kubevious/ui-components';
 import cx from 'classnames';
 import scrollIntoView from 'scroll-into-view-if-needed'
 
@@ -46,8 +45,6 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
 
     const childrenCount = config.childrenCount ?? 0;
     const hasChildren = childrenCount > 0;
-    const hasErrors = (config.alertCount?.error ?? 0) > 0;
-    const hasWarnings = (config.alertCount?.warn ?? 0) > 0;
 
     const dnParts = parseDn(config.dn);
 
@@ -61,26 +58,6 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
         } else {
             app.sharedState.set('selected_dn', config.dn);
         }
-    };
-
-    const returnAlertTooltipContent = () => {
-        return <div className={styles.tooltipAlertContainer}>
-            <div className={styles.tooltipAlertSeverity}>
-                Total number of alerts<br/>within the hierarchy.
-            </div>
-
-            {hasErrors && <div className={styles.tooltipAlertSeverity}>
-                <SeverityIcon severity="error"/>
-                Errors:
-                <Label text={`${config.alertCount.error}`} ></Label>
-            </div>}
-
-            {hasWarnings && <div className={styles.tooltipAlertSeverity}>
-                <SeverityIcon severity="warn" />
-                Warnings:
-                <Label text={`${config.alertCount.warn}`} ></Label>
-            </div>}
-        </div>
     };
 
     const returnChildrenTooltipContent = () => {
@@ -132,26 +109,8 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
 
                 <div className={styles.alertsContainer}>
 
-                    {(hasErrors || hasWarnings) && <>
-                        <IconBox height={16}
-                                    tooltipContentsFetcher={returnAlertTooltipContent}
-                                    innerExtraStyle={{ gap: '10px' }}
-                                    >
-                            {hasErrors && <span className={styles.severityWrapper}>
-                                <span className={styles.severity}>
-                                    <SeverityIcon severity="error"/>
-                                </span>
-                                <Label text={`${config.alertCount.error}`} ></Label>
-                            </span>}
-                            {hasWarnings && <span className={styles.severityWrapper}>
-                                <span className={styles.severity}>
-                                    <SeverityIcon severity="warn" />
-                                </span>
-                                <Label text={`${config.alertCount.warn}`} ></Label>
-                            </span>}
-                        </IconBox>
-
-                    </>}
+                    <SeverityBlock errors={config?.alertCount?.error}
+                                   warnings={config?.alertCount?.warn} />
 
                     {nodeConfigFlags.map((flag) => 
                         <FlagIcon key={flag} flag={flag} />
@@ -161,21 +120,7 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
                         <MarkerIcon key={marker} marker={marker} />
                     )}
 
-
                 </div>
-
-{/* 
-                {(nodeConfigMarkers.length + nodeConfigFlags.length > 0) &&
-                    <div className={styles.flagsContainer}>
-                        {nodeConfigMarkers.map((marker) => 
-                            <MarkerIcon key={marker} marker={marker} />
-                        )}
-
-                        {nodeConfigFlags.map((flag) => 
-                            <FlagIcon key={flag} flag={flag} />
-                        )}
-                    </div>
-                } */}
 
             </div>
 
