@@ -1,11 +1,10 @@
 import _ from 'the-lodash';
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { LayerFiltersProps } from './types';
 import { MultiSwitch } from '../MultiSwitch';
 import { MultiChoiceOption } from '../MultiSwitch/types';
 
 import styles from './styles.module.css';
-import cx from 'classnames';
 
 import { Input } from '@kubevious/ui-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

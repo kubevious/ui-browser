@@ -31,7 +31,7 @@ export const MultiSwitch: FC<MultiSwitchProps> = ({ items, initialSelection, han
         </div>
     }
 
-    const renderTooltipContents = (item: MultiChoiceOption, index: number) => {
+    const renderTooltipContents = (item: MultiChoiceOption) => {
         return item.tooltip ?? "";
     }
 
@@ -40,7 +40,7 @@ export const MultiSwitch: FC<MultiSwitchProps> = ({ items, initialSelection, han
         <div className={styles.container} style={{ width: `${width}px`, height: `${height}px` }} >
             {items && items.map((item, index) => {
                 return <TooltipContainer
-                    tooltipContentsFetcher={() => renderTooltipContents(item, index)}
+                    tooltipContentsFetcher={() => renderTooltipContents(item)}
                     contents={renderItem(item, index)}
                     >
                     </TooltipContainer>
