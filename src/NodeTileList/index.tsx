@@ -12,8 +12,8 @@ export const NodeTileList: FC<NodeTileListProps> = ({ isGrid, configs, selectedD
         const isSelected = (selectedDn && config.dn == selectedDn) || false;
         const isHighlighted = (highlightedDn && config.dn == highlightedDn) || false;
 
-        return <>
-            <div key={config.dn}
+        return <div key={config.dn}>
+            <div
                 className={cx(styles.nodeContainer)}
                 >
                 <NodeTile config={config}
@@ -28,7 +28,7 @@ export const NodeTileList: FC<NodeTileListProps> = ({ isGrid, configs, selectedD
             
             {separator && isNotLast && <div key={`sep-${index}`} className={styles.separator}> </div> }
 
-        </>
+        </div>
     }
 
     return <>

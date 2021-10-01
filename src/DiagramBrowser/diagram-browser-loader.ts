@@ -9,7 +9,7 @@ import { IClosable } from '@kubevious/ui-middleware/dist/common-types';
 import { parseDn, makeDn }from '@kubevious/entity-meta';
 
 export type LayersChangeHandlerCallback = ((layers: LayerInfo[]) => any);
-export type LayerNodesChangeHandlerCallback = ((nodes: NodeConfig[]) => any);
+export type LayerNodesChangeHandlerCallback = ((nodes: NodeConfig[], isLoading: boolean) => any);
 
 export class DiagramBrowserLoader
 {
@@ -67,12 +67,12 @@ export class DiagramBrowserLoader
         if (layer.dataKey) {
             const layerInternalData = this._layerData[layer.dataKey];
             if (layerInternalData) {
-                cb(layerInternalData.nodes);
+                cb(layerInternalData.nodes, layerInternalData.isLoading);
                 return layerInternalData.handler.on(cb);
             }
         }
 
-        cb([]);
+        cb([], true);
 
         return {
             close: () => {
@@ -147,6 +147,7 @@ export class DiagramBrowserLoader
             key: layer.dataKey,
             layer: layer,
             nodeDict: {},
+            isLoading: true,
             nodes: [],
             subscriptions: {},
             handler: new CallbackHandler<LayerNodesChangeHandlerCallback>()
@@ -162,8 +163,10 @@ export class DiagramBrowserLoader
         if (layer.kind == LayerInfoKind.Children)
         {
             const myDn = layer.parent!;
-            layerInternalData.subscriptions[myDn] = this._diagramSource.subscribeChildrenNodes(myDn, (nodes) => {
+            layerInternalData.subscriptions[myDn] = this._diagramSource.subscribeChildrenNodes(myDn, (nodes, isLoading) => {
+                console.log("[_setupLayerSubscriptions] %s. Loading: %s. => ", myDn, isLoading, nodes);
                 layerInternalData.nodeDict = _.makeDict(nodes, x => x.dn, x => x);
+                layerInternalData.isLoading = isLoading;
                 this._updateLayerNodes(layerInternalData);
             });
             return;
@@ -227,8 +230,7 @@ export class DiagramBrowserLoader
     private _updateLayerNodes(layerInternalData : LayerInternalData)
     {
         layerInternalData.nodes = _.values(layerInternalData.nodeDict).filter(x => x).map(x => x!);
-
-        layerInternalData.handler.execute(x => x(layerInternalData.nodes));
+        layerInternalData.handler.execute(x => x(layerInternalData.nodes, layerInternalData.isLoading));
     }
 
     private _calculateNewLayersFlat() : LayerInfo[]
@@ -322,6 +324,7 @@ export class LayerInternalData
 {
     key: string;
     layer: LayerInfo;
+    isLoading: boolean;
     nodes: NodeConfig[];
     nodeDict: Record<string, NodeConfig | null>;
     subscriptions: Record<string, IService>;

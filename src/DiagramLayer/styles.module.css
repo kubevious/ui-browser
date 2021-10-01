@@ -28,3 +28,11 @@
 .itemsContent {
     flex-grow: 1;
 }
+
+.centerLayer {
+    display: flex;
+}
+
+.centerContent {
+    margin: auto;
+}

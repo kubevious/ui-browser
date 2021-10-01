@@ -12,12 +12,14 @@ import { NodeConfig } from '@kubevious/ui-middleware/dist/services/diagram-brows
 import { getLayerColor } from '../utils/diagram-utils';
 import { ScrollbarComponent } from '../ScrollbarComponent';
 import { LayerFilters } from '../LayerFilters';
+import { Label } from '@kubevious/ui-components';
 
 
 export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBoundaryRef, viewOptions }) => {
 
     const layerRef = useRef<HTMLDivElement>(null);
 
+    const [ isLoading, setIsLoading ] = useState<boolean>(false);
     const [ nodes, setNodes ] = useState<NodeConfig[]>([]);
 
     const isChildrenView = (layer.kind == LayerInfoKind.Children);
@@ -25,8 +27,9 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
 
     useEffect(() => {
 
-        const subscription = loader.onLayerNodesChange(layer, (newNodes) => {
+        const subscription = loader.onLayerNodesChange(layer, (newNodes, newIsLoading) => {
             setNodes(newNodes ?? []);
+            setIsLoading(newIsLoading);
         })
 
         return () => {
@@ -58,7 +61,7 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
 
     }, [ layer.dataKey, nodes ]);
 
-    const renderItems = () => {
+    const renderItemsList = () => {
         return <ScrollbarComponent
             >
             <div data-dn={layer.parent}
@@ -80,7 +83,24 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
                 </NodeTileList>
             </div>
         </ScrollbarComponent>
-    }
+    };
+
+    const renderItems = () => {
+        if (nodes.length == 0) {
+            return <div className={cx(styles.layer, styles.centerLayer)}>
+
+                {(!isLoading) && 
+                    <Label text="No children under this layer."
+                        color="faded"
+                        extraStyles={styles.centerContent}
+                            />
+                }
+            </div>
+
+        }
+
+        return renderItemsList();
+    };
     
     return <div 
         className={cx(styles.outerLayer, {[styles.outerLayerColumn]: isNodeListView })} 
@@ -94,7 +114,7 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
 
         
 
-        <div style={{ backgroundColor: 'red', height: '100%'}}
+        <div style={{ height: '100%'}}
              className={styles.itemsContent}   >
             {renderItems()}
         </div>

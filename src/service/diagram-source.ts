@@ -5,7 +5,7 @@ import _ from 'the-lodash';
 import { IService } from '@kubevious/ui-framework';
 import { NodeConfig, IDiagramBrowserService } from '@kubevious/ui-middleware/dist/services/diagram-browser';
 
-import { DiagramSourceChildrenNodesChangeCallback, DiagramSourceNodesChangeCallback, IDiagramSource } from '../interfaces/diagram-source';
+import { DiagramSourceChildrenNodesChangeCallback, DiagramSourceNodeChangeCallback, IDiagramSource } from '../interfaces/diagram-source';
 
 
 export class DiagramSource implements IDiagramSource
@@ -23,7 +23,7 @@ export class DiagramSource implements IDiagramSource
         console.log('[DiagramSource] close')
     }
 
-    subscribeNode(dn: string, cb: DiagramSourceNodesChangeCallback) : IService
+    subscribeNode(dn: string, cb: DiagramSourceNodeChangeCallback) : IService
     {
         const nodesSubscriber = this._service.subscribeToNodes((_, config) => {
             if (config) {
@@ -45,17 +45,17 @@ export class DiagramSource implements IDiagramSource
     {
         console.log("[DiagramSource] subscribeChildrenNodes :: ", dn);
 
-        const nodeMap : Record<string, NodeConfig | null> = {};
+        let targetChildrenDnMap : Record<string, boolean> = {};
+        const waitingNodeConfig : Record<string, boolean> = {};
+        const nodeConfigMap : Record<string, NodeConfig | null> = {};
 
         const notifyNodes = () => {
-            const nodeList = _.values(nodeMap).filter(x => x);
-            cb(<NodeConfig[]>nodeList);
+            const nodeList = _.values(nodeConfigMap).filter(x => x).map(x => x!);
+            cb(nodeList, _.keys(waitingNodeConfig).length > 0);
         }
 
         let isTriggered = false;
         const triggerResultUpdated = () => {
-            // notifyNodes();
-            // return;
             if (isTriggered) {
                 return;
             }
@@ -67,12 +67,13 @@ export class DiagramSource implements IDiagramSource
         }
 
         const nodesSubscriber = this._service.subscribeToNodes((childDn, config) => {
-            if (childDn in nodeMap)
+            if (targetChildrenDnMap[childDn])
             {
+                delete waitingNodeConfig[childDn];
                 if (config) {
-                    nodeMap[childDn] = config;
+                    nodeConfigMap[childDn] = config;
                 } else {
-                    delete nodeMap[childDn];
+                    nodeConfigMap[childDn] = null;
                 }
                 triggerResultUpdated();
             }
@@ -82,15 +83,17 @@ export class DiagramSource implements IDiagramSource
             console.log("[DiagramSource] subscribeChildrenNodes :: ", dn, " :: ChildrenDNs: ", childrenDns);
 
             for(const childDn of childrenDns) {
-                if (!nodeMap[childDn]) {
-                    nodeMap[childDn] = null;
+                if (!(childDn in nodeConfigMap)) {
+                    waitingNodeConfig[childDn] = true;
+                    nodeConfigMap[childDn] = null;
                 }
             }
             
-            const targetChildrenMap = _.makeBoolDict(childrenDns);
-            for(const childDn of _.keys(nodeMap)) {
-                if (!targetChildrenMap[childDn]) {
-                    delete nodeMap[childDn];
+            targetChildrenDnMap = _.makeBoolDict(childrenDns);
+            for(const childDn of _.keys(nodeConfigMap)) {
+                if (!targetChildrenDnMap[childDn]) {
+                    delete waitingNodeConfig[childDn];
+                    delete nodeConfigMap[childDn];
                 }
             }
 
