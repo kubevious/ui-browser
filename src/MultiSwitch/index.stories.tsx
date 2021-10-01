@@ -83,7 +83,7 @@ export const ChangeHandler: Story = () => {
                 <MultiSwitch
                     items={CHOICE_DATA_1}
                     initialSelection={index}
-                    handler={(index) => { setIndex(index); }}
+                    onSelectedChanged={(index) => { setIndex(index); }}
                     />
             </div>
 

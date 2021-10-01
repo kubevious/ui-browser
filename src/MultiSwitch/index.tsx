@@ -5,7 +5,7 @@ import { TooltipContainer } from '@kubevious/ui-components';
 
 import styles from './styles.module.css';
 
-export const MultiSwitch: FC<MultiSwitchProps> = ({ items, initialSelection, handler }) => {
+export const MultiSwitch: FC<MultiSwitchProps> = ({ items, initialSelection, onSelectedChanged }) => {
 
     const [selected, setSelected] = useState<number>(initialSelection ?? 0);
 
@@ -15,8 +15,8 @@ export const MultiSwitch: FC<MultiSwitchProps> = ({ items, initialSelection, han
 
     const onClick = (index: number) => {
         setSelected(index);
-        if (handler) {
-            handler(index);
+        if (onSelectedChanged) {
+            onSelectedChanged(index);
         }
     }
 

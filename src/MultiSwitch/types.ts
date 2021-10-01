@@ -11,5 +11,5 @@ export interface MultiChoiceOption
 export interface MultiSwitchProps {
     items: MultiChoiceOption[];
     initialSelection?: number;
-    handler?: MultiSwitchChangeHandler;
+    onSelectedChanged?: MultiSwitchChangeHandler;
 }

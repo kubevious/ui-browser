@@ -48,7 +48,7 @@ export const DiagramBrowser: FC<DiagramBrowserProps> = ({ diagramSource, rootDn,
                     //     </pre>
                     // </div>
 
-                    <DiagramLayer key={index}
+                    <DiagramLayer key={layer.dataKey}
                                   loader={loader}
                                   layer={layer}
                                   scrollBoundaryRef={contentRef}

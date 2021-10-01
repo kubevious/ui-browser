@@ -7,6 +7,7 @@ import { NodeConfig } from "@kubevious/ui-middleware/dist/services/diagram-brows
 import { CallbackHandler } from './callback-handler';
 import { IClosable } from '@kubevious/ui-middleware/dist/common-types';
 import { parseDn, makeDn }from '@kubevious/entity-meta';
+import { LayerSearchConfig } from '../types';
 
 export type LayersChangeHandlerCallback = ((layers: LayerInfo[]) => any);
 export type LayerNodesChangeHandlerCallback = ((nodes: NodeConfig[], isLoading: boolean) => any);
@@ -24,6 +25,7 @@ export class DiagramBrowserLoader
 
     private _latestLayers : LayerInfo[] = [];
     private _layerData : Record<string, LayerInternalData> = {};
+    private _layerSearchConfig : Record<string, LayerSearchConfig> = {};
 
     private _layersChangeHandler : CallbackHandler<LayersChangeHandlerCallback> = new CallbackHandler<LayersChangeHandlerCallback>();
 
@@ -81,10 +83,29 @@ export class DiagramBrowserLoader
         };
     }
 
+    getLayerSearchConfig(layer: LayerInfo) : LayerSearchConfig
+    {
+        if (layer.kind !== LayerInfoKind.Children) {
+            return {};
+        }
+        const searchConfig = this._layerSearchConfig[layer.parent!] ?? {};
+        return searchConfig;
+    }
+
+    setLayerSearchConfig(layer: LayerInfo, searchConfig: LayerSearchConfig)
+    {
+        if (layer.kind !== LayerInfoKind.Children) {
+            return;
+        }
+        this._layerSearchConfig[layer.parent!] = searchConfig;
+
+        console.log("[setLayerSearchConfig] ", searchConfig)
+
+        this._notifyLayerNodes(layer);
+    }
+
     private _handleSelectedDnChange(selected_dn: string)
     {
-        console.info("[DiagramBrowserLoader] _handleSelectedDnChange :: ", selected_dn);
-
         if (selected_dn) {
             if (selected_dn.startsWith(this._rootDn)) {
                 this._currentSelectedDn = selected_dn;
@@ -110,17 +131,9 @@ export class DiagramBrowserLoader
             this._applyLayer(layer, usedDataSourceKeys);
         }
 
-        for(const internalLayer of _.values(this._layerData))
-        {
-            if (!usedDataSourceKeys[internalLayer.key])
-            {
-                for(const subscription of _.values(internalLayer.subscriptions)) {
-                    subscription.close();
-                }
-                internalLayer.subscriptions = {};
-                delete this._layerData[internalLayer.key];
-            }
-        }
+        this._cleanupLayersData(usedDataSourceKeys);
+
+        this._cleanupLayerSearchConfigs(layers);
 
         console.info("[DiagramBrowserLoader] _applyLayers :: FINAL LAYER DATA: ", this._layerData);
 
@@ -130,10 +143,6 @@ export class DiagramBrowserLoader
 
     private _applyLayer(layer : LayerInfo, usedDataSourceKeys : Record<string, boolean>)
     {
-        if (!layer.dataKey) {
-            return;
-        }
-
         usedDataSourceKeys[layer.dataKey] = true;
 
         let layerInternalData = this._layerData[layer.dataKey];
@@ -154,7 +163,52 @@ export class DiagramBrowserLoader
         }
         this._layerData[layer.dataKey] = layerInternalData;
 
+        if (!this._layerSearchConfig[layer.dataKey]) {
+            this._layerSearchConfig[layer.dataKey] = { }
+        }
+        
         this._setupLayerSubscriptions(layerInternalData);
+    }
+
+    private _cleanupLayersData(usedDataSourceKeys : Record<string, boolean>)
+    {
+        for(const internalLayer of _.values(this._layerData))
+        {
+            if (!usedDataSourceKeys[internalLayer.key])
+            {
+                for(const subscription of _.values(internalLayer.subscriptions)) {
+                    subscription.close();
+                }
+                internalLayer.subscriptions = {};
+                delete this._layerData[internalLayer.key];
+            }
+        }
+    }
+
+    private _cleanupLayerSearchConfigs(layers : LayerInfo[])
+    {
+        const usedLayerDns : Record<string, boolean> = {};
+        for(const layer of layers)
+        {
+            if (layer.dnList)
+            {
+                for(const dn of layer.dnList)
+                {
+                    usedLayerDns[dn] = true;
+                }
+            }
+            if (layer.parent)
+            {
+                usedLayerDns[layer.parent] = true;
+            }
+        }
+
+        for(const dn of _.keys(this._layerSearchConfig))
+        {
+            if (!usedLayerDns[dn]) {
+                delete this._layerSearchConfig[dn];
+            }
+        }
     }
 
     private _setupLayerSubscriptions(layerInternalData : LayerInternalData)
@@ -164,7 +218,6 @@ export class DiagramBrowserLoader
         {
             const myDn = layer.parent!;
             layerInternalData.subscriptions[myDn] = this._diagramSource.subscribeChildrenNodes(myDn, (nodes, isLoading) => {
-                console.log("[_setupLayerSubscriptions] %s. Loading: %s. => ", myDn, isLoading, nodes);
                 layerInternalData.nodeDict = _.makeDict(nodes, x => x.dn, x => x);
                 layerInternalData.isLoading = isLoading;
                 this._updateLayerNodes(layerInternalData);
@@ -230,7 +283,71 @@ export class DiagramBrowserLoader
     private _updateLayerNodes(layerInternalData : LayerInternalData)
     {
         layerInternalData.nodes = _.values(layerInternalData.nodeDict).filter(x => x).map(x => x!);
-        layerInternalData.handler.execute(x => x(layerInternalData.nodes, layerInternalData.isLoading));
+
+        this._notifyLayerNodes(layerInternalData.layer);
+    }
+
+    private _notifyLayerNodes(layer : LayerInfo)
+    {
+        const layerInternalData = this._layerData[layer.dataKey];
+        if (!layerInternalData) {
+            return;
+        }
+
+        const layerSearchConfig = this.getLayerSearchConfig(layer);
+
+        let nodes = layerInternalData.nodes;
+
+        if (layerSearchConfig.searchCriteria) {
+            const searchCriteria = _.toLower(layerSearchConfig.searchCriteria);
+            nodes = nodes.filter(x => {
+                if (x.name) {
+                    const name = _.toLower(x.name);
+                    return _.includes(name, searchCriteria);
+                }
+                return true;
+            })
+        }
+
+        if (layerSearchConfig.errorFilter)
+        {
+            if (layerSearchConfig.errorFilter === 'present')
+            {
+                nodes = nodes.filter(x => {
+                    const value = x.alertCount?.error ?? 0;
+                    return value > 0;
+                })
+            }
+
+            if (layerSearchConfig.errorFilter === 'not-present')
+            {
+                nodes = nodes.filter(x => {
+                    const value = x.alertCount?.error ?? 0;
+                    return value === 0;
+                })
+            }
+        }
+
+        if (layerSearchConfig.warningFilter)
+        {
+            if (layerSearchConfig.warningFilter === 'present')
+            {
+                nodes = nodes.filter(x => {
+                    const value = x.alertCount?.warn ?? 0;
+                    return value > 0;
+                })
+            }
+
+            if (layerSearchConfig.warningFilter === 'not-present')
+            {
+                nodes = nodes.filter(x => {
+                    const value = x.alertCount?.warn ?? 0;
+                    return value === 0;
+                })
+            }
+        }
+
+        layerInternalData.handler.execute(x => x(nodes, layerInternalData.isLoading));
     }
 
     private _calculateNewLayersFlat() : LayerInfo[]
@@ -266,7 +383,7 @@ export class DiagramBrowserLoader
         if (parentDns.length > 0) {
             layers.push({
                 depth: 0,
-                dataKey: null,
+                dataKey: '',
                 kind: LayerInfoKind.NodeList,
                 dnList: parentDns,
                 selectedDn: (this._currentSelectedDn && parentDns.includes(this._currentSelectedDn)) ? this._currentSelectedDn : undefined,
@@ -276,7 +393,7 @@ export class DiagramBrowserLoader
         if (this._currentExpandedDn) {
             layers.push({
                 depth: 0,
-                dataKey: null,
+                dataKey: '',
                 kind: LayerInfoKind.Children,
                 parent: this._currentExpandedDn,
                 // dn: currentDn
@@ -298,7 +415,7 @@ export class DiagramBrowserLoader
         return layers;
     }
 
-    private _getLayerDataKey(layer: LayerInfo) : string | null
+    private _getLayerDataKey(layer: LayerInfo) : string
     {
         if (layer.kind == LayerInfoKind.Children) {
             return `${layer.kind}-${layer.parent!}`;
@@ -309,10 +426,9 @@ export class DiagramBrowserLoader
         if (layer.kind == LayerInfoKind.NodeList) {
             return `${layer.kind}-${layer.depth}`;
         }
-        return null;
+        throw new Error("Could not generate Layer Key");
     }
 }
-
 
 export interface LayerData
 {

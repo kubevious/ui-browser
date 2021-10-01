@@ -13,6 +13,7 @@ import { getLayerColor } from '../utils/diagram-utils';
 import { ScrollbarComponent } from '../ScrollbarComponent';
 import { LayerFilters } from '../LayerFilters';
 import { Label } from '@kubevious/ui-components';
+import { LayerSearchConfig } from '../types';
 
 
 export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBoundaryRef, viewOptions }) => {
@@ -91,9 +92,9 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
 
                 {(!isLoading) && 
                     <Label text="No children under this layer."
-                        color="faded"
-                        extraStyles={styles.centerContent}
-                            />
+                           color="faded"
+                           extraStyles={styles.centerContent}
+                           />
                 }
             </div>
 
@@ -102,13 +103,19 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
         return renderItemsList();
     };
     
+    const handleFilterConfigChange = (config: LayerSearchConfig) => {
+        loader.setLayerSearchConfig(layer, config);
+    }
+    
     return <div 
         className={cx(styles.outerLayer, {[styles.outerLayerColumn]: isNodeListView })} 
         >
 
         {isChildrenView &&
             <div className={styles.layerFilterWrapper}>
-                <LayerFilters>
+                <LayerFilters config={loader.getLayerSearchConfig(layer)}
+                              onConfigChange={handleFilterConfigChange}
+                              >
                 </LayerFilters>
             </div>}
 
