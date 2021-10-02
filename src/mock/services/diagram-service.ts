@@ -116,12 +116,12 @@ export class MockDiagramService implements IDiagramBrowserService
             childrenCount: 0,
             markers: [],
             selfAlertCount: {
-                error: 4,
-                warn: 5
+                error: (random(10) >= 5) ? random(20) : 0,
+                warn: (random(10) >= 7) ? random(30) : 0
             },
             alertCount: {
-                error: 4,
-                warn: 5
+                error: (random(10) >= 5) ? random(20) : 0,
+                warn: (random(10) >= 7) ? random(30) : 0
             }
         };
 
@@ -135,6 +135,11 @@ export class MockDiagramService implements IDiagramBrowserService
     }
 
 
+}
+
+function random(value: number)
+{
+    return Math.floor(Math.random() * value);
 }
 
 // export interface IDiagramServiceChildrenSubscriber

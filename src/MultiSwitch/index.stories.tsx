@@ -11,7 +11,7 @@ export default {
 
 const CHOICE_DATA_1 : MultiChoiceOption[] = [
     {
-        element: <img src="/img/browser/power.svg"></img>,
+        imageUrl: '/img/browser/power.svg',
         tooltip: "Options 1"
     },
     {
@@ -19,7 +19,7 @@ const CHOICE_DATA_1 : MultiChoiceOption[] = [
         tooltip: "Options 2"
     },
     {
-        element: <img src="/img/browser/green-tick.svg"></img>,
+        imageUrl: '/img/browser/green-tick.svg',
         tooltip: "Options 3"
     },
 ];
@@ -27,7 +27,7 @@ const CHOICE_DATA_1 : MultiChoiceOption[] = [
 
 const CHOICE_DATA_2 : MultiChoiceOption[] = [
     {
-        element: <img src="/img/browser/power.svg"></img>,
+        imageUrl: '/img/browser/power.svg',
         tooltip: "Options 1"
     },
     {
@@ -39,7 +39,7 @@ const CHOICE_DATA_2 : MultiChoiceOption[] = [
         tooltip: "Options 3"
     },
     {
-        element: <img src="/img/browser/green-tick.svg"></img>,
+        imageUrl: '/img/browser/green-tick.svg',
         tooltip: "Options 4"
     },
 ];

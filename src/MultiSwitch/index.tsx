@@ -9,7 +9,7 @@ export const MultiSwitch: FC<MultiSwitchProps> = ({ items, initialSelection, onS
 
     const [selected, setSelected] = useState<number>(initialSelection ?? 0);
 
-    const itemSize = 42;
+    const itemSize = 40;
     const height = itemSize + 2;
     const width = itemSize * items.length + 2;
 
@@ -26,7 +26,8 @@ export const MultiSwitch: FC<MultiSwitchProps> = ({ items, initialSelection, onS
                     style={{ width: `${itemSize}px`, height: `${itemSize}px` }}
                     onClick={() => onClick(index)} >
             <div className={styles.iconContainer}>
-                {item.element}
+                {item.element && item.element!}
+                {item.imageUrl && <div className={styles.itemImage} style={{ backgroundImage: `url(${item.imageUrl})` }}></div>}
             </div>
         </div>
     }
@@ -34,7 +35,6 @@ export const MultiSwitch: FC<MultiSwitchProps> = ({ items, initialSelection, onS
     const renderTooltipContents = (item: MultiChoiceOption) => {
         return item.tooltip ?? "";
     }
-
    
     return <>
         <div className={styles.container} style={{ width: `${width}px`, height: `${height}px` }} >

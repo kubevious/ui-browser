@@ -4,7 +4,8 @@ export type MultiSwitchChangeHandler = (index: number) => void;
 
 export interface MultiChoiceOption
 {
-    element: ReactNode;
+    element?: ReactNode;
+    imageUrl?: string;
     tooltip?: string;
 }
 

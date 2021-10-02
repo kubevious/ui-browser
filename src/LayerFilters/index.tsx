@@ -10,11 +10,11 @@ import { Input } from '@kubevious/ui-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { SeverityIcon } from '@kubevious/ui-components';
-import { SeverityFilterType } from '../types';
+import { LayerOrderType, SeverityFilterType } from '../types';
 
 const FILTER_ERROR_MULTI_CHOICE_DATA : MultiChoiceOption[] = [
     {
-        element: <img src="/img/browser/power.svg"></img>,
+        imageUrl: "/img/browser/power.svg",
         tooltip: "Turn off error filter."
     },
     {
@@ -22,7 +22,7 @@ const FILTER_ERROR_MULTI_CHOICE_DATA : MultiChoiceOption[] = [
         tooltip: "Filter objects with errors."
     },
     {
-        element: <img src="/img/browser/green-tick.svg"></img>,
+        imageUrl: "/img/browser/green-tick.svg",
         tooltip: "Filter objects without errors."
     },
 ];
@@ -30,7 +30,7 @@ const FILTER_ERROR_MULTI_CHOICE_DATA : MultiChoiceOption[] = [
 
 const FILTER_WARNING_MULTI_CHOICE_DATA : MultiChoiceOption[] = [
     {
-        element: <img src="/img/browser/power.svg"></img>,
+        imageUrl: "/img/browser/power.svg",
         tooltip: "Turn off warning filter."
     },
     {
@@ -38,10 +38,27 @@ const FILTER_WARNING_MULTI_CHOICE_DATA : MultiChoiceOption[] = [
         tooltip: "Filter objects with warnings."
     },
     {
-        element: <img src="/img/browser/green-tick.svg"></img>,
+        imageUrl: "/img/browser/green-tick.svg",
         tooltip: "Filter objects without warnings."
     },
 ];
+
+
+const ORDERING_CHOICE_DATA : MultiChoiceOption[] = [
+    {
+        imageUrl: "/img/browser/ordering/order-alph-asc.svg",
+        tooltip: "Order alphabetically."
+    },
+    {
+        imageUrl: "/img/browser/ordering/order-err-asc.svg",
+        tooltip: "Order by errors."
+    },
+    {
+        imageUrl: "/img/browser/ordering/order-warn-asc.svg",
+        tooltip: "Order by warnings."
+    },
+];
+
 
 
 export const LayerFilters: FC<LayerFiltersProps> = ({ config, onConfigChange }) => {
@@ -51,6 +68,7 @@ export const LayerFilters: FC<LayerFiltersProps> = ({ config, onConfigChange }) 
     const [criteria, setCriteria] = useState<string>(myConfig.searchCriteria || '');
     const [errorFilter, setErrorFilter] = useState<SeverityFilterType>(myConfig.errorFilter || null);
     const [warningFilter, setWarningFilter] = useState<SeverityFilterType>(myConfig.warningFilter || null);
+    const [ordering, setOrdering] = useState<LayerOrderType>(myConfig.ordering || 'alph-asc');
 
     const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const input = e.target.value;
@@ -65,6 +83,10 @@ export const LayerFilters: FC<LayerFiltersProps> = ({ config, onConfigChange }) 
         setWarningFilter(getSeveritySelectionValue(index));
     };
 
+    const handleOrderChange = (index: number): void => {
+        setOrdering(getOrderingSelectionValue(index));
+    };
+
     useEffect(() => {
         if (!onConfigChange) {
             return;
@@ -74,8 +96,9 @@ export const LayerFilters: FC<LayerFiltersProps> = ({ config, onConfigChange }) 
             searchCriteria: criteria,
             errorFilter: errorFilter,
             warningFilter: warningFilter,
+            ordering: ordering
         });
-    }, [criteria, errorFilter, warningFilter]);
+    }, [criteria, errorFilter, warningFilter, ordering]);
 
     return <div className={styles.container}>
         <div className={styles.searchInput}>
@@ -100,6 +123,14 @@ export const LayerFilters: FC<LayerFiltersProps> = ({ config, onConfigChange }) 
                 initialSelection={getSeveritySelectionIndex(warningFilter)}
                 onSelectedChanged={handleWarningFilterChange}
                 />
+
+        <div className={styles.separator} />
+
+        <MultiSwitch
+                items={ORDERING_CHOICE_DATA}
+                initialSelection={getOrderingSelectionIndex(ordering)}
+                onSelectedChanged={handleOrderChange}
+                />                
     </div>
 }
 
@@ -120,5 +151,26 @@ function getSeveritySelectionValue(index: number) : SeverityFilterType
         case 1: return 'present';
         case 2: return 'not-present';
         default: return null;
+    }
+}
+
+
+function getOrderingSelectionIndex(value?: LayerOrderType) : number
+{
+    switch(value) 
+    {
+        case 'error-asc': return 1;
+        case 'warn-asc': return 2;
+        default: return 0;
+    }
+}
+
+function getOrderingSelectionValue(index: number) : LayerOrderType
+{
+    switch(index) 
+    {
+        case 1: return 'error-asc';
+        case 2: return 'warn-asc';
+        default: return 'alph-asc';
     }
 }

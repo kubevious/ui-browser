@@ -14,6 +14,7 @@
 
 .selectedItemContainer {
     background: #F2BF58;
+    border-radius: 2px;
  }
 
 .iconContainer {
@@ -27,4 +28,10 @@
 .iconContainer img, .iconContainer i, .iconContainer span, .iconContainer div {
     width: 100%;
     height: 100%;
+}
+
+.itemImage {
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin: auto 0 auto 0;
 }

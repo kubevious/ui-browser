@@ -9,3 +9,9 @@
 .searchInput {
     flex-grow: 1;
 }
+
+.separator {
+    border-left: 1px solid #686868;
+    width: 1px;
+    height: 38px;
+}

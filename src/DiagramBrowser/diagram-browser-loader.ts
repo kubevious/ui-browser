@@ -347,6 +347,24 @@ export class DiagramBrowserLoader
             }
         }
 
+        switch(layerSearchConfig.ordering)
+        {
+            case 'alph-asc': {
+                nodes = _.orderBy(nodes, [x => x.kind, x => x.name], ['asc', 'asc']);
+                break;
+            }
+            case 'error-asc': {
+                nodes = _.orderBy(nodes, [x => x.alertCount?.error ?? 0, x => x.kind, x => x.name], ['desc', 'asc', 'asc']);
+                break;
+            }
+            case 'warn-asc': {
+                nodes = _.orderBy(nodes, [x => x.alertCount?.warn ?? 0, x => x.kind, x => x.name], ['desc', 'asc', 'asc']);
+                break;
+            }
+        }
+
+        console.log("[_notifyLayerNodes] nodes => ", nodes)
+
         layerInternalData.handler.execute(x => x(nodes, layerInternalData.isLoading));
     }
 
@@ -396,8 +414,6 @@ export class DiagramBrowserLoader
                 dataKey: '',
                 kind: LayerInfoKind.Children,
                 parent: this._currentExpandedDn,
-                // dn: currentDn
-                // isGridView: this._viewOptions.useGridView
             });
         }
 
