@@ -40,7 +40,7 @@ export const DiagramBrowser: FC<DiagramBrowserProps> = ({ diagramSource, rootDn,
             <div className={styles.content}
                  ref={contentRef}>
 
-                {loader && layers.map((layer, index) => 
+                {loader && layers.map((layer) => 
 
                     // <div key={index}>
                     //     <pre>
