@@ -73,6 +73,29 @@ export const Default: Story = () => {
     </>;
 };
 
+
+const CHOICE_MULTI_STATE_DATA : MultiChoiceOption[] = [
+    {
+        imageUrl: '/img/browser/power.svg',
+        tooltip: "Options 1"
+    },
+    {
+        element: <SeverityIcon severity="error" />,
+        tooltip: "Options 2",
+        alternatives: [
+            {
+                element: <SeverityIcon severity="warn" />,
+                tooltip: "This is the second option"
+            }
+        ]
+    },
+    {
+        imageUrl: '/img/browser/green-tick.svg',
+        tooltip: "Options 3"
+    },
+];
+
+
 export const ChangeHandler: Story = () => {
     const [index, setIndex] = useState<number>(1);
 
@@ -89,6 +112,32 @@ export const ChangeHandler: Story = () => {
 
             <div style={{ background: '#1e1e1e', margin: '50px', padding: '50px', color: 'white' }}>
                 {index}
+            </div>
+
+        </div>
+
+    </>;
+};
+
+
+export const MultiStage: Story = () => {
+    const [index, setIndex] = useState<number>(1);
+    const [layerIndex, setLayerIndex] = useState<number>(1);
+    const [subIndex, setSubIndex] = useState<number>(1);
+
+    return <>
+        <div style={{ background: '#999999', margin: '50px', padding: '50px' }}>
+            
+            <div style={{ background: '#1e1e1e', margin: '50px', padding: '50px' }}>
+                <MultiSwitch
+                    items={CHOICE_MULTI_STATE_DATA}
+                    initialSelection={index}
+                    onSelectedChanged={(a, b, c) => { setIndex(a); setLayerIndex(b); setSubIndex(c) }}
+                    />
+            </div>
+
+            <div style={{ background: '#1e1e1e', margin: '50px', padding: '50px', color: 'white' }}>
+                {index} / {layerIndex} / {subIndex}
             </div>
 
         </div>

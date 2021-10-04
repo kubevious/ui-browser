@@ -47,15 +47,24 @@ const FILTER_WARNING_MULTI_CHOICE_DATA : MultiChoiceOption[] = [
 const ORDERING_CHOICE_DATA : MultiChoiceOption[] = [
     {
         imageUrl: "/img/browser/ordering/order-alph-asc.svg",
-        tooltip: "Order alphabetically."
+        tooltip: "Order alphabetically. Click to change the order direction.",
+        alternatives: [{
+            imageUrl: "/img/browser/ordering/order-alph-desc.svg",
+        }]
     },
     {
-        imageUrl: "/img/browser/ordering/order-err-asc.svg",
-        tooltip: "Order by errors."
+        imageUrl: "/img/browser/ordering/order-err-desc.svg",
+        tooltip: "Order by errors. Click to change the order direction.",
+        alternatives: [{
+            imageUrl: "/img/browser/ordering/order-err-asc.svg",
+        }]
     },
     {
-        imageUrl: "/img/browser/ordering/order-warn-asc.svg",
-        tooltip: "Order by warnings."
+        imageUrl: "/img/browser/ordering/order-warn-desc.svg",
+        tooltip: "Order by warnings. Click to change the order direction.",
+        alternatives: [{
+            imageUrl: "/img/browser/ordering/order-warn-asc.svg",
+        }]
     },
 ];
 
@@ -159,8 +168,12 @@ function getOrderingSelectionIndex(value?: LayerOrderType) : number
 {
     switch(value) 
     {
-        case 'error-asc': return 1;
-        case 'warn-asc': return 2;
+        case 'alph-asc': return 0;
+        case 'alph-desc': return 1;
+        case 'error-desc': return 2;
+        case 'error-asc': return 3;
+        case 'warn-desc': return 4;
+        case 'warn-asc': return 5;
         default: return 0;
     }
 }
@@ -169,8 +182,12 @@ function getOrderingSelectionValue(index: number) : LayerOrderType
 {
     switch(index) 
     {
-        case 1: return 'error-asc';
-        case 2: return 'warn-asc';
-        default: return 'alph-asc';
+        case 0: return 'alph-asc';
+        case 1: return 'alph-desc';
+        case 2: return 'error-desc';
+        case 3: return 'error-asc';
+        case 4: return 'warn-desc';
+        case 5: return 'warn-asc';
+        default: throw new Error("Unknown index: " + index);
     }
 }

@@ -10,7 +10,7 @@ import { parseDn, makeDn }from '@kubevious/entity-meta';
 import { LayerSearchConfig } from '../types';
 
 export type LayersChangeHandlerCallback = ((layers: LayerInfo[]) => any);
-export type LayerNodesChangeHandlerCallback = ((nodes: NodeConfig[], isLoading: boolean) => any);
+export type LayerNodesChangeHandlerCallback = ((nodes: NodeConfig[], isLoading: boolean, totalNodeCount: number) => any);
 
 export class DiagramBrowserLoader
 {
@@ -69,12 +69,12 @@ export class DiagramBrowserLoader
         if (layer.dataKey) {
             const layerInternalData = this._layerData[layer.dataKey];
             if (layerInternalData) {
-                cb(layerInternalData.nodes, layerInternalData.isLoading);
+                cb(layerInternalData.nodes, layerInternalData.isLoading, layerInternalData.nodes.length);
                 return layerInternalData.handler.on(cb);
             }
         }
 
-        cb([], true);
+        cb([], true, 0);
 
         return {
             close: () => {
@@ -353,19 +353,36 @@ export class DiagramBrowserLoader
                 nodes = _.orderBy(nodes, [x => x.kind, x => x.name], ['asc', 'asc']);
                 break;
             }
-            case 'error-asc': {
+
+            case 'alph-desc': {
+                nodes = _.orderBy(nodes, [x => x.kind, x => x.name], ['desc', 'desc']);
+                break;
+            }
+
+            case 'error-desc': {
                 nodes = _.orderBy(nodes, [x => x.alertCount?.error ?? 0, x => x.kind, x => x.name], ['desc', 'asc', 'asc']);
                 break;
             }
-            case 'warn-asc': {
+
+            case 'error-asc': {
+                nodes = _.orderBy(nodes, [x => x.alertCount?.error ?? 0, x => x.kind, x => x.name], ['asc', 'asc', 'asc']);
+                break;
+            }
+
+            case 'warn-desc': {
                 nodes = _.orderBy(nodes, [x => x.alertCount?.warn ?? 0, x => x.kind, x => x.name], ['desc', 'asc', 'asc']);
+                break;
+            }
+
+            case 'warn-asc': {
+                nodes = _.orderBy(nodes, [x => x.alertCount?.warn ?? 0, x => x.kind, x => x.name], ['asc', 'asc', 'asc']);
                 break;
             }
         }
 
         console.log("[_notifyLayerNodes] nodes => ", nodes)
 
-        layerInternalData.handler.execute(x => x(nodes, layerInternalData.isLoading));
+        layerInternalData.handler.execute(x => x(nodes, layerInternalData.isLoading, layerInternalData.nodes.length));
     }
 
     private _calculateNewLayersFlat() : LayerInfo[]

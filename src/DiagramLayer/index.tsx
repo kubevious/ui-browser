@@ -22,15 +22,17 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
 
     const [ isLoading, setIsLoading ] = useState<boolean>(false);
     const [ nodes, setNodes ] = useState<NodeConfig[]>([]);
+    const [ totalNodeCount, setTotalNodeCount ] = useState<number>(0);
 
     const isChildrenView = (layer.kind == LayerInfoKind.Children);
     const isNodeListView = (layer.kind == LayerInfoKind.NodeList);
 
     useEffect(() => {
 
-        const subscription = loader.onLayerNodesChange(layer, (newNodes, newIsLoading) => {
+        const subscription = loader.onLayerNodesChange(layer, (newNodes, newIsLoading, newTotalNodeCount) => {
             setNodes(newNodes ?? []);
             setIsLoading(newIsLoading);
+            setTotalNodeCount(newTotalNodeCount);
         })
 
         return () => {
@@ -90,12 +92,18 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
         if (nodes.length == 0) {
             return <div className={cx(styles.layer, styles.centerLayer)}>
 
-                {(!isLoading) && 
+                {(!isLoading) && (totalNodeCount === 0) &&
                     <Label text="No children under this layer."
                            color="faded"
                            extraStyles={styles.centerContent}
-                           />
-                }
+                           />}
+
+                {(!isLoading) && (totalNodeCount > 0) &&
+                    <Label text="No items matching the filter. Try changing filter parameters."
+                           color="faded"
+                           extraStyles={styles.centerContent}
+                           />}
+
             </div>
 
         }
@@ -118,8 +126,6 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
                               >
                 </LayerFilters>
             </div>}
-
-        
 
         <div style={{ height: '100%'}}
              className={styles.itemsContent}   >
