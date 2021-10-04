@@ -65,7 +65,7 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
     }, [ layer.dataKey, nodes ]);
 
     const renderItemsList = () => {
-        return <ScrollbarComponent
+        return <ScrollbarComponent disableHorizontal
             >
             <div data-dn={layer.parent}
                 className={styles.layer}

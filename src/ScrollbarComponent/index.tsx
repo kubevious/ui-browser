@@ -5,6 +5,7 @@ export interface ScrollbarComponentProps
 {
     style?: React.CSSProperties;
     className?: string;
+    disableHorizontal?: boolean;
 }
 
 export class ScrollbarComponent extends Component<ScrollbarComponentProps> {
@@ -13,6 +14,7 @@ export class ScrollbarComponent extends Component<ScrollbarComponentProps> {
         super(props);
         this.state = { };
         this.renderThumb = this.renderThumb.bind(this);
+        this.noopRenderTrack = this.noopRenderTrack.bind(this);
     }
 
     renderThumb({ style, ...props } : { style: any, [key: string] : any}) {
@@ -27,11 +29,16 @@ export class ScrollbarComponent extends Component<ScrollbarComponentProps> {
         );
     }
 
-    render() {
+    noopRenderTrack({ style, ...props } : { style: any, [key: string] : any}) {
+        return  <div {...props} style={{display: 'none'}} className="track-horizontal"/>
+    }
+
+    render()
+    {
         return (
             <Scrollbars style={this.props.style}
-                renderThumbHorizontal={this.renderThumb}
                 renderThumbVertical={this.renderThumb}
+                renderTrackHorizontal={this.props.disableHorizontal ? this.noopRenderTrack : undefined}
                 className={this.props.className}
                 autoHide
                 {...this.props}/>
