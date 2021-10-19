@@ -748,4 +748,5 @@ export const DN_LIST = [
     "root/logic/ns-[test-webapp-frontend]/app-[frontend]/netpols-[NetworkPolicies]",
     "root/logic/ns-[test-webapp-frontend]/app-[frontend]/netpols-[NetworkPolicies]/netpol-[default-deny-ingress]",
     "root/logic/ns-[test-webapp-frontend]/app-[frontend]/netpols-[NetworkPolicies]/netpol-[frontend-ingress-allow]",
+    "root/gateway",
 ]

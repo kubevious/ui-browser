@@ -84,6 +84,9 @@ export const Interactive: Story = () => {
         app.sharedState.set('selected_dn', 'root/logic/ns-[sprt]/app-[gprod-sprt-main-grfna]/cont-[gprod-sprt-main-grfna]/port-[default (TCP-3000)]/service-[gprod-sprt-main-grfna-default]');
     }
     function caseTwo() {
+        app.sharedState.set('selected_dn', 'root/logic/ns-[sprt]/app-[gprod-sprt-main-grfna]/cont-[gprod-sprt-main-grfna]/port-[default (TCP-3000)]');
+    }
+    function caseThree() {
         app.sharedState.set('selected_dn', null);
     }
 
@@ -98,6 +101,7 @@ export const Interactive: Story = () => {
                 <div style={{ margin: '1rem' }}>
                     <button onClick={caseOne}>Case One</button>;
                     <button onClick={caseTwo}>Case Two</button>;
+                    <button onClick={caseThree}>Case Three</button>;
                 </div>
 
                 <div style={{ margin: '1rem', height: "500px" }}>
@@ -158,6 +162,18 @@ export const MultiScreen: Story = () => (
             <div style={{ margin: '1rem', height: '400px' }}>
                 <DiagramBrowser diagramSource={MyDiagramSource}
                                 rootDn="root/infra">
+                </DiagramBrowser>
+            </div>
+        </div>
+
+
+        <div style={{ margin: '1rem' }}>
+            <h2>Gateway</h2>
+        </div>
+        <div>
+            <div style={{ margin: '1rem', height: '400px' }}>
+                <DiagramBrowser diagramSource={MyDiagramSource}
+                                rootDn="root/gateway">
                 </DiagramBrowser>
             </div>
         </div>
