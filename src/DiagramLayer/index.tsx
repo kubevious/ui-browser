@@ -50,16 +50,21 @@ export const DiagramLayer: FC<DiagramLayerProps> = ({ layer, loader, scrollBound
             }
         }
 
-        if (layer.selectedDn) {
-            const currentElem = layerRef.current;
-            if (currentElem) {
-                scrollIntoView(currentElem, {
-                    behavior: 'smooth',
-                    inline: 'end',
-                    block: 'end',
-                    boundary: scrollBoundaryRef?.current
-                });
-            }
+        if (!layer.selectedDn) {
+            return;
+        }
+        if (!nodes.some(x => x.dn === layer.selectedDn)) {
+            return;
+        }
+
+        const currentElem = layerRef.current;
+        if (currentElem) {
+            scrollIntoView(currentElem, {
+                behavior: 'smooth',
+                inline: 'end',
+                block: 'end',
+                boundary: scrollBoundaryRef?.current
+            });
         }
 
     }, [ layer.dataKey, nodes ]);

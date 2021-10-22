@@ -1551,10 +1551,17 @@
   dependencies:
     the-lodash "^2.0.9"
 
-"@kubevious/entity-meta@^1.0.21", "@kubevious/entity-meta@^1.0.25", "@kubevious/entity-meta@^1.0.26":
+"@kubevious/entity-meta@^1.0.21", "@kubevious/entity-meta@^1.0.25":
   version "1.0.26"
   resolved "https://registry.yarnpkg.com/@kubevious/entity-meta/-/entity-meta-1.0.26.tgz#a83f190195501d8af5ed2621eb0d8a0b71f73b7c"
   integrity sha512-x0fULq1YBXpfUXo4VgjtG+9Sw56LsJL8B2RwDDcjvj0Bo/y5RmsyiBlpoaRwZ4xUTtzV+vw2d6WIBWyfMs/AxA==
+  dependencies:
+    the-lodash "^2.0.9"
+
+"@kubevious/entity-meta@^1.0.34":
+  version "1.0.34"
+  resolved "https://registry.yarnpkg.com/@kubevious/entity-meta/-/entity-meta-1.0.34.tgz#2b34e4c05cd990a457e7a2d4aff1291f7c2c493c"
+  integrity sha512-E7K29+k8JmNG35xgxzNQMLesdRECHA2OFNiQJgXRLviXho4byXUa47YkZ46GTpEXqxVGAfPeZp/QaNDnPB1Bng==
   dependencies:
     the-lodash "^2.0.9"
 
