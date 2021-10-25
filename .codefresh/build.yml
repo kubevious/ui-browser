@@ -44,6 +44,7 @@ steps:
     working_directory: "${{CICD_REPO_PATH}}"
     commands:
       - yarn install --frozen-lockfile
+      - ./tools/kubevious-npm-validate-nested-dependencies.sh
 
   compile:
     title: Compile

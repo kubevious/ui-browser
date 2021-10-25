@@ -1544,24 +1544,10 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
-"@kubevious/entity-meta@^1.0.18":
-  version "1.0.18"
-  resolved "https://registry.yarnpkg.com/@kubevious/entity-meta/-/entity-meta-1.0.18.tgz#d9b07ec2d05d17659bb2735dda1067e185912018"
-  integrity sha512-LuCwWeJmhGPfP1lNDmkSZtdBN3XYXSX6McL3x+Pgmxx0+viPdAHk16s2UKzSN/3UXztXQ0VOvfnhxxDmFLxeUQ==
-  dependencies:
-    the-lodash "^2.0.9"
-
-"@kubevious/entity-meta@^1.0.21", "@kubevious/entity-meta@^1.0.25":
-  version "1.0.26"
-  resolved "https://registry.yarnpkg.com/@kubevious/entity-meta/-/entity-meta-1.0.26.tgz#a83f190195501d8af5ed2621eb0d8a0b71f73b7c"
-  integrity sha512-x0fULq1YBXpfUXo4VgjtG+9Sw56LsJL8B2RwDDcjvj0Bo/y5RmsyiBlpoaRwZ4xUTtzV+vw2d6WIBWyfMs/AxA==
-  dependencies:
-    the-lodash "^2.0.9"
-
-"@kubevious/entity-meta@^1.0.34":
-  version "1.0.34"
-  resolved "https://registry.yarnpkg.com/@kubevious/entity-meta/-/entity-meta-1.0.34.tgz#2b34e4c05cd990a457e7a2d4aff1291f7c2c493c"
-  integrity sha512-E7K29+k8JmNG35xgxzNQMLesdRECHA2OFNiQJgXRLviXho4byXUa47YkZ46GTpEXqxVGAfPeZp/QaNDnPB1Bng==
+"@kubevious/entity-meta@^1.0.25", "@kubevious/entity-meta@^1.0.34", "@kubevious/entity-meta@^1.0.36":
+  version "1.0.36"
+  resolved "https://registry.yarnpkg.com/@kubevious/entity-meta/-/entity-meta-1.0.36.tgz#378d07eb3750528f7ebcf37431edc572c030233e"
+  integrity sha512-E5e+PpfjcbMvBoDgmm2vFDitBxR2cJC8mB4+oXN7ozEkG+58UuYjs75mUM66IiQLd+i4jne2MDIyLwUL7EGyVA==
   dependencies:
     the-lodash "^2.0.9"
 
@@ -1575,46 +1561,18 @@
     the-promise "^2.0.12"
     uuid "^8.3.2"
 
-"@kubevious/ui-alerts@^1.0.34":
-  version "1.0.34"
-  resolved "https://registry.yarnpkg.com/@kubevious/ui-alerts/-/ui-alerts-1.0.34.tgz#847c82cc36e6bd7a1ec8486f5ee3fbc7348dae94"
-  integrity sha512-/Ivjl4WlvqNp5nVuacFAUyB0GowjLzm6oaxpOQpvJ48bvaseH6bYyCtoz49fHpN50g9TsSaeueHjQMG3NvoeBQ==
+"@kubevious/ui-alerts@^1.0.35":
+  version "1.0.35"
+  resolved "https://registry.yarnpkg.com/@kubevious/ui-alerts/-/ui-alerts-1.0.35.tgz#491377e1c792651a41b1f960ccdf719d34504563"
+  integrity sha512-eUiERdfw9Qukd13mZ5P8HwxT5mrPnWuF/CObzYp7Ql07cKwSWjkIzlFDP4ljOuVGkvydazq12/k/ERFgojSRjg==
   dependencies:
-    "@kubevious/entity-meta" "^1.0.21"
-    "@kubevious/ui-components" "^1.0.170"
+    "@kubevious/entity-meta" "^1.0.34"
+    "@kubevious/ui-components" "^1.0.175"
     "@kubevious/ui-framework" "^1.0.50"
     classnames "^2.2.6"
     popper.js "^1.16.1"
     postcss "^8.2.10"
     the-lodash "^2.0.9"
-
-"@kubevious/ui-components@^1.0.170":
-  version "1.0.170"
-  resolved "https://registry.yarnpkg.com/@kubevious/ui-components/-/ui-components-1.0.170.tgz#5dfa5d457fc6a4ba3119c598cf290308944c34ce"
-  integrity sha512-tastCES538+n16nvjer8Eo0Hoe4jzmNjoRKwbcN2zzDlJp4p38GG6fgiz0IdZk0fH/xnrRXv/j+XWj6l4VJFaw==
-  dependencies:
-    "@fortawesome/fontawesome-svg-core" "^1.2.35"
-    "@fortawesome/free-regular-svg-icons" "^5.15.1"
-    "@fortawesome/free-solid-svg-icons" "^5.15.3"
-    "@fortawesome/react-fontawesome" "^0.1.14"
-    "@kubevious/entity-meta" "^1.0.18"
-    "@kubevious/ui-framework" "^1.0.50"
-    "@kubevious/ui-middleware" "^1.0.39"
-    bootstrap "^5.0.0"
-    classnames "^2.2.6"
-    codemirror "^5.60.0"
-    golden-layout "^1.5.9"
-    jquery "^3.5.1"
-    popper.js "^1.16.1"
-    react "^17.0.2"
-    react-bootstrap "^2.0.0-beta.4"
-    react-codemirror2 "^7.2.1"
-    react-dom "^17.0.2"
-    react-router-dom "^5.2.0"
-    react-select "^4.3.1"
-    the-lodash "^2.0.9"
-    the-promise "^2.0.13"
-    uuid "^8.3.2"
 
 "@kubevious/ui-components@^1.0.175":
   version "1.0.175"
@@ -1657,11 +1615,12 @@
     the-promise "^2.0.13"
     uuid "^8.3.2"
 
-"@kubevious/ui-middleware@^1.0.39":
-  version "1.0.39"
-  resolved "https://registry.yarnpkg.com/@kubevious/ui-middleware/-/ui-middleware-1.0.39.tgz#8a90bb3ce0dce5d61409eed79321ec92b3aa3d62"
-  integrity sha512-zkmY/KDD+tHCYTJ+3GZ24MA91puwLjkoFMvT35RqmrBB/4xBOprNTsYF431mcyo0bh4J5MxxqC2SwGqXoJQicw==
+"@kubevious/ui-middleware@^1.0.39", "@kubevious/ui-middleware@^1.0.40":
+  version "1.0.40"
+  resolved "https://registry.yarnpkg.com/@kubevious/ui-middleware/-/ui-middleware-1.0.40.tgz#46677b44c566bbf7956051bd9d08b7fb6e1d1f15"
+  integrity sha512-MdGgwud0StvryRqynqzTNb5/3fyyvTijBD7yuZ1WKetSRn0DK/wcfasEIqfKTfyUpB69qSzzIdvWt4inEhfWhg==
   dependencies:
+    "@kubevious/entity-meta" "^1.0.36"
     the-promise "^2.0.13"
 
 "@mdx-js/loader@^1.6.22":

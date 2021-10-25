@@ -6,7 +6,7 @@ import { LayerInfo, LayerInfoKind } from "../service/types";
 import { NodeConfig } from "@kubevious/ui-middleware/dist/services/diagram-browser";
 import { CallbackHandler } from './callback-handler';
 import { IClosable } from '@kubevious/ui-middleware/dist/common-types';
-import { parseDn, makeDn }from '@kubevious/entity-meta';
+import { parseDn, makeDn, DIAGRAM_ORDER }from '@kubevious/entity-meta';
 import { LayerSearchConfig } from '../types';
 
 export type LayersChangeHandlerCallback = ((layers: LayerInfo[]) => any);
@@ -399,32 +399,32 @@ export class DiagramBrowserLoader
             switch(layerSearchConfig.ordering)
             {
                 case 'alph-asc': {
-                    nodes = _.orderBy(nodes, [x => x.kind, x => x.name], ['asc', 'asc']);
+                    nodes = _.orderBy(nodes, [orderByKindId, orderByKindStr, orderByName], ['asc', 'asc', 'asc']);
                     break;
                 }
 
                 case 'alph-desc': {
-                    nodes = _.orderBy(nodes, [x => x.kind, x => x.name], ['desc', 'desc']);
+                    nodes = _.orderBy(nodes, [orderByKindId, orderByKindStr, orderByName], ['desc', 'desc', 'desc']);
                     break;
                 }
 
                 case 'error-desc': {
-                    nodes = _.orderBy(nodes, [x => x.alertCount?.error ?? 0, x => x.kind, x => x.name], ['desc', 'asc', 'asc']);
+                    nodes = _.orderBy(nodes, [orderByError, orderByKindId, orderByKindStr, orderByName], ['desc', 'asc', 'asc', 'asc']);
                     break;
                 }
 
                 case 'error-asc': {
-                    nodes = _.orderBy(nodes, [x => x.alertCount?.error ?? 0, x => x.kind, x => x.name], ['asc', 'asc', 'asc']);
+                    nodes = _.orderBy(nodes, [orderByError, orderByKindId, orderByKindStr, orderByName], ['asc', 'asc', 'asc', 'asc']);
                     break;
                 }
 
                 case 'warn-desc': {
-                    nodes = _.orderBy(nodes, [x => x.alertCount?.warn ?? 0, x => x.kind, x => x.name], ['desc', 'asc', 'asc']);
+                    nodes = _.orderBy(nodes, [orderByWarn, orderByKindId, orderByKindStr, orderByName], ['desc', 'asc', 'asc', 'asc']);
                     break;
                 }
 
                 case 'warn-asc': {
-                    nodes = _.orderBy(nodes, [x => x.alertCount?.warn ?? 0, x => x.kind, x => x.name], ['asc', 'asc', 'asc']);
+                    nodes = _.orderBy(nodes, [orderByWarn, orderByKindId, orderByKindStr, orderByName], ['asc', 'asc', 'asc', 'asc']);
                     break;
                 }
             }
@@ -527,4 +527,30 @@ export class LayerInternalData
     subscriptions: Record<string, IService>;
 
     handler: CallbackHandler<LayerNodesChangeHandlerCallback>;
+}
+
+function orderByError(x : NodeConfig) : number
+{
+    return x.alertCount?.error ?? 0;
+}
+
+function orderByWarn(x : NodeConfig) : number
+{
+    return x.alertCount?.error ?? 0;
+}
+
+
+function orderByKindId(x : NodeConfig) : number
+{
+    return DIAGRAM_ORDER.get(x.kind);
+}
+
+function orderByKindStr(x : NodeConfig) : string
+{
+    return x.kind;
+}
+
+function orderByName(x : NodeConfig) : string
+{
+    return x.name ?? '';
 }

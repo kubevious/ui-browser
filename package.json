@@ -26,11 +26,11 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
-    "@kubevious/entity-meta": "^1.0.34",
-    "@kubevious/ui-alerts": "^1.0.34",
+    "@kubevious/entity-meta": "^1.0.36",
+    "@kubevious/ui-alerts": "^1.0.35",
     "@kubevious/ui-components": "^1.0.175",
     "@kubevious/ui-framework": "^1.0.50",
-    "@kubevious/ui-middleware": "^1.0.39",
+    "@kubevious/ui-middleware": "^1.0.40",
     "bootstrap": "^5.0.0",
     "classnames": "^2.2.6",
     "react-custom-scrollbars-2": "^4.4.0",
@@ -80,5 +80,13 @@
     "ts-node": "^9.0.0",
     "tslib": "^2.1.0",
     "typescript": "^4.1.3"
+  },
+  "resolutions": {
+    "the-lodash": "^2.0.9",
+    "@kubevious/ui-framework": "^1.0.50",
+    "@kubevious/ui-components": "^1.0.175",
+    "@kubevious/ui-alerts": "^1.0.35",
+    "@kubevious/ui-middleware": "^1.0.40",
+    "@kubevious/entity-meta": "^1.0.36"
   }
 }
