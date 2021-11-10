@@ -1544,10 +1544,10 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
-"@kubevious/entity-meta@^1.0.25", "@kubevious/entity-meta@^1.0.34", "@kubevious/entity-meta@^1.0.36":
-  version "1.0.36"
-  resolved "https://registry.yarnpkg.com/@kubevious/entity-meta/-/entity-meta-1.0.36.tgz#378d07eb3750528f7ebcf37431edc572c030233e"
-  integrity sha512-E5e+PpfjcbMvBoDgmm2vFDitBxR2cJC8mB4+oXN7ozEkG+58UuYjs75mUM66IiQLd+i4jne2MDIyLwUL7EGyVA==
+"@kubevious/entity-meta@^1.0.34", "@kubevious/entity-meta@^1.0.36", "@kubevious/entity-meta@^1.0.41":
+  version "1.0.41"
+  resolved "https://registry.yarnpkg.com/@kubevious/entity-meta/-/entity-meta-1.0.41.tgz#609bf0c02dcab2011bbd950a8a6ab5e5e062bfee"
+  integrity sha512-EoOtDqAWwTOfDqFQJdkv8eX73mQ2FlZsQeq80D0uK3ETm6dbJGNpW+iwj35P/67dCRJNCIZKZ7jhwq9iHqm7rw==
   dependencies:
     the-lodash "^2.0.9"
 
@@ -1574,27 +1574,30 @@
     postcss "^8.2.10"
     the-lodash "^2.0.9"
 
-"@kubevious/ui-components@^1.0.175":
-  version "1.0.175"
-  resolved "https://registry.yarnpkg.com/@kubevious/ui-components/-/ui-components-1.0.175.tgz#49010c122cf9c4ef737ed292c15939a2fdc5c85c"
-  integrity sha512-CfRljFPqQ9MKC1sIq2wfoiHxVMSnoP6v4/RHht3T6eJcBSI8XMPQZjS7AstWyt6f/GByrfL8v2uvgNxly4fB2g==
+"@kubevious/ui-components@^1.0.175", "@kubevious/ui-components@^1.0.181":
+  version "1.0.181"
+  resolved "https://registry.yarnpkg.com/@kubevious/ui-components/-/ui-components-1.0.181.tgz#646911a59683429ef7f72fd63496ddd2ae2a7ff8"
+  integrity sha512-zr4yuA/AwB+9II9HtVCGH3KRDySD7mMVZkdQgIuxgyPLQp5esUO+5JQZoBKXHWevJ/xNUG1af7cSaOMYHBg2jg==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.35"
     "@fortawesome/free-regular-svg-icons" "^5.15.1"
     "@fortawesome/free-solid-svg-icons" "^5.15.3"
     "@fortawesome/react-fontawesome" "^0.1.14"
-    "@kubevious/entity-meta" "^1.0.25"
+    "@kubevious/entity-meta" "^1.0.41"
     "@kubevious/ui-framework" "^1.0.50"
-    "@kubevious/ui-middleware" "^1.0.39"
+    "@kubevious/ui-middleware" "^1.0.40"
+    "@types/codemirror" "^5.60.5"
     bootstrap "^5.0.0"
     classnames "^2.2.6"
-    codemirror "^5.60.0"
+    codemirror "^5.63.3"
     golden-layout "^1.5.9"
     jquery "^3.5.1"
+    js-yaml "^4.0.0"
     popper.js "^1.16.1"
     react "^17.0.2"
     react-bootstrap "^2.0.0-beta.4"
     react-codemirror2 "^7.2.1"
+    react-custom-scrollbars-2 "^4.4.0"
     react-dom "^17.0.2"
     react-router-dom "^5.2.0"
     react-select "^4.3.1"
@@ -1615,7 +1618,7 @@
     the-promise "^2.0.13"
     uuid "^8.3.2"
 
-"@kubevious/ui-middleware@^1.0.39", "@kubevious/ui-middleware@^1.0.40":
+"@kubevious/ui-middleware@^1.0.40":
   version "1.0.40"
   resolved "https://registry.yarnpkg.com/@kubevious/ui-middleware/-/ui-middleware-1.0.40.tgz#46677b44c566bbf7956051bd9d08b7fb6e1d1f15"
   integrity sha512-MdGgwud0StvryRqynqzTNb5/3fyyvTijBD7yuZ1WKetSRn0DK/wcfasEIqfKTfyUpB69qSzzIdvWt4inEhfWhg==
@@ -2653,6 +2656,13 @@
   dependencies:
     classnames "*"
 
+"@types/codemirror@^5.60.5":
+  version "5.60.5"
+  resolved "https://registry.yarnpkg.com/@types/codemirror/-/codemirror-5.60.5.tgz#5b989a3b4bbe657458cf372c92b6bfda6061a2b7"
+  integrity sha512-TiECZmm8St5YxjFUp64LK0c8WU5bxMDt9YaAek1UqUb9swrSCoJhh92fWu1p3mTEqlHjhB5sY7OFBhWroJXZVg==
+  dependencies:
+    "@types/tern" "*"
+
 "@types/color-convert@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/color-convert/-/color-convert-2.0.0.tgz#8f5ee6b9e863dcbee5703f5a517ffb13d3ea4e22"
@@ -2914,6 +2924,13 @@
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/@types/tapable/-/tapable-1.0.8.tgz#b94a4391c85666c7b73299fd3ad79d4faa435310"
   integrity sha512-ipixuVrh2OdNmauvtT51o3d8z12p6LtFW9in7U79der/kwejjdNchQC5UMn5u/KxNoM7VHHOs/l8KS8uHxhODQ==
+
+"@types/tern@*":
+  version "0.23.4"
+  resolved "https://registry.yarnpkg.com/@types/tern/-/tern-0.23.4.tgz#03926eb13dbeaf3ae0d390caf706b2643a0127fb"
+  integrity sha512-JAUw1iXGO1qaWwEOzxTKJZ/5JxVeON9kvGZ/osgZaJImBnyjyn0cjovPsf6FNLmyGY8Vw9DoXZCMlfMkMwHRWg==
+  dependencies:
+    "@types/estree" "*"
 
 "@types/testing-library__jest-dom@^5.9.1":
   version "5.14.1"
@@ -3482,6 +3499,11 @@ argparse@^1.0.7:
   integrity sha512-o5Roy6tNG4SL/FOkCAN6RzjiakZS25RLYFrcMttJqbdd8BWrnA+fGz57iN5Pb06pvBGvl5gQ0B48dJlslXvoTg==
   dependencies:
     sprintf-js "~1.0.2"
+
+argparse@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/argparse/-/argparse-2.0.1.tgz#246f50f3ca78a3240f6c997e8a9bd1eac49e4b38"
+  integrity sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==
 
 aria-query@^4.2.2:
   version "4.2.2"
@@ -4690,10 +4712,10 @@ code-point-at@^1.0.0:
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
 
-codemirror@^5.60.0:
-  version "5.62.3"
-  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.62.3.tgz#5cfdee6931c8b2d1b39ae773aaaaec2cc6b5558e"
-  integrity sha512-zZAyOfN8TU67ngqrxhOgtkSAGV9jSpN1snbl8elPtnh9Z5A11daR405+dhLzLnuXrwX0WCShWlybxPN3QC/9Pg==
+codemirror@^5.63.3:
+  version "5.63.3"
+  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.63.3.tgz#97042a242027fe0c87c09b36bc01931d37b76527"
+  integrity sha512-1C+LELr+5grgJYqwZKqxrcbPsHFHapVaVAloBsFBASbpLnQqLw1U8yXJ3gT5D+rhxIiSpo+kTqN+hQ+9ialIXw==
 
 collapse-white-space@^1.0.2:
   version "1.0.6"
@@ -8312,6 +8334,13 @@ js-yaml@^3.13.1:
   dependencies:
     argparse "^1.0.7"
     esprima "^4.0.0"
+
+js-yaml@^4.0.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-4.1.0.tgz#c1fb65f8f5017901cdd2c951864ba18458a10602"
+  integrity sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==
+  dependencies:
+    argparse "^2.0.1"
 
 jsbn@~0.1.0:
   version "0.1.1"

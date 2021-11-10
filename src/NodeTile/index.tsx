@@ -12,7 +12,7 @@ import scrollIntoView from 'scroll-into-view-if-needed'
 import { getNodeConfigFlags, getNodeConfigMarkers } from '../utils/node-utils';
 
 import { app } from '@kubevious/ui-framework'
-import { parseDn, DIAGRAM_LABELS } from '@kubevious/entity-meta';
+import { parseDn, NODE_LABELS } from '@kubevious/entity-meta';
 
 export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted, scrollBoundaryRef, compact, viewOptions }) => {
 
@@ -96,7 +96,7 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
 
                 <div className={cx(styles.nameContainer, { [styles.nameContainerCompact] : compact })}>
                     <div className={styles.kindText}>
-                        {DIAGRAM_LABELS.get((config.kind as any))}
+                        {NODE_LABELS.get((config.kind as any))}
                     </div>
                     {config.name && 
                         <div className={styles.nameText}>
