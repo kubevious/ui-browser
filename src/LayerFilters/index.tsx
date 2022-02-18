@@ -1,8 +1,7 @@
 import _ from 'the-lodash';
 import React, { FC, useEffect, useState } from 'react';
 import { LayerFiltersProps } from './types';
-import { MultiSwitch } from '../MultiSwitch';
-import { MultiChoiceOption } from '../MultiSwitch/types';
+import { MultiSwitch, MultiChoiceOption } from '@kubevious/ui-components';
 
 import styles from './styles.module.css';
 
@@ -18,7 +17,7 @@ const FILTER_ERROR_MULTI_CHOICE_DATA : MultiChoiceOption[] = [
         tooltip: "Turn off error filter."
     },
     {
-        element: <SeverityIcon severity="error" />,
+        element: <SeverityIcon severity="error" size={20} />,
         tooltip: "Filter objects with errors."
     },
     {
@@ -34,7 +33,7 @@ const FILTER_WARNING_MULTI_CHOICE_DATA : MultiChoiceOption[] = [
         tooltip: "Turn off warning filter."
     },
     {
-        element: <SeverityIcon severity="warn" />,
+        element: <SeverityIcon severity="warn" size={20} />,
         tooltip: "Filter objects with warnings."
     },
     {

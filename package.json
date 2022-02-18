@@ -26,11 +26,11 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
-    "@kubevious/entity-meta": "^1.0.41",
-    "@kubevious/ui-alerts": "^1.0.35",
-    "@kubevious/ui-components": "^1.0.181",
-    "@kubevious/ui-framework": "^1.0.50",
-    "@kubevious/ui-middleware": "^1.0.40",
+    "@kubevious/entity-meta": "^1.0.45",
+    "@kubevious/ui-alerts": "^1.0.38",
+    "@kubevious/ui-components": "^1.0.195",
+    "@kubevious/ui-framework": "^1.0.56",
+    "@kubevious/ui-middleware": "^1.0.43",
     "bootstrap": "^5.0.0",
     "classnames": "^2.2.6",
     "react-custom-scrollbars-2": "^4.4.0",
@@ -83,10 +83,10 @@
   },
   "resolutions": {
     "the-lodash": "^2.0.9",
-    "@kubevious/ui-framework": "^1.0.50",
-    "@kubevious/ui-components": "^1.0.181",
-    "@kubevious/ui-alerts": "^1.0.35",
-    "@kubevious/ui-middleware": "^1.0.40",
-    "@kubevious/entity-meta": "^1.0.41"
+    "@kubevious/ui-framework": "^1.0.56",
+    "@kubevious/ui-components": "^1.0.195",
+    "@kubevious/ui-alerts": "^1.0.38",
+    "@kubevious/ui-middleware": "^1.0.43",
+    "@kubevious/entity-meta": "^1.0.45"
   }
 }
