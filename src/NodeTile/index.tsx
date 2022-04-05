@@ -49,7 +49,7 @@ export const NodeTile: FC<NodeTileProps> = ({ config, isSelected, isHighlighted,
     const dnParts = parseDn(config.dn);
 
     const onClick = () => {
-        const currentSelection = app.sharedState.get('selected_dn');
+        const currentSelection = app.sharedState.tryGet<string>('selected_dn');
         console.log("[NodeTile] Click: ", currentSelection)
         if (currentSelection && currentSelection === config.dn) {
             app.sharedState.set('selected_dn', null);
