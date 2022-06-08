@@ -32,8 +32,8 @@ export default {
                 'node_modules/react-is/index.js': ['isValidElementType'],
             },
         }),
-        json(),
         sass({ insert: true }),
+        json(),
     ],
     external: ['react', 'react-dom'],
 };
