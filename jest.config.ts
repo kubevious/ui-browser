@@ -11,7 +11,6 @@ const config: Config.InitialOptions = {
   },
   setupFilesAfterEnv: [
   //   "@testing-library/react/cleanup-after-each",
-    "@testing-library/jest-dom/extend-expect",
     "@testing-library/jest-dom/extend-expect"
   ],
   testRegex: "(/tests/.*|(\\.|/)(test|spec))\\.tsx?$",

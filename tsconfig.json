@@ -21,5 +21,18 @@
   },
   "importHelpers": true,
   "include": ["./src"],
-  "exclude": ["node_modules", "dist", "test", "example", "rollup.config.js"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "test",
+    "**/*.stories.js",
+    "**/*.stories.jsx",
+    "**/*.stories.ts",
+    "**/*.stories.tsx",
+    "**/test",
+    "**/test/**/*.test.js",
+    "**/test/**/*.test.ts",
+    "**/test/**/*.test.jsx",
+    "**/test/**/*.test.tsx"
+  ]
 }
