@@ -23,9 +23,9 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@kubevious/entity-meta": "^1.0.69",
-    "@kubevious/ui-components": "^1.0.242",
+    "@kubevious/ui-components": "^1.0.245",
     "@kubevious/ui-framework": "^1.0.59",
-    "@kubevious/ui-middleware": "^1.0.72",
+    "@kubevious/ui-middleware": "^1.0.74",
     "bootstrap": "^5.0.0",
     "classnames": "2.3.1",
     "react-custom-scrollbars-2": "^4.4.0",
@@ -83,8 +83,8 @@
   "resolutions": {
     "the-lodash": "^2.0.9",
     "@kubevious/ui-framework": "^1.0.59",
-    "@kubevious/ui-components": "^1.0.242",
-    "@kubevious/ui-middleware": "^1.0.72",
+    "@kubevious/ui-components": "^1.0.245",
+    "@kubevious/ui-middleware": "^1.0.74",
     "@kubevious/entity-meta": "^1.0.69",
     "react": "17.0.2",
     "react-dom": "17.0.2",
